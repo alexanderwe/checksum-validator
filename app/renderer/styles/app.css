@@ -1,0 +1,61 @@
+@import '../../node_modules/bulma/css/bulma.css';
+@import './icons.css';
+body {
+    -webkit-app-region: drag;
+    overflow: hidden;
+}
+
+.message-body p {
+    word-wrap: break-word;
+}
+
+.section {
+    padding-bottom: 10px !important;
+}
+
+.primary {
+    color: rgba(21, 209, 179, 1);
+}
+
+.error {
+    color: rgba(254, 59, 97, 1);
+}
+
+.dimmer {
+    height: 100vh;
+    min-width: 100%;
+    background: rgba(0, 0, 0, .8);
+    z-index: 99;
+    position: absolute;
+    color: #fff;
+}
+
+.dimmer .hero {
+    background-color: transparent !important;
+}
+
+.icon.is-large .nc-icon {
+    font-size: 3rem;
+}
+
+.delete:hover {
+    cursor: pointer;
+}
+
+.fade-enter {
+    opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+    opacity: 1;
+    transition: opacity 500ms ease-in;
+}
+
+.fade-leave {
+    opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+    opacity: 0.01;
+    transition: opacity 300ms ease-in;
+}

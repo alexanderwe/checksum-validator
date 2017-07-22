@@ -1,0 +1,23 @@
+{
+    "name": "checksumvalidator",
+    "version": "0.0.1",
+    "description": "A minimal menubar application to validate checksums",
+    "main": "main/main.js",
+    "author": "Alexander Weiss",
+    "scripts": {
+        "start": "electron -r babel-register app/main/main.js"
+    },
+    "dependencies": {
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react": "^6.24.1",
+        "babel-register": "^6.24.1",
+        "bulma": "^0.4.3",
+        "classnames": "^2.2.5",
+        "menubar": "^5.2.3",
+        "prop-types": "^15.5.10",
+        "react": "^15.6.1",
+        "react-dom": "^15.6.1",
+        "react-transition-group": "1.x"
+    },
+    "license": "MIT"
+}
