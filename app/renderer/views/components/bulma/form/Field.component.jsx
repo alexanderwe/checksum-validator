@@ -6,16 +6,16 @@ class Field extends Component {
 
     render() {
 
-        var { hasAddons,
+        const { hasAddons,
             hasIconsLeft,
             hasIconsRight,
             ...other } = this.props;
 
-        var fieldClass = classNames('field', this.props.className, {
+        const fieldClass = classNames('field', this.props.className, {
             'has-addons': hasAddons
         });
 
-        var controlClass = classNames('control', {
+        const controlClass = classNames('control', {
             'has-icons-left': hasIconsLeft,
             'has-icons-right': hasIconsRight
         });

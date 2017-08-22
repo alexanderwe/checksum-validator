@@ -19,6 +19,13 @@
   },
   "build": {
     "appId": "your.id",
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "alexanderwe",
+        "repo": "checksum-validator"
+      }
+    ],
     "mac": {
       "category": "your.app.category.type"
     }

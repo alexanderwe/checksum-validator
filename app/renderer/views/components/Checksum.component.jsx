@@ -16,7 +16,8 @@ class ChecksumValidator extends Component {
         super(props);
         this.state = {
             type: "SHA256",
-            filepath: "",
+            filePath: "",
+            fileName: "",
             checksum: "",
             checksumResult: "",
             fileHover: false,
@@ -27,7 +28,7 @@ class ChecksumValidator extends Component {
     componentDidMount() {
         ipcRenderer.on("set-file-path", (event, data) => {
             this.setState({
-                filepath: data.path
+                filePath: data.path
             });
         });
 
@@ -40,7 +41,7 @@ class ChecksumValidator extends Component {
 
         document.body.ondrop = ev => {
             this.setState({
-                filepath: ev.dataTransfer.files[0].path,
+                filePath: ev.dataTransfer.files[0].path,
                 fileHover: false
             });
             ev.preventDefault();
@@ -84,6 +85,13 @@ class ChecksumValidator extends Component {
             [name]: value
         });
     };
+
+    handleFileChange = event => {
+        this.setState({
+            filePath: event.target.files[0].path,
+            fileName: event.target.files[0].name
+        }, console.log(this.state));
+    }
 
     closeNotification = () => {
         this.setState({
@@ -138,22 +146,15 @@ class ChecksumValidator extends Component {
                         </Hero.Body>
                     </Hero>
                 </div>
-                <Section isMedium>
-                    <Form.Field hasIconsLeft>
-                        <input
-                            className="input"
-                            type="text"
-                            name="filepath"
-                            placeholder="File path"
-                            value={this.state.filepath}
-                            onClick={() =>
-                                ipcRenderer.send("open-file-dialog", {
-                                    fileDialogOptions: {
-                                        title: "Choose your file"
-                                    }
-                                })}
-                        />
-                        <Icon name={"nc-zip-54"} isSmall isLeft />
+                <Section>
+                    <Form.Field>
+                        <Form.File
+                            isBoxed
+                            isPrimary
+                            isFullWidth
+                            label='Choose your file...'
+                            onChange={this.handleFileChange}
+                            fileName={this.state.fileName} />
                     </Form.Field>
                     <Form.Field hasIconsLeft>
                         <input
@@ -185,7 +186,7 @@ class ChecksumValidator extends Component {
                         isPrimary
                         onClick={() =>
                             ipcRenderer.send("checksum", {
-                                filepath: this.state.filepath,
+                                filepath: this.state.filePath,
                                 type: this.state.type,
                                 checksum: this.state.checksum
                             })}
