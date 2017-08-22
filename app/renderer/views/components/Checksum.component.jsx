@@ -26,11 +26,6 @@ class ChecksumValidator extends Component {
     }
 
     componentDidMount() {
-        ipcRenderer.on("set-file-path", (event, data) => {
-            this.setState({
-                filePath: data.path
-            });
-        });
 
         ipcRenderer.on("checksum-result", (event, data) => {
             this.setState({

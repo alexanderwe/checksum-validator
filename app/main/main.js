@@ -197,20 +197,6 @@ ipcMain.on("checksum", (event, arg) => {
     }
 });
 
-ipcMain.on("open-file-dialog", (event, data) => {
-    dialog.showOpenDialog(data.fileDialogOptions, function (fileNames) {
-        if (fileNames === undefined) {
-            console.log("You didn't choose the file");
-            return;
-        }
-        console.log(data.fileDialogOptions.type);
-        event.sender.send("set-file-path", {
-            path: fileNames[0]
-        });
-    });
-});
-
-
 let base64Icon = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw
 7AAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH4AkZCg87wZW7ewA
 AAp1JREFUOMuV1U2IVlUcx/HPnbc0MWwEF40hRWRQmWhEUi4KorlTQ0zQKgqSxKinRYuWrdq0iIp8DAy
