@@ -1,21 +1,17 @@
-const electron = require('electron');
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
-const { ipcMain, Tray, nativeImage } = require('electron');
-const path = require('path');
-const url = require('url');
-var exec = require('child_process').exec;
-const { dialog } = require('electron');
-const log = require('electron-log');
-const update = require('./update');
-const { clipboard } = require('electron');
+import { Tray, clipboard, dialog, ipcMain, nativeImage } from 'electron';
+import electron from 'electron';
+import { exec } from 'child_process';
+import log from 'electron-log';
+import path from 'path';
+import url from 'url';
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
+import { update } from './update';
+
 let mainWindow = undefined;
 let tray = undefined;
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+
 function createWindow() {
     /*
     let icon = nativeImage.createFromDataURL(base64Icon)
