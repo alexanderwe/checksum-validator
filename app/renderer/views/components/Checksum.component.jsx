@@ -22,6 +22,7 @@ class ChecksumValidator extends Component {
             checksumResult: "",
             fileHover: false,
             notificationOpen: false,
+            saveChecksum: false,
         };
     }
 
@@ -86,6 +87,12 @@ class ChecksumValidator extends Component {
             filePath: event.target.files[0].path,
             fileName: event.target.files[0].name
         }, console.log(this.state));
+    }
+
+    handleCheckboxChange = event => {
+        this.setState({
+            saveChecksum: event.target.checked,
+        })
     }
 
     closeNotification = () => {
@@ -179,15 +186,21 @@ class ChecksumValidator extends Component {
 
                     <Button
                         isPrimary
-                        onClick={() =>
+                        onClick={() => {
+                            this.closeNotification()
                             ipcRenderer.send("checksum", {
                                 filepath: this.state.filePath,
                                 type: this.state.type,
-                                checksum: this.state.checksum
-                            })}
+                                checksum: this.state.checksum,
+                                saveChecksum: this.state.saveChecksum
+                            });
+                        }}
                         icon={<Icon name={"nc-check-2"} isSmall style={{ marginRight: "10px" }} />}>
                         Check
                     </Button>
+                    <Form.Checkbox
+                        label={'Save checksum to clipboard'}
+                        onChange={this.handleCheckboxChange} />
                 </Section>
             </div >
         );

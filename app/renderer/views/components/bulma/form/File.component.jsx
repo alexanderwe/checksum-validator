@@ -54,7 +54,7 @@ class File extends Component {
                         </span>
                     </span>
                     {fileName ? <span className="file-name">
-                        {fileName}
+                        {fileName ? fileName : ''}
                     </span> : null}
                 </label>
             </div>
