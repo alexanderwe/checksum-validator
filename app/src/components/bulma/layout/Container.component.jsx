@@ -4,10 +4,10 @@ import PropTypes from 'prop-types';
 
 class Container extends Component {
     render() {
-
         var containerClass = classNames('container', this.props.className, {
             'is-fluid': this.props.isFluid,
-            'has-text-centered': this.props.hasTextCentered
+            'has-text-centered': this.props.hasTextCentered,
+            'is-marginless': this.props.isMarginless
         });
 
         return (
@@ -19,8 +19,9 @@ class Container extends Component {
 }
 
 Container.propTypes = {
-    'is-fluid': PropTypes.bool,
-    'has-text-centered': PropTypes.bool,
-}
+    isFluid: PropTypes.bool,
+    hasTextCentered: PropTypes.bool,
+    isMarginless: PropTypes.bool
+};
 
 export default Container;

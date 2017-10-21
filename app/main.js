@@ -1,16 +1,23 @@
-import { Tray, clipboard, dialog, ipcMain, nativeImage } from 'electron';
-import electron from 'electron';
-import { exec } from 'child_process';
-import log from 'electron-log';
-import path from 'path';
-import url from 'url';
+// Basic init
+const electron = require('electron');
+// Module to control application life.
+const app = electron.app;
+// Module to create native browser window.
+const BrowserWindow = electron.BrowserWindow;
+const { ipcMain, Tray, nativeImage } = require('electron');
+const path = require('path');
+const url = require('url');
+var exec = require('child_process').exec;
+const { dialog } = require('electron');
+const { clipboard } = require('electron');
 
-import { update } from './update';
+// Let electron reloads by itself when webpack watches changes in ./app/
+require('electron-reload')(__dirname);
 
+// Keep a global reference of the window object, if you don't, the window will
+// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = undefined;
 let tray = undefined;
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
 
 function createWindow() {
     /*
@@ -37,16 +44,10 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL(
-        url.format({
-            pathname: path.join(__dirname, '../renderer/index.html'),
-            protocol: 'file:',
-            slashes: true
-        })
-    );
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     // Open the DevTools.
-    //mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {
@@ -85,7 +86,7 @@ const showWindow = () => {
 
 app.on('ready', () => {
     createWindow();
-    update();
+    //update(); //TODO: enable update again
     //app.dock.hide();
 });
 

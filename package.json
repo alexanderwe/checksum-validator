@@ -1,38 +1,46 @@
 {
-  "name": "checksumvalidator",
-  "version": "0.0.1",
-  "description": "A minimal menubar application to validate checksums",
-  "main": " app/main/main.js",
-  "scripts": {
-    "start": "electron -r babel-register app/main/main.js",
-    "postinstall": "install-app-deps",
-    "dist": "build -mwl --x64 --ia32"
-  },
-  "author": "Alexander Weiss",
-  "license": "MIT",
-  "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-register": "^6.24.1",
-    "electron": "~1.6.2",
-    "electron-builder": "^19.16.0",
-    "electron-react-devtools": "^0.4.0"
-  },
-  "build": {
-    "appId": "your.id",
-    "publish": [
-      {
-        "provider": "github",
-        "owner": "alexanderwe",
-        "repo": "checksum-validator"
-      }
-    ],
-    "mac": {
-      "category": "your.app.category.type"
+    "name": "checksum-validator",
+    "version": "0.1.0",
+    "description": "Small Electron application to validate checksum.",
+    "main": "main.js",
+    "scripts": {
+        "dev": "webpack",
+        "start": "electron ./app/main.js",
+        "postinstall": "install-app-deps",
+        "dist": "build -m --x64 --ia32"
+    },
+    "author": "Alexander Weiß",
+    "repository": "https://github.com/alexanderwe/checksum-validator",
+    "license": "MIT",
+    "devDependencies": {
+        "babel-core": "^6.26.0",
+        "babel-loader": "^7.1.2",
+        "babel-plugin-transform-object-rest-spread": "^6.26.0",
+        "babel-preset-env": "^1.6.1",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-0": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
+        "css-loader": "^0.26.1",
+        "electron": "^1.4.15",
+        "electron-builder": "^19.37.2",
+        "electron-reload": "^1.1.0",
+        "extract-text-webpack-plugin": "^2.0.0-rc.3",
+        "file-loader": "^0.9.0",
+        "webpack": "^3.8.1",
+        "webpack-dashboard": "^1.0.0"
+    },
+    "build": {
+        "appId": "your.id",
+        "publish": [
+            {
+                "provider": "github",
+                "owner": "alexanderwe",
+                "repo": "checksum-validator"
+            }
+        ],
+        "mac": {
+            "category": "your.app.category.type"
+        }
     }
-  },
-  "dependencies": {
-    "babel-plugin-transform-object-rest-spread": "^6.23.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1"
-  }
 }
