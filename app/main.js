@@ -12,7 +12,10 @@ const { dialog } = require('electron');
 const { clipboard } = require('electron');
 
 // Let electron reloads by itself when webpack watches changes in ./app/
-require('electron-reload')(__dirname);
+
+if (process.env.ELECTRON_DEV) {
+    require('electron-reload')(__dirname);
+}
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -44,7 +47,7 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL(`file://${__dirname}/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
 
     // Open the DevTools.
     mainWindow.webContents.openDevTools();

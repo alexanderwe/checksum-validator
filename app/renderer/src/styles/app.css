@@ -1,5 +1,5 @@
-/*@import './icons.css';*/
-@import '../../node_modules/bulma/css/bulma.css';
+@import './icons.css';
+@import '../../../node_modules/bulma/css/bulma.css';
 body {
     -webkit-app-region: drag;
     overflow: hidden;

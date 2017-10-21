@@ -2,7 +2,7 @@
     "name": "checksum-validator",
     "version": "0.1.0",
     "description": "Small Electron application to validate checksum.",
-    "main": "main/main.js",
+    "main": "main.js",
     "author": "Alexander Weiss",
     "dependencies": {
         "bulma": "^0.6.0",

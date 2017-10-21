@@ -4,14 +4,21 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 module.exports = {
     watch: true,
     target: 'electron',
-    entry: './app/src/entry.js',
+    entry: './app/renderer/src/entry.js',
     output: {
-        path: __dirname + '/app/build',
+        path: __dirname + '/app/renderer/build',
         publicPath: 'build/',
         filename: 'bundle.js'
     },
     module: {
         rules: [
+            {
+                test: /\.(eot|svg|ttf|woff|woff2)$/,
+                loader: 'file-loader?name=/fonts/[name].[ext]',
+                query: {
+                    name: '[name].[ext]'
+                }
+            },
             {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
@@ -31,13 +38,6 @@ module.exports = {
                 loader: 'file-loader',
                 query: {
                     name: '[name].[ext]?[hash]'
-                }
-            },
-            {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
-                loader: 'file-loader',
-                query: {
-                    name: '[name].[ext]'
                 }
             }
         ]

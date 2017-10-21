@@ -1,14 +1,17 @@
 /*--------------------------------
 
-checksum_validator Web Font - built using nucleoapp.com
+Checksum Validaotor Web Font - built using nucleoapp.com
 License - nucleoapp.com/license/
 
 -------------------------------- */
 @font-face {
-    font-family: 'checksum_validator';
-    src: url('../fonts/checksum_validator.eot');
-    src: url('../fonts/checksum_validator.eot') format('embedded-opentype'), url('../fonts/checksum_validator.woff2') format('woff2'), url('../fonts/checksum_validator.woff') format('woff'),
-        url('../fonts/checksum_validator.ttf') format('truetype'), url('../fonts/checksum_validator.svg') format('svg');
+    font-family: 'myicons';
+    src: url('../assets/fonts/myicons.eot');
+    src: url('../assets/fonts/myicons.eot') format('embedded-opentype');
+    src: url('../assets/fonts/myicons.woff2') format('woff2');
+    src: url('../assets/fonts/myicons.woff') format('woff');
+    src: url('../assets/fonts/myicons.ttf') format('truetype');
+    src: url('../assets/fonts/myicons.svg') format('svg');
     font-weight: normal;
     font-style: normal;
 }
@@ -17,7 +20,7 @@ License - nucleoapp.com/license/
   -------------------------*/
 .nc-icon {
     display: inline-block;
-    font: normal normal normal 14px/1 'checksum_validator';
+    font: normal normal normal 14px/1 'myicons';
     font-size: inherit;
     speak: none;
     text-transform: none;
@@ -163,24 +166,20 @@ License - nucleoapp.com/license/
       font icons
   -------------------------*/
 
-.nc-check-2::before {
+.nc-code::before {
     content: '\ea01';
 }
 
-.nc-code::before {
+.nc-zip-54::before {
     content: '\ea02';
 }
 
-.nc-file-download-89::before {
+.nc-security::before {
     content: '\ea03';
 }
 
-.nc-security::before {
+.nc-file-download-89::before {
     content: '\ea04';
-}
-
-.nc-zip-54::before {
-    content: '\ea05';
 }
 
 /* all icon font classes list here */
