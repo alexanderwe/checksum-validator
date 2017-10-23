@@ -1,8 +1,8 @@
 // Basic init
+const exec = require('child_process').exec;
 const { app, BrowserWindow, clipboard, dialog, ipcMain, menu, nativeImage, Tray } = require('electron');
 const path = require('path');
 const url = require('url');
-const exec = require('child_process').exec;
 const update = require('./update');
 // Let electron reloads by itself when webpack watches changes in ./app/
 if (process.env.ELECTRON_DEV) {
@@ -12,7 +12,6 @@ if (process.env.ELECTRON_DEV) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow = undefined;
-let tray = undefined;
 
 function createWindow() {
     // Create the browser window.
@@ -35,15 +34,9 @@ function createWindow() {
     mainWindow.on('closed', function() {
         mainWindow = null;
     });
-}
 
-const toggleWindow = () => {
-    if (mainWindow.isVisible()) {
-        mainWindow.hide();
-    } else {
-        showWindow();
-    }
-};
+    require('./menu');
+}
 
 app.on('ready', () => {
     createWindow();
