@@ -1,7 +1,12 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+var path = require('path');
 
-module.exports = {
+var config = {
+    module: {}
+};
+
+var rendererConfig = Object.assign({}, config, {
     watch: true,
     target: 'electron',
     entry: './app/renderer/src/entry.js',
@@ -14,7 +19,7 @@ module.exports = {
         rules: [
             {
                 test: /\.(eot|svg|ttf|woff|woff2)$/,
-                loader: 'file-loader?name=/fonts/[name].[ext]',
+                loader: 'file-loader',
                 query: {
                     name: '[name].[ext]'
                 }
@@ -50,4 +55,6 @@ module.exports = {
         }),
         new DashboardPlugin()
     ]
-};
+});
+
+module.exports = [rendererConfig];

@@ -10740,6 +10740,7 @@ var ChecksumValidator = function (_Component) {
         };
 
         _this.handleFileChange = function (event) {
+            console.log('handle file change');
             _this.setState({
                 filePath: event.target.files[0].path,
                 fileName: event.target.files[0].name
@@ -10790,8 +10791,11 @@ var ChecksumValidator = function (_Component) {
             });
 
             document.body.ondrop = function (ev) {
+                console.log('ondrop');
+                console.log(ev.dataTransfer.files[0].path);
                 _this2.setState({
                     filePath: ev.dataTransfer.files[0].path,
+                    fileName: ev.dataTransfer.files[0].name,
                     fileHover: false
                 });
                 ev.preventDefault();

@@ -37,8 +37,11 @@ class ChecksumValidator extends Component {
         });
 
         document.body.ondrop = ev => {
+            console.log('ondrop');
+            console.log(ev.dataTransfer.files[0].path);
             this.setState({
                 filePath: ev.dataTransfer.files[0].path,
+                fileName: ev.dataTransfer.files[0].name,
                 fileHover: false
             });
             ev.preventDefault();
@@ -83,6 +86,7 @@ class ChecksumValidator extends Component {
     };
 
     handleFileChange = event => {
+        console.log('handle file change');
         this.setState(
             {
                 filePath: event.target.files[0].path,

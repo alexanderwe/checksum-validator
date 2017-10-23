@@ -5,7 +5,9 @@ body {
     overflow: hidden;
 }
 
-/** lalalal**/
+.notification {
+    border-radius: 0px !important;
+}
 
 .message-body p {
     word-wrap: break-word;
