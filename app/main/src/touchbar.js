@@ -1,4 +1,4 @@
-const { TouchBar } = require('electron');
+import { TouchBar } from 'electron';
 const { TouchBarLabel, TouchBarButton, TouchBarSpacer } = TouchBar;
 
 const check = new TouchBarButton({
@@ -9,6 +9,4 @@ const check = new TouchBarButton({
     }
 });
 
-const touchBar = new TouchBar([check]);
-
-module.exports = touchBar;
+export const touchBar = new TouchBar([check]);

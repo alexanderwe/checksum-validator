@@ -1,9 +1,13 @@
 // Basic init
-const exec = require('child_process').exec;
-const { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, nativeImage, Tray, TouchBar } = require('electron');
-const path = require('path');
-const url = require('url');
-const update = require('./update');
+import * as child from 'child_process';
+import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, nativeImage, Tray, TouchBar } from 'electron';
+import path from 'path';
+import url from 'url';
+import fs from 'fs';
+import { update } from './update';
+
+import { menuTemplate } from './menu';
+import { touchBar } from './touchbar';
 // Let electron reloads by itself when webpack watches changes in ./app/
 if (process.env.ELECTRON_DEV) {
     require('electron-reload')(__dirname);
@@ -24,19 +28,19 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL(`file://${__dirname}/../renderer/index.html`);
-    mainWindow.setTouchBar(require('./touchbar.js'));
+    mainWindow.loadURL(`file://${__dirname}/../../renderer/index.html`);
+
     // Open the DevTools.
     if (process.env.ELECTRON_DEV) {
         mainWindow.webContents.openDevTools();
     }
 
-    mainWindow.on('closed', function() {
+    mainWindow.on('closed', () => {
         mainWindow = null;
     });
-    mainWindow.setTouchBar(require('./touchbar'));
 
-    const menu = Menu.buildFromTemplate(require('./menu'));
+    mainWindow.setTouchBar(touchBar);
+    const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu);
 }
 
@@ -46,7 +50,7 @@ app.on('ready', () => {
 });
 
 // Quit when all windows are closed.
-app.on('window-all-closed', function() {
+app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
@@ -54,7 +58,7 @@ app.on('window-all-closed', function() {
     }
 });
 
-app.on('activate', function() {
+app.on('activate', () => {
     // On OS X it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
@@ -68,7 +72,7 @@ app.on('activate', function() {
 ipcMain.on('checksum', (event, arg) => {
     switch (arg.type) {
         case 'SHA512':
-            var child = exec('shasum -a 512 ' + arg.filepath.replace(/ /g, '\\ '), function(error, stdout, stderr) {
+            child.exec('shasum -a 512 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 var checksumResult = stdout.split(' ')[0].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
@@ -82,7 +86,7 @@ ipcMain.on('checksum', (event, arg) => {
             });
             break;
         case 'SHA256':
-            var child = exec('shasum -a 256 ' + arg.filepath.replace(/ /g, '\\ '), function(error, stdout, stderr) {
+            child.exec('shasum -a 256 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 var checksumResult = stdout.split(' ')[0].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
@@ -96,7 +100,7 @@ ipcMain.on('checksum', (event, arg) => {
             });
             break;
         case 'SHA1':
-            var child = exec('openssl sha1 ' + arg.filepath.replace(/ /g, '\\ '), function(error, stdout, stderr) {
+            child.exec('openssl sha1 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 var checksumResult = stdout.split('= ')[1].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
@@ -110,7 +114,7 @@ ipcMain.on('checksum', (event, arg) => {
             });
             break;
         case 'MD5':
-            var child = exec('openssl md5 ' + arg.filepath.replace(/ /g, '\\ '), function(error, stdout, stderr) {
+            child.exec('openssl md5 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 var checksumResult = stdout.split('= ')[1].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);

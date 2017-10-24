@@ -1,6 +1,6 @@
-const { app } = require('electron');
+import { app } from 'electron';
 
-const menuTemplate = [
+export const menuTemplate = [
     {
         label: app.getName(),
         submenu: [
@@ -16,5 +16,3 @@ const menuTemplate = [
         ]
     }
 ];
-
-module.exports = menuTemplate;

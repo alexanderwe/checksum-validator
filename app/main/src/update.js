@@ -1,7 +1,7 @@
-const { autoUpdater } = require('electron-updater');
-const { dialog } = require('electron');
-const ms = require('ms');
-const path = require('path');
+import { autoUpdater } from 'electron-updater';
+import { dialog } from 'electron';
+import ms from 'ms';
+import path from 'path';
 
 //TODO: Get autoupdater in dev to work
 autoUpdater.updateConfigPath = 'dev-app-update.yml';
@@ -15,7 +15,7 @@ const createInterval = () =>
         autoUpdater.checkForUpdates();
     }, ms('5m'));
 
-function update() {
+export function update() {
     setTimeout(() => autoUpdater.checkForUpdates(), ms('5s'));
 
     let intervalId = createInterval();
@@ -55,5 +55,3 @@ function update() {
         logger.info('Error fetching updates', err.stack);
     });
 }
-
-module.exports = update;

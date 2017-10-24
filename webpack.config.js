@@ -57,28 +57,26 @@ var rendererConfig = Object.assign({}, config, {
 
 var mainConfig = Object.assign({}, config, {
     watch: true,
-    target: 'electron-main',
+    target: 'electron',
+    entry: './app/main/src/main.js',
     externals: [nodeExternals()],
-    entry: './app/main/main.js',
     output: {
-        path: path.resolve(__dirname, './app/main'),
         filename: 'bundle.js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['es2015']
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['env']
+                    }
                 }
             }
         ]
-    },
-    stats: {
-        colors: true
-    },
-    devtool: 'source-map'
+    }
 });
 
 module.exports = [rendererConfig];

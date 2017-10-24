@@ -4,8 +4,10 @@
     "description": "Small Electron application to validate checksum.",
     "main": "main.js",
     "scripts": {
-        "dev": "webpack",
-        "start": "ELECTRON_DEV=1 electron app/main/main.js",
+        "webpack": "webpack",
+        "dev": "yarn webpack || yarn babel:watch",
+        "start": "ELECTRON_DEV=1 electron app/main/build/main.js",
+        "babel:watch": "babel ./app/main/src/ -w -d ./app/main/build",
         "postinstall": "install-app-deps",
         "dist": "build -m --x64 --ia32"
     },
@@ -13,6 +15,7 @@
     "repository": "https://github.com/alexanderwe/checksum-validator",
     "license": "MIT",
     "devDependencies": {
+        "babel-cli": "^6.26.0",
         "babel-core": "^6.26.0",
         "babel-loader": "^7.1.2",
         "babel-plugin-transform-object-rest-spread": "^6.26.0",
@@ -22,7 +25,7 @@
         "babel-preset-stage-0": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
         "css-loader": "^0.26.1",
-        "electron": "^1.7.9",
+        "electron": "1.8.1",
         "electron-builder": "^19.37.2",
         "electron-reload": "^1.1.0",
         "extract-text-webpack-plugin": "^2.0.0-rc.3",
