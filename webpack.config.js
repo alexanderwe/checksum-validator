@@ -18,13 +18,6 @@ var rendererConfig = Object.assign({}, config, {
     module: {
         rules: [
             {
-                test: /\.(eot|svg|ttf|woff|woff2)$/,
-                loader: 'file-loader',
-                query: {
-                    name: '[name].[ext]'
-                }
-            },
-            {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 options: {
@@ -44,6 +37,10 @@ var rendererConfig = Object.assign({}, config, {
                 query: {
                     name: '[name].[ext]?[hash]'
                 }
+            },
+            {
+                test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
+                loader: 'url-loader'
             }
         ]
     },
