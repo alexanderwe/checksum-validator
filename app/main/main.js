@@ -1,6 +1,6 @@
 // Basic init
 const exec = require('child_process').exec;
-const { app, BrowserWindow, clipboard, dialog, ipcMain, menu, nativeImage, Tray, TouchBar } = require('electron');
+const { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, nativeImage, Tray, TouchBar } = require('electron');
 const path = require('path');
 const url = require('url');
 const update = require('./update');
@@ -24,7 +24,7 @@ function createWindow() {
     });
 
     // and load the index.html of the app.
-    mainWindow.loadURL(`file://${__dirname}/renderer/index.html`);
+    mainWindow.loadURL(`file://${__dirname}/../renderer/index.html`);
     mainWindow.setTouchBar(require('./touchbar.js'));
     // Open the DevTools.
     if (process.env.ELECTRON_DEV) {
@@ -34,13 +34,15 @@ function createWindow() {
     mainWindow.on('closed', function() {
         mainWindow = null;
     });
+    mainWindow.setTouchBar(require('./touchbar'));
 
-    require('./menu');
+    const menu = Menu.buildFromTemplate(require('./menu'));
+    Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', () => {
     createWindow();
-    update();
+    //update();
 });
 
 // Quit when all windows are closed.

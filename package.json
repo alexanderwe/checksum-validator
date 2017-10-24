@@ -5,8 +5,7 @@
     "main": "main.js",
     "scripts": {
         "dev": "webpack",
-        "start": "ELECTRON_DEV=1 electron app/main.js",
-        "babel": "babel --presets es2015 app/app.js -o app/main.js",
+        "start": "ELECTRON_DEV=1 electron app/main/main.js",
         "postinstall": "install-app-deps",
         "dist": "build -m --x64 --ia32"
     },
@@ -31,7 +30,8 @@
         "typescript": "^2.5.3",
         "url-loader": "^0.6.2",
         "webpack": "^3.8.1",
-        "webpack-dashboard": "^1.0.0"
+        "webpack-dashboard": "^1.0.0",
+        "webpack-node-externals": "^1.6.0"
     },
     "build": {
         "appId": "com.github.alexanderwe.checksum-validator",

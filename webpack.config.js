@@ -1,5 +1,6 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+var nodeExternals = require('webpack-node-externals');
 var path = require('path');
 
 var config = {
@@ -52,6 +53,32 @@ var rendererConfig = Object.assign({}, config, {
         }),
         new DashboardPlugin()
     ]
+});
+
+var mainConfig = Object.assign({}, config, {
+    watch: true,
+    target: 'electron-main',
+    externals: [nodeExternals()],
+    entry: './app/main/main.js',
+    output: {
+        path: path.resolve(__dirname, './app/main'),
+        filename: 'bundle.js'
+    },
+    module: {
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: 'babel-loader',
+                query: {
+                    presets: ['es2015']
+                }
+            }
+        ]
+    },
+    stats: {
+        colors: true
+    },
+    devtool: 'source-map'
 });
 
 module.exports = [rendererConfig];
