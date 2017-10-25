@@ -1,30 +1,28 @@
-import { autoUpdater } from 'electron-updater';
 import { dialog } from 'electron';
-import ms from 'ms';
-import path from 'path';
+import { autoUpdater } from 'electron-updater';
+import * as path from 'path';
 
-//TODO: Get autoupdater in dev to work
+// TODO: Get autoupdater in dev to work
 autoUpdater.updateConfigPath = 'dev-app-update.yml';
 
 const createInterval = () =>
     setInterval(() => {
-        logger.info('Checking for updates');
         dialog.showMessageBox({
-            message: 'Checking for updates'
+            message: 'Checking for updates',
         });
         autoUpdater.checkForUpdates();
-    }, ms('5m'));
+    }, 300000); // 5 minutes 
 
 export function update() {
-    setTimeout(() => autoUpdater.checkForUpdates(), ms('5s'));
+    setTimeout(() => autoUpdater.checkForUpdates(), 5000);
 
     let intervalId = createInterval();
 
-    autoUpdater.on('error', error => {
+    autoUpdater.on('error', (error) => {
         clearInterval(intervalId);
         intervalId = null;
         dialog.showMessageBox({
-            message: 'Error while checking updates' + error
+            message: 'Error while checking updates' + error,
         });
     });
 
@@ -34,17 +32,14 @@ export function update() {
     });
 
     autoUpdater.on('update-downloaded', () => {
-        dialog.showMessageBox(
-            {
-                message: 'Eine Neue version wurde gedownloadet'
-            },
-            () => autoUpdater.quitAndInstall()
-        );
+        dialog.showMessageBox({
+            message: 'Update downloaded',
+        });
     });
 
     autoUpdater.on('update-not-available', () => {
         dialog.showMessageBox({
-            message: 'Update not available'
+            message: 'Update not available',
         });
     });
 
@@ -52,6 +47,5 @@ export function update() {
         if (intervalId === null) {
             intervalId = createInterval();
         }
-        logger.info('Error fetching updates', err.stack);
     });
 }

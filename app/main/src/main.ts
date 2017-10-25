@@ -1,30 +1,29 @@
 // Basic init
 import * as child from 'child_process';
-import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, nativeImage, Tray, TouchBar } from 'electron';
-import path from 'path';
-import url from 'url';
-import fs from 'fs';
-import { update } from './update';
-
+import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, nativeImage, TouchBar, Tray } from 'electron';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as url from 'url';
 import { menuTemplate } from './menu';
 import { touchBar } from './touchbar';
-// Let electron reloads by itself when webpack watches changes in ./app/
+import { update } from './update';
+
 if (process.env.ELECTRON_DEV) {
-    require('electron-reload')(__dirname);
+    require('electron-reload')(path.join(__dirname, '/../../renderer/build/'));
 }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow = undefined;
+let mainWindow: BrowserWindow;
 
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        width: 310,
         height: 310,
-        show: true,
         resizable: false,
-        titleBarStyle: 'hidden'
+        show: true,
+        titleBarStyle: 'hidden',
+        width: 310,
     });
 
     // and load the index.html of the app.
@@ -46,7 +45,7 @@ function createWindow() {
 
 app.on('ready', () => {
     createWindow();
-    //update();
+    // update();
 });
 
 // Quit when all windows are closed.
@@ -68,62 +67,78 @@ app.on('activate', () => {
 
 /**
  * COMMUNICATION OF RENDERER AND MAIN PROCESS
- **/
-ipcMain.on('checksum', (event, arg) => {
+ */
+ipcMain.on('checksum', (event: any, arg: any) => {
     switch (arg.type) {
         case 'SHA512':
             child.exec('shasum -a 512 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                var checksumResult = stdout.split(' ')[0].trim();
+                const checksumResultString = stdout.split(' ')[0].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
                 }
-                var match = checksumResult == arg.checksum ? true : false;
-                arg.saveChecksum ? clipboard.writeText(checksumResult) : null;
+                const didMatch = checksumResultString === arg.checksum ? true : false;
+
+                if (arg.saveChecksum) {
+                    clipboard.writeText(checksumResultString);
+                }
+
                 event.sender.send('checksum-result', {
-                    checksumResult: checksumResult,
-                    match: match
+                    checksumResult: checksumResultString,
+                    match: didMatch,
                 });
             });
             break;
         case 'SHA256':
             child.exec('shasum -a 256 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                var checksumResult = stdout.split(' ')[0].trim();
+                const checksumResultString = stdout.split(' ')[0].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
                 }
-                arg.saveChecksum ? clipboard.writeText(checksumResult) : null;
-                var match = checksumResult == arg.checksum ? true : false;
+                const didMatch = checksumResultString === arg.checksum ? true : false;
+
+                if (arg.saveChecksum) {
+                    clipboard.writeText(checksumResultString);
+                }
+
                 event.sender.send('checksum-result', {
-                    checksumResult: checksumResult,
-                    match: match
+                    checksumResult: checksumResultString,
+                    match: didMatch,
                 });
             });
             break;
         case 'SHA1':
             child.exec('openssl sha1 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                var checksumResult = stdout.split('= ')[1].trim();
+                const checksumResultString = stdout.split(' ')[0].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
                 }
-                arg.saveChecksum ? clipboard.writeText(checksumResult) : null;
-                var match = checksumResult === arg.checksum ? true : false;
+                const didMatch = checksumResultString === arg.checksum ? true : false;
+
+                if (arg.saveChecksum) {
+                    clipboard.writeText(checksumResultString);
+                }
+
                 event.sender.send('checksum-result', {
-                    checksumResult: checksumResult,
-                    match: match
+                    checksumResult: checksumResultString,
+                    match: didMatch,
                 });
             });
             break;
         case 'MD5':
             child.exec('openssl md5 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                var checksumResult = stdout.split('= ')[1].trim();
+                const checksumResultString = stdout.split(' ')[0].trim();
                 if (error !== null) {
                     console.log('exec error: ' + error);
                 }
-                arg.saveChecksum ? clipboard.writeText(checksumResult) : null;
-                var match = checksumResult == arg.checksum ? true : false;
+                const didMatch = checksumResultString === arg.checksum ? true : false;
+
+                if (arg.saveChecksum) {
+                    clipboard.writeText(checksumResultString);
+                }
+
                 event.sender.send('checksum-result', {
-                    checksumResult: checksumResult,
-                    match: match
+                    checksumResult: checksumResultString,
+                    match: didMatch,
                 });
             });
             break;

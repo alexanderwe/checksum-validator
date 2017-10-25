@@ -9,7 +9,7 @@ var config = {
 
 var rendererConfig = Object.assign({}, config, {
     watch: true,
-    target: 'electron',
+    target: 'electron-renderer',
     entry: './app/renderer/src/entry.js',
     output: {
         path: __dirname + '/app/renderer/build',
@@ -56,27 +56,23 @@ var rendererConfig = Object.assign({}, config, {
 });
 
 var mainConfig = Object.assign({}, config, {
-    watch: true,
-    target: 'electron',
-    entry: './app/main/src/main.js',
+    entry: './app/main/src/main.ts',
+    target: 'electron-main',
+    node: {
+        __dirname: false,
+        __filename: false
+    },
     externals: [nodeExternals()],
+    watch: true,
     output: {
-        filename: 'bundle.js'
+        filename: './app/main/build/main.js'
+    },
+    resolve: {
+        extensions: ['.ts']
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env']
-                    }
-                }
-            }
-        ]
+        loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }]
     }
 });
 
-module.exports = [rendererConfig];
+module.exports = [rendererConfig, mainConfig];
