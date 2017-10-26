@@ -12,4 +12,15 @@ export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
             { role: 'quit' },
         ],
     },
+    {
+        role: 'help',
+        submenu: [
+            {
+                click: () => {
+                    console.log('update');
+                },
+                label: 'Update',
+            },
+        ],
+    },
 ];

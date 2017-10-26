@@ -13,8 +13,8 @@ License - nucleoapp.com/license/
     font-style: normal;
 }
 /*------------------------
-      base class definition
-  -------------------------*/
+	base class definition
+-------------------------*/
 .nc-icon {
     display: inline-block;
     font: normal normal normal 14px/1 'checksum_validator';
@@ -163,24 +163,34 @@ License - nucleoapp.com/license/
       font icons
   -------------------------*/
 
-.nc-check-2::before {
+.nc-code::before {
     content: '\ea01';
 }
 
-.nc-code::before {
+.nc-zip-54::before {
     content: '\ea02';
 }
 
-.nc-file-download-89::before {
+.nc-security::before {
     content: '\ea03';
 }
 
-.nc-security::before {
+.nc-file-download-89::before {
     content: '\ea04';
 }
 
-.nc-zip-54::before {
+.nc-circle::before {
     content: '\ea05';
 }
 
-/* all icon font classes list here */
+.nc-dots::before {
+    content: '\ea06';
+}
+
+.nc-check-2::before {
+    content: '\ea07';
+}
+
+.nc-alert-exc::before {
+    content: '\ea08';
+}

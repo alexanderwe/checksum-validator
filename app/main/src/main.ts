@@ -6,7 +6,7 @@ import * as path from 'path';
 import * as url from 'url';
 import { menuTemplate } from './menu';
 import { touchBar } from './touchbar';
-import { update } from './update';
+import Updater from './update';
 
 if (process.env.ELECTRON_DEV) {
     require('electron-reload')(path.join(__dirname, '/../../renderer/build/'));
@@ -15,15 +15,16 @@ if (process.env.ELECTRON_DEV) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow;
+let updater: Updater;
 
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        height: 310,
+        height: 300,
         resizable: false,
         show: true,
         titleBarStyle: 'hidden',
-        width: 310,
+        width: 300,
     });
 
     // and load the index.html of the app.
@@ -45,7 +46,7 @@ function createWindow() {
 
 app.on('ready', () => {
     createWindow();
-    // update();
+    // updater = new Updater(); // TODO: This is not working, some modules are not found 
 });
 
 // Quit when all windows are closed.
@@ -67,6 +68,7 @@ app.on('activate', () => {
 
 /**
  * COMMUNICATION OF RENDERER AND MAIN PROCESS
+ * TODO: Move this functionality into separate class
  */
 ipcMain.on('checksum', (event: any, arg: any) => {
     switch (arg.type) {

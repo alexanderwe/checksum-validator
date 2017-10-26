@@ -21,7 +21,8 @@ class ChecksumValidator extends Component {
             checksumResult: '',
             fileHover: false,
             notificationOpen: false,
-            saveChecksum: false
+            saveChecksum: false,
+            loading: false
         };
     }
 
@@ -30,7 +31,8 @@ class ChecksumValidator extends Component {
             this.setState(
                 {
                     checksumResult: data.checksumResult,
-                    match: data.match
+                    match: data.match,
+                    loading: false
                 },
                 this.openNotification()
             );
@@ -114,6 +116,21 @@ class ChecksumValidator extends Component {
         });
     };
 
+    check = () => {
+        this.closeNotification();
+        this.setState({
+            loading: true
+        });
+        setTimeout(() => {
+            ipcRenderer.send('checksum', {
+                filepath: this.state.filePath,
+                type: this.state.type,
+                checksum: this.state.checksum,
+                saveChecksum: this.state.saveChecksum
+            });
+        }, 1000);
+    };
+
     render() {
         const button = <div>Button</div>;
 
@@ -121,7 +138,15 @@ class ChecksumValidator extends Component {
             <div className="checksum-validator">
                 {this.state.notificationOpen ? (
                     <Notification isSuccess={this.state.match} isDanger={!this.state.match} style={{ width: '100%', position: 'absolute', zIndex: '10' }} onCloseClick={() => this.closeNotification()}>
-                        {this.state.match ? 'Checksum match' : 'Checksum fail'}
+                        {this.state.match ? (
+                            <div>
+                                <Icon name={'nc-check-2'} style={{ marginRight: '10px' }} /> Checksum match
+                            </div>
+                        ) : (
+                            <div>
+                                <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Checksum mismatch
+                            </div>
+                        )}
                     </Notification>
                 ) : null}
                 <div className="dimmer" style={this.state.fileHover ? { display: 'block' } : { display: 'none' }}>
@@ -155,19 +180,7 @@ class ChecksumValidator extends Component {
                         </span>
                         <Icon name={'nc-security'} isSmall isLeft />
                     </Form.Field>
-                    <Button
-                        isPrimary
-                        onClick={() => {
-                            this.closeNotification();
-                            ipcRenderer.send('checksum', {
-                                filepath: this.state.filePath,
-                                type: this.state.type,
-                                checksum: this.state.checksum,
-                                saveChecksum: this.state.saveChecksum
-                            });
-                        }}
-                        icon={<Icon name={'nc-check-2'} isSmall style={{ marginRight: '10px' }} />}
-                    >
+                    <Button isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
                         Check
                     </Button>
                 </Section>
