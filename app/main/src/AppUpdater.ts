@@ -1,16 +1,19 @@
 import { dialog } from 'electron';
+import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
-import * as path from 'path';
 
-// TODO: Get autoupdater in dev to work
-
-
-export default class Updater {
-
+export default class AppUpdater {
     constructor() {
-        autoUpdater.updateConfigPath = 'dev-app-update.yml';
+
+        if (process.env.ELECTRON_DEV) {
+            autoUpdater.updateConfigPath = 'dev-app-update.yml';
+        }
 
         let intervalId: number = this.createInterval();
+
+        log.transports.file.level = 'info';
+        autoUpdater.logger = log;
+        autoUpdater.checkForUpdatesAndNotify();
 
         autoUpdater.on('error', (error) => {
             clearInterval(intervalId);

@@ -3,6 +3,7 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 var nodeExternals = require('webpack-node-externals');
 var path = require('path');
 
+// TODO: check replacement of loader with use
 var config = {
     module: {}
 };
@@ -22,7 +23,7 @@ var rendererConfig = Object.assign({}, config, {
                 test: /\.jsx?$/,
                 loader: 'babel-loader',
                 options: {
-                    presets: ['es2015', 'stage-0', 'stage-2', 'react'],
+                    presets: ['env', 'stage-0', 'stage-2', 'react'],
                     plugins: ['transform-object-rest-spread']
                 }
             },
@@ -68,7 +69,7 @@ var mainConfig = Object.assign({}, config, {
         filename: './app/main/build/main.js'
     },
     resolve: {
-        extensions: ['.ts']
+        extensions: ['.ts', '.js']
     },
     module: {
         loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }]

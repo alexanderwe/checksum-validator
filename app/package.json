@@ -7,6 +7,7 @@
     "dependencies": {
         "bulma": "^0.6.0",
         "classnames": "^2.2.5",
+        "electron-log": "^2.2.10",
         "electron-updater": "^2.15.0",
         "prop-types": "^15.6.0",
         "react": "^16.0.0",

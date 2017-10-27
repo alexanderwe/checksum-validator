@@ -1,12 +1,13 @@
 // Basic init
-import * as child from 'child_process';
-import { app, BrowserWindow, clipboard, dialog, ipcMain, Menu, nativeImage, TouchBar, Tray } from 'electron';
+import { app, BrowserWindow, Menu } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as url from 'url';
+
+import AppUpdater from './AppUpdater';
+import IPCHandler from './IPCHandler';
 import { menuTemplate } from './menu';
 import { touchBar } from './touchbar';
-import Updater from './update';
 
 if (process.env.ELECTRON_DEV) {
     require('electron-reload')(path.join(__dirname, '/../../renderer/build/'));
@@ -15,8 +16,13 @@ if (process.env.ELECTRON_DEV) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow;
-let updater: Updater;
+let updater: AppUpdater;
+let ipcHandler: IPCHandler;
 
+/**
+ * @function createWindow
+ * @return {void} Creates a new main window with the index.html loaded
+ */
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
@@ -46,7 +52,9 @@ function createWindow() {
 
 app.on('ready', () => {
     createWindow();
-    // updater = new Updater(); // TODO: This is not working, some modules are not found 
+    ipcHandler = new IPCHandler();
+    updater = new AppUpdater();
+    updater.update(); // init automatic update function
 });
 
 // Quit when all windows are closed.
@@ -63,88 +71,5 @@ app.on('activate', () => {
     // dock icon is clicked and there are no other windows open.
     if (mainWindow === null) {
         createWindow();
-    }
-});
-
-/**
- * COMMUNICATION OF RENDERER AND MAIN PROCESS
- * TODO: Move this functionality into separate class
- */
-ipcMain.on('checksum', (event: any, arg: any) => {
-    switch (arg.type) {
-        case 'SHA512':
-            child.exec('shasum -a 512 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                const checksumResultString = stdout.split(' ')[0].trim();
-                if (error !== null) {
-                    console.log('exec error: ' + error);
-                }
-                const didMatch = checksumResultString === arg.checksum ? true : false;
-
-                if (arg.saveChecksum) {
-                    clipboard.writeText(checksumResultString);
-                }
-
-                event.sender.send('checksum-result', {
-                    checksumResult: checksumResultString,
-                    match: didMatch,
-                });
-            });
-            break;
-        case 'SHA256':
-            child.exec('shasum -a 256 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                const checksumResultString = stdout.split(' ')[0].trim();
-                if (error !== null) {
-                    console.log('exec error: ' + error);
-                }
-                const didMatch = checksumResultString === arg.checksum ? true : false;
-
-                if (arg.saveChecksum) {
-                    clipboard.writeText(checksumResultString);
-                }
-
-                event.sender.send('checksum-result', {
-                    checksumResult: checksumResultString,
-                    match: didMatch,
-                });
-            });
-            break;
-        case 'SHA1':
-            child.exec('openssl sha1 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                const checksumResultString = stdout.split(' ')[0].trim();
-                if (error !== null) {
-                    console.log('exec error: ' + error);
-                }
-                const didMatch = checksumResultString === arg.checksum ? true : false;
-
-                if (arg.saveChecksum) {
-                    clipboard.writeText(checksumResultString);
-                }
-
-                event.sender.send('checksum-result', {
-                    checksumResult: checksumResultString,
-                    match: didMatch,
-                });
-            });
-            break;
-        case 'MD5':
-            child.exec('openssl md5 ' + arg.filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
-                const checksumResultString = stdout.split(' ')[0].trim();
-                if (error !== null) {
-                    console.log('exec error: ' + error);
-                }
-                const didMatch = checksumResultString === arg.checksum ? true : false;
-
-                if (arg.saveChecksum) {
-                    clipboard.writeText(checksumResultString);
-                }
-
-                event.sender.send('checksum-result', {
-                    checksumResult: checksumResultString,
-                    match: didMatch,
-                });
-            });
-            break;
-        default:
-            break;
     }
 });
