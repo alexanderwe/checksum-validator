@@ -1,4 +1,5 @@
 import { app, Menu } from 'electron';
+import AppUpdater from './AppUpdater';
 
 export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
     {
@@ -17,7 +18,7 @@ export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
         submenu: [
             {
                 click: () => {
-                    console.log('update');
+                    console.log("update");
                 },
                 label: 'Update',
             },
