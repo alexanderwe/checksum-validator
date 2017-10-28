@@ -9,23 +9,21 @@ export default class AppUpdater {
             autoUpdater.updateConfigPath = 'dev-app-update.yml';
         }
 
-        let intervalId: number = this.createInterval();
+        autoUpdater.checkForUpdatesAndNotify();
 
         log.transports.file.level = 'info';
         autoUpdater.logger = log;
-        autoUpdater.checkForUpdatesAndNotify();
 
         autoUpdater.on('error', (error) => {
-            clearInterval(intervalId);
-            intervalId = null;
             dialog.showMessageBox({
                 message: 'Error while checking updates' + error,
             });
         });
 
         autoUpdater.on('update-available', () => {
-            clearInterval(intervalId);
-            intervalId = null;
+            dialog.showMessageBox({
+                message: 'Update available',
+            });
         });
 
         autoUpdater.on('update-downloaded', () => {
@@ -41,22 +39,13 @@ export default class AppUpdater {
         });
 
         autoUpdater.on('error', (error) => {
-            if (intervalId === null) {
-                intervalId = this.createInterval();
-            }
+            dialog.showMessageBox({
+                message: error,
+            });
         });
     }
 
     public update = () => {
-        setTimeout(() => autoUpdater.checkForUpdates(), 5000);
-    }
-
-    private createInterval = (): any => {
-        return setInterval(() => {
-            dialog.showMessageBox({
-                message: 'Checking for updates',
-            });
-            autoUpdater.checkForUpdates();
-        }, 300000); // 5 mins
+        autoUpdater.checkForUpdatesAndNotify();
     }
 }
