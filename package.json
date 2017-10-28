@@ -1,6 +1,6 @@
 {
     "name": "checksum-validator",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "Small Electron application to validate checksum.",
     "main": "main.js",
     "scripts": {
@@ -10,7 +10,7 @@
         "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5",
         "postinstall": "install-app-deps",
         "dist": "build -m --x64 --ia32",
-        "publish": "electron-builder --publish never"
+        "release": "build"
     },
     "author": "Alexander Weiß",
     "repository": "https://github.com/alexanderwe/checksum-validator",
@@ -45,8 +45,5 @@
         "mac": {
             "category": "your.app.category.type"
         }
-    },
-    "dependencies": {
-        "electron-updater": "^2.15.0"
     }
 }

@@ -1,11 +1,20 @@
 import { app, Menu } from 'electron';
 import AppUpdater from './AppUpdater';
 
+let updater: AppUpdater;
+updater = new AppUpdater();
+
 export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
     {
         label: app.getName(),
         submenu: [
             { role: 'about' },
+            {
+                click: () => {
+                    updater.update();
+                },
+                label: 'Check for Updates...',
+            },
             { role: 'hide' },
             { role: 'hideothers' },
             { role: 'unhide' },
@@ -14,21 +23,8 @@ export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
         ],
     },
     {
-        role: 'help',
-        submenu: [
-            {
-                click: () => {
-                    console.log("update");
-                },
-                label: 'Update',
-            },
-        ],
-    },
-    {
         label: 'Edit',
         submenu: [
-            { role: 'undo' },
-            { role: 'redo' },
             { type: 'separator' },
             { role: 'cut' },
             { role: 'copy' },

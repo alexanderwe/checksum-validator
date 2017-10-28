@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as url from 'url';
 
-import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
 import { menuTemplate } from './menu';
 import { touchBar } from './touchbar';
@@ -16,7 +15,6 @@ if (process.env.ELECTRON_DEV) {
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow;
-let updater: AppUpdater;
 let ipcHandler: IPCHandler;
 
 /**
@@ -52,9 +50,7 @@ function createWindow() {
 
 app.on('ready', () => {
     createWindow();
-    ipcHandler = new IPCHandler();
-    updater = new AppUpdater();
-    updater.update(); // init automatic update function
+    ipcHandler = new IPCHandler(); // init automatic update function
 });
 
 // Quit when all windows are closed.
@@ -73,4 +69,3 @@ app.on('activate', () => {
         createWindow();
     }
 });
-

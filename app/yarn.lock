@@ -22,9 +22,9 @@ bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
-builder-util-runtime@~2.5.0:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-2.5.0.tgz#22373d4faab8d89e0b077630aef76538deb38476"
+builder-util-runtime@~2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/builder-util-runtime/-/builder-util-runtime-2.4.0.tgz#403b3c17aed596752a56e4a7d696c5eee59142c1"
   dependencies:
     bluebird-lst "^1.0.5"
     debug "^3.1.0"
@@ -58,11 +58,11 @@ electron-log@^2.2.10:
   resolved "https://registry.yarnpkg.com/electron-log/-/electron-log-2.2.10.tgz#dcd8972812d0f9041a54961e640895dca376dd97"
 
 electron-updater@^2.15.0:
-  version "2.15.1"
-  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-2.15.1.tgz#9cd218d5960b4e36b2528e92aff102d05911f9ae"
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/electron-updater/-/electron-updater-2.15.0.tgz#f9b521284afceaccf0a151d31c036e38ca308637"
   dependencies:
     bluebird-lst "^1.0.5"
-    builder-util-runtime "~2.5.0"
+    builder-util-runtime "~2.4.0"
     electron-is-dev "^0.3.0"
     fs-extra-p "^4.4.4"
     js-yaml "^3.10.0"
