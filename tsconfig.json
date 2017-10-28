@@ -6,7 +6,8 @@
         "strictNullChecks": false,
         "allowJs": true,
         "lib": ["dom", "es6", "es2015.promise", "es2017.object"],
-        "outDir": "./app/main/build"
+        "outDir": "./app/main/build",
+        "jsx": "react"
     },
     "exclude": ["./test/*", "./build"],
     "include": ["./app/main/src"]

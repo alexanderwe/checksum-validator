@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
-import classNames from 'classnames';
-import PropTypes from 'prop-types';
+import * as classNames from 'classnames';
+import * as React from 'react';
 
-class Field extends Component {
+interface IFieldProps {
+    className?: string;
+    hasAddons?: boolean;
+    hasIconsLeft?: boolean;
+    hasIconsRight?: boolean;
+}
 
-    render() {
+class Field extends React.Component<IFieldProps, any> {
+
+    public render() {
 
         const { hasAddons,
             hasIconsLeft,
@@ -12,12 +18,12 @@ class Field extends Component {
             ...other } = this.props;
 
         const fieldClass = classNames('field', this.props.className, {
-            'has-addons': hasAddons
+            'has-addons': hasAddons,
         });
 
         const controlClass = classNames('control', {
             'has-icons-left': hasIconsLeft,
-            'has-icons-right': hasIconsRight
+            'has-icons-right': hasIconsRight,
         });
 
         return (
@@ -28,12 +34,6 @@ class Field extends Component {
             </div>
         );
     }
-}
-
-Field.PropTypes = {
-    hasAddons: PropTypes.bool,
-    hasIconsLeft: PropTypes.bool,
-    hasIconsRight: PropTypes.bool
 }
 
 export default Field;

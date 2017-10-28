@@ -11,21 +11,21 @@ var config = {
 var rendererConfig = Object.assign({}, config, {
     watch: true,
     target: 'electron-renderer',
-    entry: './app/renderer/src/entry.js',
+    entry: './app/renderer/src/entry.tsx',
     output: {
         path: __dirname + '/app/renderer/build',
         publicPath: 'build/',
         filename: 'bundle.js'
     },
+    resolve: {
+        // Add '.ts' and '.tsx' as resolvable extensions.
+        extensions: ['.ts', '.tsx', '.js', '.json']
+    },
     module: {
         rules: [
             {
-                test: /\.jsx?$/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ['env', 'stage-0', 'stage-2', 'react'],
-                    plugins: ['transform-object-rest-spread']
-                }
+                test: /\.tsx?$/,
+                loader: 'awesome-typescript-loader'
             },
             {
                 test: /\.css$/,

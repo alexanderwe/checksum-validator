@@ -9,9 +9,7 @@
         "classnames": "^2.2.5",
         "electron-log": "^2.2.10",
         "electron-updater": "^2.15.0",
-        "prop-types": "^15.6.0",
         "react": "^16.0.0",
-        "react-dom": "^16.0.0",
-        "react-transition-group": "^2.2.1"
+        "react-dom": "^16.0.0"
     }
 }
