@@ -14,7 +14,16 @@ export default class IPCHandler {
 
             switch (arg.type) {
                 case 'SHA512':
-                    checksumResultString = await Checksum.sha512(arg.filepath);
+                    try {
+                        checksumResultString = await Checksum.sha512(arg.filepath);
+                    } catch (e) {
+                        event.sender.send('checksum-result', {
+                            checksumResult: checksumResultString,
+                            error: true,
+                            match: didMatch,
+                        });
+                    }
+
                     didMatch = checksumResultString === arg.checksum ? true : false;
 
                     if (arg.saveChecksum) {
@@ -23,11 +32,20 @@ export default class IPCHandler {
 
                     event.sender.send('checksum-result', {
                         checksumResult: checksumResultString,
+                        error: false,
                         match: didMatch,
                     });
                     break;
                 case 'SHA256':
-                    checksumResultString = await Checksum.sha256(arg.filepath);
+                    try {
+                        checksumResultString = await Checksum.sha256(arg.filepath);
+                    } catch (e) {
+                        event.sender.send('checksum-result', {
+                            checksumResult: checksumResultString,
+                            error: true,
+                            match: didMatch,
+                        });
+                    }
                     didMatch = checksumResultString === arg.checksum ? true : false;
                     if (arg.saveChecksum) {
                         clipboard.writeText(checksumResultString);
@@ -35,12 +53,22 @@ export default class IPCHandler {
 
                     event.sender.send('checksum-result', {
                         checksumResult: checksumResultString,
+                        error: false,
                         match: didMatch,
                     });
 
                     break;
                 case 'SHA1':
-                    checksumResultString = await Checksum.sha1(arg.filepath);
+                    try {
+                        checksumResultString = await Checksum.sha1(arg.filepath);
+                    } catch (e) {
+                        event.sender.send('checksum-result', {
+                            checksumResult: checksumResultString,
+                            error: true,
+                            match: didMatch,
+                        });
+                    }
+
                     didMatch = checksumResultString === arg.checksum ? true : false;
 
                     if (arg.saveChecksum) {
@@ -49,11 +77,20 @@ export default class IPCHandler {
 
                     event.sender.send('checksum-result', {
                         checksumResult: checksumResultString,
+                        error: false,
                         match: didMatch,
                     });
                     break;
                 case 'MD5':
-                    checksumResultString = await Checksum.md5(arg.filepath);
+                    try {
+                        checksumResultString = await Checksum.md5(arg.filepath);
+                    } catch (e) {
+                        event.sender.send('checksum-result', {
+                            checksumResult: checksumResultString,
+                            error: true,
+                            match: didMatch,
+                        });
+                    }
                     didMatch = checksumResultString === arg.checksum ? true : false;
 
                     if (arg.saveChecksum) {
@@ -62,6 +99,7 @@ export default class IPCHandler {
 
                     event.sender.send('checksum-result', {
                         checksumResult: checksumResultString,
+                        error: false,
                         match: didMatch,
                     });
                     break;

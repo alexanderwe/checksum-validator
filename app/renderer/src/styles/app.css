@@ -18,11 +18,11 @@ body {
 }
 
 .primary {
-    color: rgba(21, 209, 179, 1);
+    color: #15d1b3;
 }
 
 .error {
-    color: rgba(254, 59, 97, 1);
+    color: #fe3b61;
 }
 
 .dimmer {

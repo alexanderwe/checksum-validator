@@ -34,10 +34,10 @@ export default class Checksum {
             child.exec('shasum -a 256 ' + filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 const checksum = stdout.split(' ')[0].trim();
                 if (error) {
-                    log.error('Error while computing SHA512 of ' + filepath + ' : ' + error);
+                    log.error('Error while computing sha256 of ' + filepath + ' : ' + error);
                     reject(error);
                 }
-                log.info('Computed SHA512 of ' + filepath + ' result: ' + checksum);
+                log.info('Computed sha256 of ' + filepath + ' result: ' + checksum);
                 resolve(checksum);
             });
         });
@@ -54,10 +54,10 @@ export default class Checksum {
             child.exec('openssl sha1 ' + filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 const checksum = stdout.split(' ')[0].trim();
                 if (error) {
-                    log.error('Error while computing SHA512 of ' + filepath + ' : ' + error);
+                    log.error('Error while computing sha1 of ' + filepath + ' : ' + error);
                     reject(error);
                 }
-                log.info('Computed SHA512 of ' + filepath + ' result: ' + checksum);
+                log.info('Computed sha1 of ' + filepath + ' result: ' + checksum);
                 resolve(checksum);
             });
         });
@@ -74,10 +74,10 @@ export default class Checksum {
             child.exec('openssl md5 ' + filepath.replace(/ /g, '\\ '), (error, stdout, stderr) => {
                 const checksum = stdout.split(' ')[0].trim();
                 if (error) {
-                    log.error('Error while computing SHA512 of ' + filepath + ' : ' + error);
+                    log.error('Error while computing md5 of ' + filepath + ' : ' + error);
                     reject(error);
                 }
-                log.info('Computed SHA512 of ' + filepath + ' result: ' + checksum);
+                log.info('Computed md5 of ' + filepath + ' result: ' + checksum);
                 resolve(checksum);
             });
         });

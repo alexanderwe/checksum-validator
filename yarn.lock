@@ -1406,6 +1406,10 @@ electron-publish@19.42.0:
     fs-extra-p "^4.4.4"
     mime "^2.0.3"
 
+electron-react-devtools@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/electron-react-devtools/-/electron-react-devtools-0.4.0.tgz#06bd04d8e232b20703d059f5560a6f2a838bc163"
+
 electron-reload@^1.1.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/electron-reload/-/electron-reload-1.2.2.tgz#621ddb443b9fbba1c5e29a5fdd683322b5c42284"

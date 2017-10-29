@@ -10,16 +10,17 @@ import Hero from './bulma/layout/hero/Hero.component';
 import Section from './bulma/layout/Section.component';
 
 interface IChecksumValidatorState {
-    type: string;
-    filePath: string;
-    fileName: string;
     checksum: string;
     checksumResult: string;
+    error: boolean;
     fileHover: boolean;
+    fileName: string;
+    filePath: string;
+    loading: boolean;
     match: boolean;
     notificationOpen: boolean;
     saveChecksum: boolean;
-    loading: boolean;
+    type: string;
 }
 
 class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
@@ -28,6 +29,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
         this.state = {
             checksum: '',
             checksumResult: '',
+            error: false,
             fileHover: false,
             fileName: '',
             filePath: '',
@@ -40,10 +42,11 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     }
 
     public componentDidMount() {
-        ipcRenderer.on('checksum-result', (event: any, data: any ) => {
+        ipcRenderer.on('checksum-result', (event: any, data: any) => {
             this.setState(
                 {
                     checksumResult: data.checksumResult,
+                    error: data.error,
                     loading: false,
                     match: data.match,
                 },
@@ -75,7 +78,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
             });
         };
 
-        document.ondragleave = (event: any ) => {
+        document.ondragleave = (event: any) => {
             event.preventDefault();
             if (event.target.className === 'hero-body') {
                 this.setState({
@@ -104,7 +107,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
         this.setState(
             {
                 fileName: event.target.files[0].name,
-                filePath: event.target.files[0].path,      
+                filePath: event.target.files[0].path,
             },
         );
     }
@@ -122,6 +125,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     }
 
     public openNotification = (): any => {
+        console.log(this.state);
         this.setState({
             notificationOpen: true,
         });
@@ -148,16 +152,18 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
         return (
             <div className='checksum-validator'>
                 {this.state.notificationOpen ? (
-                    <Notification isSuccess={this.state.match} isDanger={!this.state.match} style={{ width: '100%', position: 'absolute', zIndex: '10' }} onCloseClick={() => this.closeNotification()}>
-                        {this.state.match ? (
-                            <div>
-                                <Icon name={'nc-check-2'} style={{ marginRight: '10px' }} /> Checksum match
+                    <Notification isSuccess={this.state.match} isDanger={!this.state.match || this.state.error} style={{ width: '100%', position: 'absolute', zIndex: '10' }} onCloseClick={() => this.closeNotification()}>
+                        {!this.state.checksumResult ? <div>
+                            <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Failed - did you try to compute the checksum of an directory ?
+                            </div> : this.state.match ? (
+                                <div>
+                                    <Icon name={'nc-check-2'} style={{ marginRight: '10px' }} /> Checksum match
                             </div>
-                        ) : (
-                            <div>
-                                <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Checksum mismatch
+                            ) : (
+                                    <div>
+                                        <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Checksum mismatch
                             </div>
-                        )}
+                                )}
                     </Notification>
                 ) : null}
                 <div className='dimmer' style={this.state.fileHover ? { display: 'block' } : { display: 'none' }}>
