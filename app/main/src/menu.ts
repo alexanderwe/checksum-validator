@@ -1,4 +1,8 @@
-import { app, Menu } from 'electron';
+
+import { app, Menu, shell } from 'electron';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as username from 'username';
 import AppUpdater from './AppUpdater';
 
 let updater: AppUpdater;
@@ -29,6 +33,23 @@ export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
             { role: 'cut' },
             { role: 'copy' },
             { role: 'paste' },
+        ],
+    },
+    {
+        role: 'help',
+        submenu: [
+            {
+                click: () => {
+                    shell.openExternal('https://github.com/alexanderwe/checksum-validator');
+                },
+                label: 'Learn More',
+            },
+            {
+                click: () => {
+                    shell.openItem(path.join('/Users/', username.sync(), '/Library/logs/checksum-validator/log.log'));
+                },
+                label: 'Open Logs',
+            },
         ],
     },
 ];

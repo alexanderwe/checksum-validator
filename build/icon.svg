@@ -59,24 +59,16 @@
             </g>
             <g id="Grid"></g>
             <g id="Upper-horizontal-bar" filter="url(#filter-4)" transform="translate(512.000000, 367.000000) rotate(90.000000) translate(-512.000000, -367.000000) translate(464.000000, 64.000000)" fill="#FFFFFF">
-                <rect id="Middle" x="0" y="106" width="96" height="394"></rect>
-                <rect id="Lower" x="0" y="500" width="96" height="106"></rect>
-                <rect id="Upper" x="0" y="0" width="96" height="106"></rect>
+                <rect id="Middle" x="0" y="0" width="96" height="606" rx="5"></rect>
             </g>
             <g id="Left-vertical-bar" filter="url(#filter-5)" transform="translate(319.000000, 209.000000)" fill="#FFFFFF">
-                <rect id="Middle" x="0" y="106" width="96" height="394"></rect>
-                <rect id="Lower" x="0" y="500" width="96" height="106"></rect>
-                <rect id="Upper" x="0" y="0" width="96" height="106"></rect>
+                <rect id="Middle" x="0" y="0" width="96" height="606" rx="5"></rect>
             </g>
             <g id="Lower-horizontal-bar" filter="url(#filter-6)" transform="translate(512.000000, 657.000000) rotate(90.000000) translate(-512.000000, -657.000000) translate(464.000000, 354.000000)" fill="#FFFFFF">
-                <rect id="Middle" x="0" y="106" width="96" height="394"></rect>
-                <rect id="Lower" x="0" y="500" width="96" height="106"></rect>
-                <rect id="Upper" x="0" y="0" width="96" height="106"></rect>
+                <rect id="Middle" x="0" y="0" width="96" height="606" rx="5"></rect>
             </g>
             <g id="Right-vertical-bar" filter="url(#filter-7)" transform="translate(609.000000, 209.000000)" fill="#FFFFFF">
-                <rect id="Middle" x="0" y="106" width="96" height="394"></rect>
-                <rect id="Lower" x="0" y="500" width="96" height="106"></rect>
-                <rect id="Upper" x="0" y="0" width="96" height="106"></rect>
+                <rect id="Middle" x="0" y="0" width="96" height="606" rx="5"></rect>
             </g>
         </g>
     </g>

@@ -55,8 +55,6 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
         });
 
         document.body.ondrop = (event: any) => {
-            console.log('ondrop');
-            console.log(event.dataTransfer.files[0].path);
             this.setState({
                 fileHover: false,
                 fileName: event.dataTransfer.files[0].name,
@@ -84,7 +82,6 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                 this.setState({
                     fileHover: false,
                 });
-                console.log(event.target.className);
             }
         };
     }
@@ -125,7 +122,6 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     }
 
     public openNotification = (): any => {
-        console.log(this.state);
         this.setState({
             notificationOpen: true,
         });
