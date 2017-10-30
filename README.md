@@ -1,4 +1,4 @@
-#  checksum-validator  <img src="https://github.com/alexanderwe/checksum-validator/blob/master/build/icon.png" width="100" height="100">
+#  checksum-validator
 
 checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. This is mainly intended to verify the checksums of downloaded files. 
 
