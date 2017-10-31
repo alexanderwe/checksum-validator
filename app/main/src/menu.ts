@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as username from 'username';
 import AppUpdater from './AppUpdater';
+import I18n from './i18n/i18n';
 
 let updater: AppUpdater;
 updater = new AppUpdater();
@@ -17,7 +18,7 @@ export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
                 click: () => {
                     updater.update();
                 },
-                label: 'Check for Updates...',
+                label: I18n.translate('Check for updates'),
             },
             { role: 'hide' },
             { role: 'hideothers' },

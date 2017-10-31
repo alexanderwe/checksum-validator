@@ -1,7 +1,7 @@
 {
     "name": "checksum-validator",
     "version": "0.1.2",
-    "description": "Small Electron application to validate checksum.",
+    "description": "Small Electron application to validate checksums.",
     "main": "main/build/main.js",
     "author": "Alexander Weiss",
     "dependencies": {

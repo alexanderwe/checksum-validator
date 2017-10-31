@@ -21,6 +21,7 @@
         "@types/react-dom": "^16.0.2",
         "@types/username": "^1.0.28",
         "awesome-typescript-loader": "^3.2.3",
+        "copy-webpack-plugin": "^4.2.0",
         "css-loader": "^0.26.1",
         "electron": "1.8.1",
         "electron-builder": "^19.37.2",

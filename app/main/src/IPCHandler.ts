@@ -1,4 +1,4 @@
-import { clipboard, ipcMain } from 'electron';
+import { BrowserWindow, clipboard, ipcMain } from 'electron';
 import Checksum from './Checksum';
 
 /**
@@ -6,7 +6,13 @@ import Checksum from './Checksum';
  * @desc  Handles all the IPC calls in the main process
  */
 export default class IPCHandler {
-    constructor() {
+
+    private mainWindow: BrowserWindow;
+
+    constructor(mainWindow: BrowserWindow) {
+
+        this.mainWindow = mainWindow;
+
         ipcMain.on('checksum', async (event: any, arg: any) => {
 
             let checksumResultString: string;
@@ -107,5 +113,9 @@ export default class IPCHandler {
                     break;
             }
         });
+    }
+
+    public initCheck() {
+        this.mainWindow.webContents.send('check', {});
     }
 }

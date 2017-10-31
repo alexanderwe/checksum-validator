@@ -52,6 +52,8 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                 },
                 this.openNotification(),
             );
+        }).on('check', (event: any, data: any) => {
+            this.check();
         });
 
         document.body.ondrop = (event: any) => {
@@ -128,18 +130,21 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     }
 
     public check = () => {
-        this.closeNotification();
-        this.setState({
-            loading: true,
-        });
-        setTimeout(() => {
-            ipcRenderer.send('checksum', {
-                checksum: this.state.checksum,
-                filepath: this.state.filePath,
-                saveChecksum: this.state.saveChecksum,
-                type: this.state.type,
+
+        if (this.state.filePath !== '' && this.state.checksum !== '') {
+            this.closeNotification();
+            this.setState({
+                loading: true,
             });
-        }, 1000);
+            setTimeout(() => {
+                ipcRenderer.send('checksum', {
+                    checksum: this.state.checksum,
+                    filepath: this.state.filePath,
+                    saveChecksum: this.state.saveChecksum,
+                    type: this.state.type,
+                });
+            }, 1000);
+        }
     }
 
     public render() {

@@ -6,7 +6,7 @@ import * as url from 'url';
 
 import IPCHandler from './IPCHandler';
 import { menuTemplate } from './menu';
-import { touchBar } from './touchbar';
+import TouchBarBuilder from './TouchBarBuilder';
 
 if (process.env.ELECTRON_DEV) {
     require('electron-reload')(path.join(__dirname, '/../../renderer/build/'));
@@ -43,14 +43,19 @@ function createWindow() {
         mainWindow = null;
     });
 
-    mainWindow.setTouchBar(touchBar);
+    // Init ipcHandler
+    ipcHandler = new IPCHandler(mainWindow);
+
+    // Init the touchbar with ipcHandler support to send events to the renderer process
+    mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());
+
+    // Build the application menu
     const menu = Menu.buildFromTemplate(menuTemplate);
     Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', () => {
     createWindow();
-    ipcHandler = new IPCHandler(); // init automatic update function
 });
 
 // Quit when all windows are closed.
