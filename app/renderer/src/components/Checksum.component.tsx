@@ -1,6 +1,5 @@
 import * as React from 'react'; // ES6
 const { ipcRenderer } = require('electron');
-import I18n from '../../../main/src/i18n/i18n';
 
 import Button from './bulma/element/Button.component';
 import Icon from './bulma/element/Icon.component';
@@ -200,7 +199,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         <Icon name={'nc-security'} isSmall isLeft />
                     </Form.Field>
                     <Button isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
-                        {I18n.translate('check')}
+                        Check
                     </Button>
                 </Section>
             </div>
