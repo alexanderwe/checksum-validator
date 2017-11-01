@@ -1,4 +1,4 @@
-import { app } from 'electron';
+import * as electron from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 
@@ -9,10 +9,14 @@ interface ILanguages {
 class I18n {
 
     private loadedLanguage: ILanguages;
+    private app = electron.app ? electron.app : electron.remote.app;
+
+
+
 
     constructor() {
-        if (fs.existsSync(path.join(__dirname, app.getLocale() + '.json'))) {
-            this.loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, app.getLocale() + '.json'), 'utf8'));
+        if (fs.existsSync(path.join(__dirname, this.app.getLocale() + '.json'))) {
+            this.loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, this.app.getLocale() + '.json'), 'utf8'));
         } else {
             this.loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, 'en.json'), 'utf8'));
         }

@@ -1,3 +1,15 @@
 {
-    "Check for updates": "Check for updates..."
+    "about": "About",
+    "check for updates": "Check for updates...",
+    "copy": "Copy",
+    "cut": "Cut",
+    "edit": "Edit",
+    "help": "Help",
+    "hide others": "Hide others",
+    "hide": "Hide",
+    "learn more": "Learn more",
+    "open logs": "Open Logs",
+    "paste": "Paste",
+    "quit": "Quit",
+    "unhide": "Unhide"
 }
