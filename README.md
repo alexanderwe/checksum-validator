@@ -34,9 +34,8 @@ This project was only possible with these awesome technologies !
 * [React](https://github.com/facebook/react)
 * [Typescript](https://github.com/Microsoft/TypeScript)
 * [Webpack](https://github.com/webpack/webpack)
-* <a href="https://bulma.io">
-  <img src="https://bulma.io/images/made-with-bulma--dark.png" alt="Made with Bulma" width="128" height="24">
-</a>
+* [Bulma CSS](https://bulma.io)
+
 
 # Issues
 

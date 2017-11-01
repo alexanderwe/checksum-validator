@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as username from 'username';
 import AppUpdater from './AppUpdater';
+import I18n from './i18n/i18n';
 
 let updater: AppUpdater;
 updater = new AppUpdater();
@@ -12,43 +13,43 @@ export const menuTemplate: Electron.MenuItemConstructorOptions[] = [
     {
         label: app.getName(),
         submenu: [
-            { role: 'about' },
+            { role: 'about', label: I18n.translate('about') },
             {
                 click: () => {
                     updater.update();
                 },
-                label: 'Check for Updates...',
+                label: I18n.translate('check for updates'),
             },
-            { role: 'hide' },
-            { role: 'hideothers' },
-            { role: 'unhide' },
+            { role: 'hide', label: I18n.translate('hide') },
+            { role: 'hideothers', label: I18n.translate('hide others') },
+            { role: 'unhide', label: I18n.translate('unhide') },
             { type: 'separator' },
-            { role: 'quit' },
+            { role: 'quit', label: I18n.translate('quit') },
         ],
     },
     {
-        label: 'Edit',
+        label: I18n.translate('edit'),
         submenu: [
             { type: 'separator' },
-            { role: 'cut' },
-            { role: 'copy' },
-            { role: 'paste' },
+            { role: 'cut', label: I18n.translate('cut') },
+            { role: 'copy', label: I18n.translate('copy') },
+            { role: 'paste', label: I18n.translate('paste') },
         ],
     },
     {
-        role: 'help',
+        label: I18n.translate('help'), role: 'help',
         submenu: [
             {
                 click: () => {
                     shell.openExternal('https://github.com/alexanderwe/checksum-validator');
                 },
-                label: 'Learn More',
+                label: I18n.translate('learn more'),
             },
             {
                 click: () => {
                     shell.openItem(path.join('/Users/', username.sync(), '/Library/logs/checksum-validator/log.log'));
                 },
-                label: 'Open Logs',
+                label: I18n.translate('open logs'),
             },
         ],
     },

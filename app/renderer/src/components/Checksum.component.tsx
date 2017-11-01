@@ -1,5 +1,6 @@
 import * as React from 'react'; // ES6
 const { ipcRenderer } = require('electron');
+import I18n from '../../../main/src/i18n/i18n';
 
 import Button from './bulma/element/Button.component';
 import Icon from './bulma/element/Icon.component';
@@ -52,6 +53,8 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                 },
                 this.openNotification(),
             );
+        }).on('check', (event: any, data: any) => {
+            this.check();
         });
 
         document.body.ondrop = (event: any) => {
@@ -128,18 +131,21 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     }
 
     public check = () => {
-        this.closeNotification();
-        this.setState({
-            loading: true,
-        });
-        setTimeout(() => {
-            ipcRenderer.send('checksum', {
-                checksum: this.state.checksum,
-                filepath: this.state.filePath,
-                saveChecksum: this.state.saveChecksum,
-                type: this.state.type,
+
+        if (this.state.filePath !== '' && this.state.checksum !== '') {
+            this.closeNotification();
+            this.setState({
+                loading: true,
             });
-        }, 1000);
+            setTimeout(() => {
+                ipcRenderer.send('checksum', {
+                    checksum: this.state.checksum,
+                    filepath: this.state.filePath,
+                    saveChecksum: this.state.saveChecksum,
+                    type: this.state.type,
+                });
+            }, 1000);
+        }
     }
 
     public render() {
@@ -194,7 +200,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         <Icon name={'nc-security'} isSmall isLeft />
                     </Form.Field>
                     <Button isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
-                        Check
+                        {I18n.translate('check')}
                     </Button>
                 </Section>
             </div>
