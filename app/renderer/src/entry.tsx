@@ -1,10 +1,10 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import Main from './components/main';
+import App from './components/App';
 
 import './styles/app.css';
 
 window.onload = () => {
-    ReactDOM.render(<Main />, document.getElementById('app'));
+    ReactDOM.render(<App />, document.getElementById('app'));
 };
