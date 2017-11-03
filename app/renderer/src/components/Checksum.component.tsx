@@ -1,4 +1,5 @@
 import * as React from 'react'; // ES6
+import Transition from 'react-transition-group/Transition';
 const { ipcRenderer } = require('electron');
 
 import Button from './bulma/element/Button.component';
@@ -8,6 +9,7 @@ import Form from './bulma/form/Form.component';
 import Container from './bulma/layout/Container.component';
 import Hero from './bulma/layout/hero/Hero.component';
 import Section from './bulma/layout/Section.component';
+import FadeAndSlideDownTransition from './transition/FadeAndSlideDownTransition.component';
 
 interface IChecksumValidatorState {
     checksum: string;
@@ -152,7 +154,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
 
         return (
             <div className='checksum-validator'>
-                {this.state.notificationOpen ? (
+                <FadeAndSlideDownTransition in={!!this.state.notificationOpen} duration={500}>
                     <Notification isSuccess={this.state.match} isDanger={!this.state.match || this.state.error} style={{ width: '100%', position: 'absolute', zIndex: '10' }} onCloseClick={() => this.closeNotification()}>
                         {!this.state.checksumResult ? <div>
                             <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Failed - did you try to compute the checksum of an directory ?
@@ -166,7 +168,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                             </div>
                                 )}
                     </Notification>
-                ) : null}
+                </FadeAndSlideDownTransition>
                 <div className='dimmer' style={this.state.fileHover ? { display: 'block' } : { display: 'none' }}>
                     <Hero isMedium isFullHeight>
                         <Hero.Body>
@@ -202,7 +204,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         Check
                     </Button>
                 </Section>
-            </div>
+            </div >
         );
     }
 }

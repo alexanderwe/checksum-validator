@@ -19,6 +19,7 @@
         "@types/classnames": "^2.2.3",
         "@types/react": "^16.0.18",
         "@types/react-dom": "^16.0.2",
+        "@types/react-transition-group": "^2.0.6",
         "@types/username": "^1.0.28",
         "awesome-typescript-loader": "^3.2.3",
         "copy-webpack-plugin": "^4.2.0",
