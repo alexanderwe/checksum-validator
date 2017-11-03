@@ -1,0 +1,67 @@
+@import './icons.css';
+@import '../../../node_modules/bulma/sass/utilities/initial-variables';
+
+// Customization
+$green: #4da167;
+$red: #db473f;
+$primary: #08605f;
+
+// Base
+
+body {
+    -webkit-app-region: drag;
+    overflow: hidden;
+}
+
+input {
+    -webkit-app-region: no-drag;
+}
+
+.error {
+    color: #fe3b61;
+}
+
+// Layout
+
+.section {
+    padding: 1.5rem !important;
+}
+
+// Notification
+
+.notification {
+    border-radius: 0px !important;
+    .delete {
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}
+
+.message-body {
+    p {
+        word-wrap: break-word;
+    }
+}
+
+// Dimmer
+
+.dimmer {
+    height: 100vh;
+    min-width: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 99;
+    position: absolute;
+    color: #fff;
+    .hero {
+        background-color: transparent !important;
+    }
+}
+
+// Icon
+
+.icon.is-large .nc-icon {
+    font-size: 3rem;
+}
+
+@import '../../../node_modules/bulma/bulma';

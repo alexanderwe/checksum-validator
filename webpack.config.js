@@ -33,8 +33,16 @@ var rendererConfig = Object.assign({}, config, {
                 ]
             },
             {
+                // regular css files
                 test: /\.css$/,
-                loader: ExtractTextPlugin.extract('css-loader')
+                loader: ExtractTextPlugin.extract({
+                    loader: 'css-loader?importLoaders=1'
+                })
+            },
+            {
+                // sass / scss loader for webpack
+                test: /\.(sass|scss)$/,
+                loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
