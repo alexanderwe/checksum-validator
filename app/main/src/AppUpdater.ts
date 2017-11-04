@@ -10,6 +10,8 @@ export default class AppUpdater {
     constructor(ipcHandler: IPCHandler) {
         this.ipcHandler = ipcHandler;
 
+        autoUpdater.autoDownload = false;
+
         if (process.env.ELECTRON_DEV) {
             autoUpdater.updateConfigPath = 'dev-app-update.yml';
         }
@@ -36,7 +38,7 @@ export default class AppUpdater {
         });
 
         autoUpdater.on('download-progress', (progressObj) => {
-            const logMessage = ' - Downloaded ' + progressObj.percent + '%';
+            const logMessage = 'Downloaded ' + Math.round(progressObj.percent) + '%';
             this.ipcHandler.sendToRenderer('update', {
                 error: false,
                 msg: logMessage,
