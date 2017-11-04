@@ -27,10 +27,9 @@ interface IButtonProps {
     isSuccess?: boolean;
     isWarning?: boolean;
     isWhite?: boolean;
-    onClick?: () => void ;
+    onClick?: () => void;
     style?: object;
     children?: string;
-
 }
 
 class Button extends React.Component<IButtonProps, any> {

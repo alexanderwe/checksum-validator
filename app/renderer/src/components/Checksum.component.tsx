@@ -11,6 +11,14 @@ import Hero from './bulma/layout/hero/Hero.component';
 import Section from './bulma/layout/Section.component';
 import FadeAndSlideDownTransition from './transition/FadeAndSlideDownTransition.component';
 
+import Tag from './bulma/element/Tag.component';
+
+interface IUpdateMsg {
+    error: boolean;
+    msg: string;
+    updateAvailable: boolean;
+}
+
 interface IChecksumValidatorState {
     checksum: string;
     checksumResult: string;
@@ -23,6 +31,7 @@ interface IChecksumValidatorState {
     notificationOpen: boolean;
     saveChecksum: boolean;
     type: string;
+    updateMsg: IUpdateMsg;
 }
 
 class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
@@ -40,6 +49,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
             notificationOpen: false,
             saveChecksum: false,
             type: 'SHA256',
+            updateMsg: null,
         };
     }
 
@@ -56,6 +66,10 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
             );
         }).on('check', (event: any, data: any) => {
             this.check();
+        }).on('update', (event: any, data: any) => {
+            this.setState({
+                updateMsg: data,
+            });
         });
 
         document.body.ondrop = (event: any) => {
@@ -131,6 +145,10 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
         });
     }
 
+    public updateApp = (): any => {
+        ipcRenderer.send('update-app', {});
+    }
+
     public check = () => {
 
         if (this.state.filePath !== '' && this.state.checksum !== '') {
@@ -204,6 +222,16 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         Check
                     </Button>
                 </Section>
+                {this.state.updateMsg ?
+                    <Tag
+                        isPrimary={this.state.updateMsg.updateAvailable}
+                        isDanger={this.state.updateMsg.error}
+                        style={{ cursor: 'pointer' }}
+                        onClick={this.state.updateMsg.updateAvailable ? () => this.updateApp() : null}>
+                        {this.state.updateMsg.msg}
+                    </Tag>
+                    : null}
+
             </div >
         );
     }
