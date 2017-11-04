@@ -1,6 +1,6 @@
 #  checksum-validator
 
-checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. This is mainly intended to verify the checksums of downloaded files. 
+checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. This is primarily intended to verify the checksums of downloaded files. 
 
 
 # Usage
@@ -16,19 +16,22 @@ Head over to the [releases section](https://github.com/alexanderwe/checksum-vali
 After installing it you are ready to use checksum-validator.
 
 ## Update
-The application will always check if there is a new version at startup. After that you can always manually update.
+On start the application will check if an update is available. If this is the case, the small tag on the bottom will change and on click the update will be downloaded and installed. You can also trigger this check by `checksum-validator --> Check for updates...`
+
+
+![img1](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img1.png)
+
+
 
 ## Calculate checksum
 
 To calculate and check the checksum of files, either drag them onto the application pane or open them via the `Choose file...` button. Then select your preferred hash algorithm and insert the hash to check against. 
 
-![img1](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img1.png)
-
 ![img2](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img2.png)
 
 # How was it built ?
 
-This project was only possible with these awesome technologies !
+This project is only possible with these awesome technologies !
 
 * [Electron](https://github.com/electron/electron)
 * [React](https://github.com/facebook/react)
