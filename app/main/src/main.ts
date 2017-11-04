@@ -26,7 +26,7 @@ let appUpdater: AppUpdater;
 function createWindow() {
     // Create the browser window.
     mainWindow = new BrowserWindow({
-        height: 300,
+        height: 320,
         resizable: false,
         show: true,
         titleBarStyle: 'hidden',
