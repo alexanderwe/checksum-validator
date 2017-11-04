@@ -1,6 +1,6 @@
+import { ipcRenderer } from 'electron';
 import * as React from 'react'; // ES6
 import Transition from 'react-transition-group/Transition';
-const { ipcRenderer } = require('electron');
 
 import Button from './bulma/element/Button.component';
 import Icon from './bulma/element/Icon.component';
@@ -119,7 +119,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
         });
     }
 
-    public closeNotification = () => {
+    public closeNotification = (): any => {
         this.setState({
             notificationOpen: false,
         });
@@ -200,7 +200,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         </span>
                         <Icon name={'nc-security'} isSmall isLeft />
                     </Form.Field>
-                    <Button isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
+                    <Button isOutLined isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
                         Check
                     </Button>
                 </Section>

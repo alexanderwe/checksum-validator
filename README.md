@@ -39,7 +39,8 @@ This project was only possible with these awesome technologies !
 
 # Issues
 
-If you find any bugs or issues with this application feel free to report them in the [issue section](https://github.com/alexanderwe/checksum-validator/issues)
+If you find any bugs or issues with this application feel free to report them in the [issue section](https://github.com/alexanderwe/checksum-validator/issues).
+In case you want to do some local debugging, open the logs via `Help --> Open Logs` and take a look at it.
 
 
 # License

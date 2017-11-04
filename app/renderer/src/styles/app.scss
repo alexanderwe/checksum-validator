@@ -2,9 +2,11 @@
 @import '../../../node_modules/bulma/sass/utilities/initial-variables';
 
 // Customization
-$green: #4da167;
-$red: #db473f;
-$primary: #08605f;
+$green: #62c462;
+$red: #ee5f5b;
+$yellow: #fff457;
+$orange: #f89406;
+$primary: #8b4d93;
 
 // Base
 
@@ -16,9 +18,8 @@ body {
 input {
     -webkit-app-region: no-drag;
 }
-
-.error {
-    color: #fe3b61;
+::-webkit-scrollbar {
+    display: none;
 }
 
 // Layout
@@ -32,9 +33,7 @@ input {
 .notification {
     border-radius: 0px !important;
     .delete {
-        &:hover {
-            cursor: pointer;
-        }
+        cursor: pointer;
     }
 }
 

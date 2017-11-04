@@ -1,6 +1,6 @@
 {
     "name": "checksum-validator",
-    "version": "0.1.2",
+    "version": "0.1.3",
     "description": "Small Electron application to validate checksum.",
     "main": "main.js",
     "scripts": {

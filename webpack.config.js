@@ -1,15 +1,14 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var nodeExternals = require('webpack-node-externals');
-var path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const nodeExternals = require('webpack-node-externals');
+const path = require('path');
 
-// TODO: check replacement of loader with use
-var config = {
+let config = {
     module: {}
 };
 
-var rendererConfig = Object.assign({}, config, {
+let rendererConfig = Object.assign({}, config, {
     watch: true,
     target: 'electron-renderer',
     entry: './app/renderer/src/entry.tsx',
@@ -75,7 +74,7 @@ var rendererConfig = Object.assign({}, config, {
     ]
 });
 
-var mainConfig = Object.assign({}, config, {
+let mainConfig = Object.assign({}, config, {
     entry: './app/main/src/main.ts',
     target: 'electron-main',
     node: {

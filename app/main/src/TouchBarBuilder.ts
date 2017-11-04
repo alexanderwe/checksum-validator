@@ -14,7 +14,7 @@ export default class TouchBarBuilder {
     public build(): TouchBar {
         const check: Electron.TouchBarConstructorOptions = {
             items: [new TouchBarButton({
-                backgroundColor: '#00c4a7',
+                backgroundColor: '#8b4d93',
                 click: () => {
                     this.ipcHandler.initCheck();
                 },
