@@ -1,4 +1,5 @@
 import { BrowserWindow, clipboard, ipcMain } from 'electron';
+import AppUpdater from './AppUpdater';
 import Checksum from './Checksum';
 
 /**
@@ -7,7 +8,9 @@ import Checksum from './Checksum';
  */
 export default class IPCHandler {
 
+    public updater: AppUpdater;
     private mainWindow: BrowserWindow;
+
 
     constructor(mainWindow: BrowserWindow) {
 
@@ -112,10 +115,12 @@ export default class IPCHandler {
                 default:
                     break;
             }
+        }).on('update-app', async (event: any, arg: any) => {
+            this.updater.update();
         });
     }
 
-    public initCheck() {
-        this.mainWindow.webContents.send('check', {});
+    public sendToRenderer(eventName: string, data: object) {
+        this.mainWindow.webContents.send(eventName, data);
     }
 }

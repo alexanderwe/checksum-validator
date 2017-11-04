@@ -4,8 +4,9 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as url from 'url';
 
+import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
-import { menuTemplate } from './menu';
+import MenuBuilder from './MenuBuilder';
 import TouchBarBuilder from './TouchBarBuilder';
 
 if (process.env.ELECTRON_DEV) {
@@ -16,6 +17,7 @@ if (process.env.ELECTRON_DEV) {
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow;
 let ipcHandler: IPCHandler;
+let appUpdater: AppUpdater;
 
 /**
  * @function createWindow
@@ -45,12 +47,14 @@ function createWindow() {
 
     // Init ipcHandler
     ipcHandler = new IPCHandler(mainWindow);
+    appUpdater = new AppUpdater(ipcHandler);
+    ipcHandler.updater = appUpdater;
 
     // Init the touchbar with ipcHandler support to send events to the renderer process
     mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());
 
     // Build the application menu
-    const menu = Menu.buildFromTemplate(menuTemplate);
+    const menu = Menu.buildFromTemplate(new MenuBuilder(appUpdater).build());
     Menu.setApplicationMenu(menu);
 }
 

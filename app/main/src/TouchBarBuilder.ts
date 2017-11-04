@@ -16,7 +16,7 @@ export default class TouchBarBuilder {
             items: [new TouchBarButton({
                 backgroundColor: '#8b4d93',
                 click: () => {
-                    this.ipcHandler.initCheck();
+                    this.ipcHandler.sendToRenderer('check', {});
                 },
                 label: 'Check',
             })],
