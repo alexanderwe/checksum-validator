@@ -1,0 +1,12 @@
+os:
+  - osx
+language: node_js
+node_js:
+  - "node"
+install:
+- yarn install
+before_script: 
+- ./script/travis-build.sh
+- yarn dev
+script:
+- yarn test
