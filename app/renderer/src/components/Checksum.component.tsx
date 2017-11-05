@@ -32,12 +32,14 @@ interface IChecksumValidatorState {
     saveChecksum: boolean;
     type: string;
     updateMsg: IUpdateMsg;
+    checkingForUpdate: boolean;
 }
 
 class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     constructor(props: any) {
         super(props);
         this.state = {
+            checkingForUpdate: false,
             checksum: '',
             checksumResult: '',
             error: false,
@@ -68,7 +70,12 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
             this.check();
         }).on('update', (event: any, data: any) => {
             this.setState({
+                checkingForUpdate: false,
                 updateMsg: data,
+            });
+        }).on('checkForUpdate', (event: any, data: any) => {
+            this.setState({
+                checkingForUpdate: true,
             });
         });
 
@@ -228,7 +235,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         isDanger={this.state.updateMsg.error}
                         style={{ cursor: 'pointer' }}
                         onClick={this.state.updateMsg.updateAvailable ? () => this.updateApp() : null}>
-                        {this.state.updateMsg.msg}
+                        {this.state.checkingForUpdate ? <Icon name={'nc-circle'} spin></Icon> : null}  {this.state.updateMsg.msg}
                     </Tag>
                     : null}
 

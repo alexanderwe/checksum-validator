@@ -72,6 +72,7 @@ export default class AppUpdater {
     }
 
     public checkForUpdate = () => {
+        this.ipcHandler.sendToRenderer('checkForUpdate', {});
         autoUpdater.checkForUpdates();
     }
 }
