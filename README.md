@@ -1,5 +1,9 @@
 #  checksum-validator
 
+[![Build Status](https://travis-ci.org/alexanderwe/checksum-validator.svg?branch=master)](https://travis-ci.org/alexanderwe/checksum-validator)
+
+
+
 checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. This is primarily intended to verify the checksums of downloaded files. 
 
 
