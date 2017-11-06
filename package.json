@@ -5,8 +5,8 @@
     "main": "main.js",
     "scripts": {
         "babel:watch": "babel ./app/main/src/ -w -d ./app/main/build",
-        "dev:watch": "webpack --env.mode=watch",
-        "dev": "webpack --env.mode=noWatch",
+        "build:watch": "webpack --env.mode=watch",
+        "build": "webpack --env.mode=noWatch",
         "dist": "build -m --x64 --ia32",
         "postinstall": "install-app-deps",
         "release": "build",
