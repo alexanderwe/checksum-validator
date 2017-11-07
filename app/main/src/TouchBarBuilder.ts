@@ -19,7 +19,7 @@ export default class TouchBarBuilder {
                     this.ipcHandler.sendToRenderer('check', {});
                 },
                 label: 'Check',
-            })],
+            })] as any, // as any till https://github.com/electron/electron/issues/10916 gets resolved
         };
         return new TouchBar(check);
     }
