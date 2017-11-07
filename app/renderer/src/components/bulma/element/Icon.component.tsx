@@ -25,11 +25,16 @@ class Icon extends React.Component<IIconProps, {}> {
             'is-small': isSmall,
         });
 
+        const ncIconSizeClass = classNames({
+            'lg': isMedium,
+            'x2': isLarge,
+        });
+
         const spinClass = spin ? 'spin' : null;
 
         return (
             <span className={iconClass} {...other}>
-                <i className={'nc-icon ' + name + ' ' + spinClass} />
+                <i className={'nc-icon ' + name + ' ' + spinClass + ' ' + ncIconSizeClass} />
             </span>
         );
     }

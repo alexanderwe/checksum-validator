@@ -1,6 +1,6 @@
 {
     "name": "checksum-validator",
-    "version": "0.1.6",
+    "version": "0.1.7",
     "description": "Small Electron application to validate checksums.",
     "main": "main.js",
     "scripts": {
@@ -52,6 +52,7 @@
     },
     "build": {
         "appId": "com.github.alexanderwe.checksum-validator",
+        "productName": "Checksum Validator",
         "publish": [
             {
                 "provider": "github",
