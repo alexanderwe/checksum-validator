@@ -3,8 +3,8 @@ import { app, Menu, shell } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as username from 'username';
+import I18n from '../../lib/i18n/i18n';
 import AppUpdater from './AppUpdater';
-import I18n from './i18n/i18n';
 import IPCHandler from './IPCHandler';
 
 export default class MenuBuilder {

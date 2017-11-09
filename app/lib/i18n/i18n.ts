@@ -1,7 +1,7 @@
 import * as electron from 'electron';
+import log from 'electron-log';
 import * as fs from 'fs';
 import * as path from 'path';
-
 interface ILanguages {
     [key: string]: string;
 }
@@ -9,14 +9,12 @@ interface ILanguages {
 class I18n {
 
     private loadedLanguage: ILanguages;
-    private app = electron.app ? electron.app : electron.remote.app;
-
-
-
+    private app = electron.app;
 
     constructor() {
-        if (fs.existsSync(path.join(__dirname, this.app.getLocale() + '.json'))) {
-            this.loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, this.app.getLocale() + '.json'), 'utf8'));
+        console.log('I18n constructor');
+        if (fs.existsSync(path.join(__dirname, '/' + this.app.getLocale() + '.json'))) {
+            this.loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, '/' + this.app.getLocale() + '.json'), 'utf8'));
         } else {
             this.loadedLanguage = JSON.parse(fs.readFileSync(path.join(__dirname, 'en.json'), 'utf8'));
         }

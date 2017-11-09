@@ -12,6 +12,10 @@ module.exports = function(env) {
     let rendererConfig = Object.assign({}, config, {
         watch: env.mode == 'watch' ? true : false,
         target: 'electron-renderer',
+        node: {
+            __dirname: false,
+            __filename: false
+        },
         entry: './app/renderer/src/entry.tsx',
         output: {
             path: __dirname + '/app/renderer/build',
@@ -93,7 +97,7 @@ module.exports = function(env) {
         module: {
             loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }]
         },
-        plugins: [new CopyWebpackPlugin([{ from: 'app/main/src/i18n/', to: 'app/main/build/' }], { ignore: ['*.ts'] }), new DashboardPlugin()]
+        plugins: [new CopyWebpackPlugin([{ from: 'app/lib/i18n/', to: 'app/main/build/' }], { ignore: ['*.ts'] }), new DashboardPlugin()]
     });
 
     return [rendererConfig, mainConfig];

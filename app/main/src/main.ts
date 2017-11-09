@@ -49,6 +49,7 @@ function createWindow() {
     ipcHandler = new IPCHandler(mainWindow);
     appUpdater = new AppUpdater(ipcHandler);
     ipcHandler.updater = appUpdater;
+    console.log('main' + app.getLocale());
 
     // Init the touchbar with ipcHandler support to send events to the renderer process
     mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());
