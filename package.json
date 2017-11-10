@@ -64,5 +64,8 @@
             "category": "public.app-category.utilities",
             "type": "distribution"
         }
+    },
+    "dependencies": {
+        "tslint-config-airbnb": "^5.3.0"
     }
 }
