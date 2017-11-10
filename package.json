@@ -1,6 +1,6 @@
 {
     "name": "checksum-validator",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "description": "Small Electron application to validate checksums.",
     "main": "main.js",
     "scripts": {
@@ -10,7 +10,7 @@
         "dist": "build -m --x64 --ia32",
         "postinstall": "install-app-deps",
         "release": "build",
-        "start": "ELECTRON_DEV=1 electron app/main/build/main.js",
+        "start": "ELECTRON_DEV=1 electron app/build/main.js",
         "test": "mocha",
         "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5"
     },
