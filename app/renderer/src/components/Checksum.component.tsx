@@ -4,6 +4,7 @@ import Transition from 'react-transition-group/Transition';
 
 import Button from './bulma/element/Button.component';
 import Icon from './bulma/element/Icon.component';
+
 import Notification from './bulma/element/Notification.component';
 import Form from './bulma/form/Form.component';
 import Container from './bulma/layout/Container.component';
@@ -12,6 +13,10 @@ import Section from './bulma/layout/Section.component';
 import FadeAndSlideDownTransition from './transition/FadeAndSlideDownTransition.component';
 
 import Tag from './bulma/element/Tag.component';
+
+import I18n from '../../../lib/i18n/i18n';
+
+const i18n: I18n = new I18n();
 
 interface IUpdateMsg {
     error: boolean;
@@ -182,15 +187,15 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                 <FadeAndSlideDownTransition in={!!this.state.notificationOpen} duration={500}>
                     <Notification isSuccess={this.state.match} isDanger={!this.state.match || this.state.error} style={{ width: '100%', position: 'absolute', zIndex: '10' }} onCloseClick={() => this.closeNotification()}>
                         {!this.state.checksumResult ? <div>
-                            <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Failed - did you try to compute the checksum of an directory ?
-                            </div> : this.state.match ? (
-                                <div>
-                                    <Icon name={'nc-check-2'} style={{ marginRight: '10px' }} /> Checksum match
+                            <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> {i18n.translate('checksum fail')}
+                        </div> : this.state.match ? (
+                            <div>
+                                <Icon name={'nc-check-2'} style={{ marginRight: '10px' }} /> {i18n.translate('checksum match')}
                             </div>
-                            ) : (
+                        ) : (
                                     <div>
-                                        <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> Checksum mismatch
-                            </div>
+                                        <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> {i18n.translate('checksum mismatch')}
+                                    </div>
                                 )}
                     </Notification>
                 </FadeAndSlideDownTransition>
@@ -199,7 +204,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         <Hero.Body>
                             <Container>
                                 <h1 className='title' style={{ color: '#fff' }}>
-                                    Drop your file here
+                                    {i18n.translate('drop file')}
                                 </h1>
                                 <Icon name={'nc-file-download-89'} isLarge />
                             </Container>
@@ -208,7 +213,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                 </div>
                 <Section>
                     <Form.Field>
-                        <Form.File isBoxed isPrimary isFullWidth label='Choose your file...' onChange={this.handleFileChange} fileName={this.state.fileName} />
+                        <Form.File isBoxed isPrimary isFullWidth label={i18n.translate('choose file')} onChange={this.handleFileChange} fileName={this.state.fileName} />
                     </Form.Field>
                     <Form.Field hasIconsLeft>
                         <input className='input' type='text' name='checksum' placeholder='Checksum' value={this.state.checksum} onChange={this.handleInputChange} />
@@ -226,7 +231,7 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
                         <Icon name={'nc-security'} isSmall isLeft />
                     </Form.Field>
                     <Button isOutLined isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
-                        Check
+                        {i18n.translate('check')}
                     </Button>
                 </Section>
                 {this.state.updateMsg ?

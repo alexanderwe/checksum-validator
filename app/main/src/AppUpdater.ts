@@ -1,14 +1,17 @@
 import { dialog } from 'electron';
 import log from 'electron-log';
 import { autoUpdater } from 'electron-updater';
+import I18n from '../../lib/i18n/i18n';
 import IPCHandler from './IPCHandler';
 
 export default class AppUpdater {
 
     private ipcHandler: IPCHandler;
+    private i18n: I18n;
 
     constructor(ipcHandler: IPCHandler) {
         this.ipcHandler = ipcHandler;
+        this.i18n = new I18n();
 
         autoUpdater.autoDownload = false;
 
@@ -24,7 +27,7 @@ export default class AppUpdater {
         autoUpdater.on('error', (error) => {
             this.ipcHandler.sendToRenderer('update', {
                 error: true,
-                msg: 'Error while checking updates ' + error,
+                msg: this.i18n.translate('update error') + ' ' + error,
                 updateAvailable: false,
             });
         });
@@ -32,7 +35,7 @@ export default class AppUpdater {
         autoUpdater.on('update-available', () => {
             this.ipcHandler.sendToRenderer('update', {
                 error: false,
-                msg: 'Update available',
+                msg: this.i18n.translate('update available'),
                 updateAvailable: true,
             });
         });
@@ -53,7 +56,7 @@ export default class AppUpdater {
         autoUpdater.on('update-not-available', () => {
             this.ipcHandler.sendToRenderer('update', {
                 error: false,
-                msg: 'You have the latest version',
+                msg: this.i18n.translate('update latest'),
                 updateAvailable: false,
             });
         });

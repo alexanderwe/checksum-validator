@@ -3,16 +3,18 @@ import { app, Menu, shell } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as username from 'username';
+import I18n from '../../lib/i18n/i18n';
 import AppUpdater from './AppUpdater';
-import I18n from './i18n/i18n';
 import IPCHandler from './IPCHandler';
 
 export default class MenuBuilder {
 
+    private i18n: I18n;
     private updater: AppUpdater;
 
     constructor(updater: AppUpdater) {
         this.updater = updater;
+        this.i18n = new I18n();
     }
 
     /**
@@ -25,43 +27,43 @@ export default class MenuBuilder {
             {
                 label: app.getName(),
                 submenu: [
-                    { role: 'about', label: I18n.translate('about') },
+                    { role: 'about', label: this.i18n.translate('about') },
                     {
                         click: () => {
                             this.updater.checkForUpdate();
                         },
-                        label: I18n.translate('check for updates'),
+                        label: this.i18n.translate('check for updates'),
                     },
-                    { role: 'hide', label: I18n.translate('hide') },
-                    { role: 'hideothers', label: I18n.translate('hide others') },
-                    { role: 'unhide', label: I18n.translate('unhide') },
+                    { role: 'hide', label: this.i18n.translate('hide') },
+                    { role: 'hideothers', label: this.i18n.translate('hide others') },
+                    { role: 'unhide', label: this.i18n.translate('unhide') },
                     { type: 'separator' },
-                    { role: 'quit', label: I18n.translate('quit') },
+                    { role: 'quit', label: this.i18n.translate('quit') },
                 ],
             },
             {
-                label: I18n.translate('edit'),
+                label: this.i18n.translate('edit'),
                 submenu: [
                     { type: 'separator' },
-                    { role: 'cut', label: I18n.translate('cut') },
-                    { role: 'copy', label: I18n.translate('copy') },
-                    { role: 'paste', label: I18n.translate('paste') },
+                    { role: 'cut', label: this.i18n.translate('cut') },
+                    { role: 'copy', label: this.i18n.translate('copy') },
+                    { role: 'paste', label: this.i18n.translate('paste') },
                 ],
             },
             {
-                label: I18n.translate('help'), role: 'help',
+                label: this.i18n.translate('help'), role: 'help',
                 submenu: [
                     {
                         click: () => {
                             shell.openExternal('https://github.com/alexanderwe/checksum-validator');
                         },
-                        label: I18n.translate('learn more'),
+                        label: this.i18n.translate('learn more'),
                     },
                     {
                         click: () => {
                             shell.openItem(path.join('/Users/', username.sync(), '/Library/logs/checksum-validator/log.log'));
                         },
-                        label: I18n.translate('open logs'),
+                        label: this.i18n.translate('open logs'),
                     },
                 ],
             },

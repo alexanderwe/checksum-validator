@@ -1,6 +1,8 @@
 {
     "about": "About",
+    "check": "Check",
     "check for updates": "Check for updates...",
+    "choose file": "Choose file",
     "copy": "Copy",
     "cut": "Cut",
     "edit": "Edit",
@@ -11,5 +13,8 @@
     "open logs": "Open Logs",
     "paste": "Paste",
     "quit": "Quit",
-    "unhide": "Unhide"
+    "unhide": "Unhide",
+    "update available": "Update available",
+    "update error": "Error while checking updates",
+    "update latest": "You have the latest version"
 }
