@@ -11,7 +11,7 @@ chai.should();
 
 beforeEach(() => {
     this.app = new Application({
-        args: ['app/main/build/main.js'],
+        args: ['app/build/main.js'],
         path: 'node_modules/.bin/electron',
     });
 
