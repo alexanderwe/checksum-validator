@@ -1,5 +1,9 @@
 os:
   - osx
+addons:
+  apt:
+    packages:
+    - xvfb
 language: node_js
 node_js:
   - "node"
