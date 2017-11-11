@@ -9,6 +9,7 @@ install:
   - yarn install 
   - cd ../
 before_script:
+  - chmod +x ./test/travis-build.sh
   - ./test/travis-build.sh
   - yarn build
 script:
