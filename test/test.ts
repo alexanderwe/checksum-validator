@@ -12,6 +12,7 @@ beforeEach(() => {
   this.app = new Application({
     args: ['app/build/main.js'],
     path: 'node_modules/.bin/electron',
+    waitTimeout: 20000,
   });
 
   return this.app.start().then((app) => {
