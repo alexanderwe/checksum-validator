@@ -1,25 +1,18 @@
 os:
   - osx
-addons:
-  apt:
-    packages:
-    - xvfb
 language: node_js
 node_js:
   - "node"
 install:
-  - yarn install
-  - cd ./app
-  - yarn install 
-  - cd ../
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
-  - yarn build
+- yarn install
+- cd ./app
+- yarn install 
+- cd ../
+before_script: 
+- if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
+- yarn build
 script:
-  - yarn test
+- yarn test
 cache:
   directories:
     - node_modules
-
