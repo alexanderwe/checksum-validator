@@ -5185,8 +5185,8 @@ tslint-config-airbnb@^5.3.0:
     vrsource-tslint-rules "^5.1.0"
 
 tslint-consistent-codestyle@^1.4.0:
-  version "1.9.2"
-  resolved "https://registry.yarnpkg.com/tslint-consistent-codestyle/-/tslint-consistent-codestyle-1.9.2.tgz#eea0516c717fed2c57a534a2186c6db918f9c8ac"
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/tslint-consistent-codestyle/-/tslint-consistent-codestyle-1.9.3.tgz#0987196b73d22abae5053367962993de208e3f63"
   dependencies:
     tslib "^1.7.1"
     tsutils "^2.12.2"
