@@ -1,6 +1,6 @@
 {
   "name": "checksum-validator",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Small Electron application to validate checksums.",
   "main": "main.js",
   "scripts": {
@@ -31,7 +31,7 @@
     "chai-as-promised": "^7.1.1",
     "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.7",
-    "electron": "1.8.1",
+    "electron": "^1.8.2-beta.4",
     "electron-builder": "^19.37.2",
     "electron-react-devtools": "^0.4.0",
     "electron-reload": "^1.1.0",

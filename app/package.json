@@ -1,18 +1,18 @@
 {
-    "name": "checksum-validator",
-    "version": "0.2.0",
-    "description": "Small Electron application to validate checksums.",
-    "main": "build/main.js",
-    "author": "Alexander Weiss",
-    "dependencies": {
-        "bulma": "^0.6.0",
-        "classnames": "^2.2.5",
-        "electron-log": "^2.2.10",
-        "electron-updater": "^2.15.0",
-        "is-electron-renderer": "^2.0.1",
-        "react": "^16.0.0",
-        "react-dom": "^16.0.0",
-        "react-transition-group": "^2.2.1",
-        "username": "^3.0.0"
-    }
+  "name": "checksum-validator",
+  "version": "0.2.1",
+  "description": "Small Electron application to validate checksums.",
+  "main": "build/main.js",
+  "author": "Alexander Weiss",
+  "dependencies": {
+    "bulma": "^0.6.0",
+    "classnames": "^2.2.5",
+    "electron-log": "^2.2.10",
+    "electron-updater": "^2.15.0",
+    "is-electron-renderer": "^2.0.1",
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-transition-group": "^2.2.1",
+    "username": "^3.0.0"
+  }
 }
