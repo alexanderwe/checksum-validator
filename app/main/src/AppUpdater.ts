@@ -5,7 +5,6 @@ import I18n from '../../lib/i18n/I18n';
 import IPCHandler from './IPCHandler';
 
 export default class AppUpdater {
-
   private ipcHandler: IPCHandler;
   private i18n: I18n;
 
@@ -19,12 +18,13 @@ export default class AppUpdater {
       autoUpdater.updateConfigPath = 'dev-app-update.yml';
     }
 
+    console.log('checking for updates');
     autoUpdater.checkForUpdates();
 
     electronLog.transports.file.level = 'info';
     autoUpdater.logger = electronLog;
 
-    autoUpdater.on('error', (error) => {
+    autoUpdater.on('error', error => {
       this.ipcHandler.sendToRenderer('update', {
         error: true,
         msg: this.i18n.translate('update error') + ' ' + error,
@@ -40,7 +40,7 @@ export default class AppUpdater {
       });
     });
 
-    autoUpdater.on('download-progress', (progressObj) => {
+    autoUpdater.on('download-progress', progressObj => {
       const logMessage = 'Downloaded ' + Math.round(progressObj.percent) + '%';
       this.ipcHandler.sendToRenderer('update', {
         error: false,
@@ -61,7 +61,7 @@ export default class AppUpdater {
       });
     });
 
-    autoUpdater.on('error', (error) => {
+    autoUpdater.on('error', error => {
       this.ipcHandler.sendToRenderer('update', {
         error: true,
         msg: error,
@@ -72,10 +72,10 @@ export default class AppUpdater {
 
   public update = () => {
     autoUpdater.downloadUpdate();
-  }
+  };
 
   public checkForUpdate = () => {
     this.ipcHandler.sendToRenderer('checkForUpdate', {});
     autoUpdater.checkForUpdates();
-  }
+  };
 }

@@ -17,7 +17,10 @@
   "open logs": "Open Logs",
   "paste": "Paste",
   "quit": "Quit",
+  "settings": "Settings",
   "unhide": "Unhide",
+  "upload text": "Click or drag to insert a file",
+  "upload hint": "Please insert only files and not directories",
   "update available": "Update available",
   "update error": "Error while checking updates",
   "update latest": "You have the latest version"

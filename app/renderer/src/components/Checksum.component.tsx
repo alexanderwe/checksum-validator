@@ -1,23 +1,11 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react'; // ES6
 import Transition from 'react-transition-group/Transition';
+import BulmaIcon from './base/Icon.component';
 
-import FadeAndSlideDownTransition from './transition/FadeAndSlideDownTransition.component';
-import Notification from './bulma/element/Notification.component';
-import BulmaIcon from './bulma/element/Icon.component';
-
-/*
-import BulmaButton from './bulma/element/Button.component';
-
-
-import Form from './bulma/form/Form.component';
-import Container from './bulma/layout/Container.component';
-import Hero from './bulma/layout/hero/Hero.component';
-import Section from './bulma/layout/Section.component';
-
-import Tag from './bulma/element/Tag.component';
-import Button from 'antd/lib/button';
-*/
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { checksumTypeChanged } from '../actions/checksum/';
 
 import Form from 'antd/lib/form';
 import Icon from 'antd/lib/icon';
@@ -41,70 +29,25 @@ interface IUpdateMsg {
   updateAvailable: boolean;
 }
 
-interface IChecksumValidatorState {
-  checksum: string;
-  checksumResult: string;
-  error: boolean;
-  fileHover: boolean;
-  fileName: string;
-  filePath: string;
-  loading: boolean;
-  match: boolean;
-  notificationOpen: boolean;
-  saveChecksum: boolean;
-  type: string;
-  updateMsg: IUpdateMsg;
-  checkingForUpdate: boolean;
-}
+const mapStateToProps = state => ({
+  checksumType: state.checksum.type,
+  update: {
+    error: state.update.error,
+    msg: state.update.msg,
+    updateAvailable: state.update.updateAvailable,
+  },
+});
 
-class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ checksumTypeChanged }, dispatch);
+
+@connect(mapStateToProps, mapDispatchToProps)
+class ChecksumValidator extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      checkingForUpdate: false,
-      checksum: '',
-      checksumResult: '',
-      error: false,
-      fileHover: false,
-      fileName: '',
-      filePath: '',
-      loading: false,
-      match: false,
-      notificationOpen: false,
-      saveChecksum: false,
-      type: 'SHA256',
-      updateMsg: null,
-    };
   }
 
   public componentDidMount() {
-    ipcRenderer
-      .on('checksum-result', (event: any, data: any) => {
-        this.setState(
-          {
-            checksumResult: data.checksumResult,
-            error: data.error,
-            loading: false,
-            match: data.match,
-          },
-          this.openNotification(),
-        );
-      })
-      .on('check', (event: any, data: any) => {
-        this.check();
-      })
-      .on('update', (event: any, data: any) => {
-        this.setState({
-          checkingForUpdate: false,
-          updateMsg: data,
-        });
-      })
-      .on('checkForUpdate', (event: any, data: any) => {
-        this.setState({
-          checkingForUpdate: true,
-        });
-      });
-
     document.body.ondrop = (event: any) => {
       this.setState({
         fileHover: false,
@@ -231,10 +174,8 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
             <p className="ant-upload-drag-icon">
               <Icon type="inbox" />
             </p>
-            <p className="ant-upload-text">Click or drag to insert a file</p>
-            <p className="ant-upload-hint">
-              Please insert only files and not directories
-            </p>
+            <p className="ant-upload-text">{i18n.translate('upload text')}</p>
+            <p className="ant-upload-hint">{i18n.translate('upload hint')}</p>
           </Dragger>
           <FormItem>
             {getFieldDecorator('checksum', {
@@ -260,13 +201,19 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
             )}
           </FormItem>
           <FormItem>
-            {getFieldDecorator('password', {
-              initialValue: 'SHA256',
+            {getFieldDecorator('checksumType', {
+              initialValue: this.props.checksumType,
               rules: [
-                { required: true, message: 'Please input your Password!' },
+                {
+                  required: true,
+                  message: 'Please specify the checksum type!',
+                },
               ],
             })(
-              <Select onChange={this.handleSelectChange}>
+              <Select
+                value={this.props.checksumType}
+                onChange={this.props.checksumTypeChanged}
+              >
                 <Option value="SHA256">SHA256</Option>
                 <Option value="SHA512">SHA512</Option>
                 <Option value="SHA1">SHA1</Option>
@@ -280,8 +227,9 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
               htmlType="submit"
               className="login-form-button"
             >
-              Check
+              {i18n.translate('check')}
             </Button>
+            <p>{this.props.update.msg}</p>
           </FormItem>
         </Form>
       </div>

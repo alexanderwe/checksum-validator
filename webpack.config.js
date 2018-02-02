@@ -6,7 +6,7 @@ const path = require('path');
 module.exports = function(env) {
   console.log(env);
   let config = {
-    module: {}
+    module: {},
   };
 
   let rendererConfig = Object.assign({}, config, {
@@ -14,17 +14,17 @@ module.exports = function(env) {
     target: 'electron-renderer',
     node: {
       __dirname: false,
-      __filename: false
+      __filename: false,
     },
     entry: './app/renderer/src/entry.tsx',
     output: {
       path: __dirname + '/app/build/',
       publicPath: 'build/',
-      filename: 'renderer.js'
+      filename: 'renderer.js',
     },
     resolve: {
       // Add '.ts' and '.tsx' as resolvable extensions.
-      extensions: ['.ts', '.tsx', '.js', '.json']
+      extensions: ['.ts', '.tsx', '.js', '.json'],
     },
     module: {
       rules: [
@@ -32,21 +32,21 @@ module.exports = function(env) {
           test: /\.tsx?$/,
           use: [
             {
-              loader: 'awesome-typescript-loader'
-            }
-          ]
+              loader: 'awesome-typescript-loader',
+            },
+          ],
         },
         {
           // regular css files
           test: /\.css$/,
           loader: ExtractTextPlugin.extract({
-            loader: 'css-loader?importLoaders=1'
-          })
+            loader: 'css-loader?importLoaders=1',
+          }),
         },
         {
           // sass / scss loader for webpack
-          test: /\.(sass|scss)$/,
-          loader: ExtractTextPlugin.extract(['css-loader', 'sass-loader'])
+          test: /\.less$/,
+          loader: ExtractTextPlugin.extract(['css-loader', 'less-loader']),
         },
         {
           test: /\.(png|jpg|gif|svg)$/,
@@ -54,29 +54,29 @@ module.exports = function(env) {
             {
               loader: 'file-loader',
               query: {
-                name: '[name].[ext]?[hash]'
-              }
-            }
-          ]
+                name: '[name].[ext]?[hash]',
+              },
+            },
+          ],
         },
         {
           test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
           use: [
             {
-              loader: 'url-loader'
-            }
-          ]
-        }
-      ]
+              loader: 'url-loader',
+            },
+          ],
+        },
+      ],
     },
     plugins: [
       new ExtractTextPlugin({
         filename: 'bundle.css',
         disable: false,
-        allChunks: true
+        allChunks: true,
       }),
-      new DashboardPlugin()
-    ]
+      new DashboardPlugin(),
+    ],
   });
 
   let mainConfig = Object.assign({}, config, {
@@ -84,20 +84,25 @@ module.exports = function(env) {
     target: 'electron-main',
     node: {
       __dirname: false,
-      __filename: false
+      __filename: false,
     },
     externals: [nodeExternals()],
     watch: env.mode == 'watch' ? true : false,
     output: {
-      filename: './app/build/main.js'
+      filename: './app/build/main.js',
     },
     resolve: {
-      extensions: ['.ts', '.js', '.json']
+      extensions: ['.ts', '.js', '.json'],
     },
     module: {
-      loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }]
+      loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }],
     },
-    plugins: [new CopyWebpackPlugin([{ from: 'app/lib/i18n/', to: 'app/build/' }], { ignore: ['*.ts'] }), new DashboardPlugin()]
+    plugins: [
+      new CopyWebpackPlugin([{ from: 'app/lib/i18n/', to: 'app/build/' }], {
+        ignore: ['*.ts'],
+      }),
+      new DashboardPlugin(),
+    ],
   });
 
   return [rendererConfig, mainConfig];

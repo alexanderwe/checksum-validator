@@ -10,7 +10,7 @@
     "dist": "build -m --x64 --ia32",
     "postinstall": "install-app-deps",
     "release": "build",
-    "start": "ELECTRON_DEV=1 electron app/build/main.js",
+    "start": "ELECTRON_DEV=true electron app/build/main.js",
     "test": "mocha",
     "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5"
   },
@@ -38,6 +38,8 @@
     "electron-reload": "^1.1.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "file-loader": "^0.9.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
     "mocha": "^4.0.1",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
