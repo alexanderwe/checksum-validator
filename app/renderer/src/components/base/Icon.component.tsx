@@ -15,9 +15,18 @@ interface IIconProps {
 
 class Icon extends React.Component<IIconProps, {}> {
   public render() {
-    const { isSmall, isMedium, isLarge, isLeft, isRight, name, spin, ...other } = this.props;
+    const {
+      isSmall,
+      isMedium,
+      isLarge,
+      isLeft,
+      isRight,
+      name,
+      spin,
+      ...other
+    } = this.props;
 
-    const iconClass = classNames('icon', this.props.className, {
+    const iconClass = classNames('anticon', this.props.className, {
       'is-large': isLarge,
       'is-left': isLeft,
       'is-medium': isMedium,
@@ -26,15 +35,19 @@ class Icon extends React.Component<IIconProps, {}> {
     });
 
     const ncIconSizeClass = classNames({
-      'lg': isMedium,
-      'x2': isLarge,
+      lg: isMedium,
+      x2: isLarge,
     });
 
     const spinClass = spin ? 'spin' : null;
 
     return (
       <span className={iconClass} {...other}>
-        <i className={'nc-icon ' + name + ' ' + spinClass + ' ' + ncIconSizeClass} />
+        <i
+          className={
+            'nc-icon ' + name + ' ' + spinClass + ' ' + ncIconSizeClass
+          }
+        />
       </span>
     );
   }

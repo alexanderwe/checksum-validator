@@ -10,7 +10,6 @@ const initialState = {
 };
 
 export function update(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case CHECK_FOR_UPDATE:
       return Object.assign({}, state, {

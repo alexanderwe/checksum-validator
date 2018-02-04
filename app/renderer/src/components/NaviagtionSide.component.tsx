@@ -5,12 +5,12 @@ import { Route, NavLink, Switch } from 'react-router-dom';
 import Layout from 'antd/lib/layout';
 import Menu from 'antd/lib/menu';
 import Icon from 'antd/lib/icon';
+import BulmaIcon from './base/Icon.component';
 
 const { Content, Sider } = Layout;
 
 class NavigationSide extends React.Component<any, any> {
   render() {
-    console.log(this.props.location.pathname);
     return (
       <Sider
         style={{
@@ -37,14 +37,20 @@ class NavigationSide extends React.Component<any, any> {
         >
           <Menu.Item key="/">
             <NavLink to={'/'}>
-              <Icon type="search" />
+              <BulmaIcon name="nc-zoom-2" />
             </NavLink>
             <span className="nav-text">Check</span>
+          </Menu.Item>
+          <Menu.Item key="/checksum-overview">
+            <NavLink to={'/checksum-overview'}>
+              <BulmaIcon name="nc-segmentation" />
+            </NavLink>
+            <span className="nav-text">Checksums</span>
           </Menu.Item>
 
           <Menu.Item key="/settings" style={{ marginTop: 'auto' }}>
             <NavLink to={'/settings'}>
-              <Icon type="setting" />
+              <BulmaIcon name="nc-settings-gear-64" />
             </NavLink>
 
             <span className="nav-text">Settings</span>

@@ -15,9 +15,9 @@ export default class IPCHandler {
 
     ipcMain
       .on('checksum', async (event: any, arg: any) => {
+        event.sender.send('checksum', {}); // main received event and acknowledge it to renderer
         let checksumResultString: string;
         let didMatch: boolean;
-
         switch (arg.type) {
           case 'SHA512':
             try {
@@ -25,9 +25,11 @@ export default class IPCHandler {
             } catch (e) {
               event.sender.send('checksum-result', {
                 checksumResult: checksumResultString,
+                currentChecksum: arg.checksum,
                 error: true,
                 match: didMatch,
               });
+              break;
             }
 
             didMatch = checksumResultString === arg.checksum ? true : false;
@@ -38,6 +40,7 @@ export default class IPCHandler {
 
             event.sender.send('checksum-result', {
               checksumResult: checksumResultString,
+              currentChecksum: arg.checksum,
               error: false,
               match: didMatch,
             });
@@ -48,17 +51,19 @@ export default class IPCHandler {
             } catch (e) {
               event.sender.send('checksum-result', {
                 checksumResult: checksumResultString,
+                currentChecksum: arg.checksum,
                 error: true,
                 match: didMatch,
               });
+              break;
             }
             didMatch = checksumResultString === arg.checksum ? true : false;
             if (arg.saveChecksum) {
               clipboard.writeText(checksumResultString);
             }
-
             event.sender.send('checksum-result', {
               checksumResult: checksumResultString,
+              currentChecksum: arg.checksum,
               error: false,
               match: didMatch,
             });
@@ -70,9 +75,11 @@ export default class IPCHandler {
             } catch (e) {
               event.sender.send('checksum-result', {
                 checksumResult: checksumResultString,
+                currentChecksum: arg.checksum,
                 error: true,
                 match: didMatch,
               });
+              break;
             }
 
             didMatch = checksumResultString === arg.checksum ? true : false;
@@ -83,6 +90,7 @@ export default class IPCHandler {
 
             event.sender.send('checksum-result', {
               checksumResult: checksumResultString,
+              currentChecksum: arg.checksum,
               error: false,
               match: didMatch,
             });
@@ -93,18 +101,20 @@ export default class IPCHandler {
             } catch (e) {
               event.sender.send('checksum-result', {
                 checksumResult: checksumResultString,
+                currentChecksum: arg.checksum,
                 error: true,
                 match: didMatch,
               });
+              break;
             }
             didMatch = checksumResultString === arg.checksum ? true : false;
 
             if (arg.saveChecksum) {
               clipboard.writeText(checksumResultString);
             }
-
             event.sender.send('checksum-result', {
               checksumResult: checksumResultString,
+              currentChecksum: arg.checksum,
               error: false,
               match: didMatch,
             });

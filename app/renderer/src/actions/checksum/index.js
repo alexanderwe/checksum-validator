@@ -1,21 +1,34 @@
-import { ipcRenderer } from 'electron';
+import { send } from 'redux-electron-ipc';
+import message from 'antd/lib/message';
 
 export const CHECKSUM_TYPE_CHANGED = 'CHECKSUM_TYPE_CHANGED';
+export const CHECKSUM_CURRENTLY_CHECKING = 'CHECKSUM_CURRENTLY_CHECKING';
 export const CHECKSUM_RESULT = 'CHECKSUM_RESULT';
 
 export const checksumTypeChanged = checksumType => {
   return {
     type: CHECKSUM_TYPE_CHANGED,
-    checksumType: checksumType,
+    data: {
+      checksumType: checksumType,
+    },
   };
 };
 
-ipcRenderer.on('checksum-result', (event, data) => {
-  dispatch({
-    type: CHECKSUM_RESULT,
-    checksumResult: data.checksumResult,
-    error: data.error,
-    loading: false,
-    match: data.match,
+export const checksumIsChecking = () => {
+  return {
+    type: CHECKSUM_CURRENTLY_CHECKING,
+    data: {
+      loading: true,
+    },
+  };
+};
+
+export const validateChecksum = data => {
+  checksumIsChecking();
+  return send('checksum', {
+    checksum: data.checksum,
+    filepath: data.filepath,
+    saveChecksum: data.saveChecksum,
+    type: data.type,
   });
-});
+};

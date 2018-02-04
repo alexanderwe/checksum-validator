@@ -1,26 +1,36 @@
-import { CHECKSUM_TYPE_CHANGED, CHECKSUM_RESULT } from '../actions/checksum/';
+import {
+  CHECKSUM_CURRENTLY_CHECKING,
+  CHECKSUM_TYPE_CHANGED,
+  CHECKSUM_RESULT,
+} from '../actions/checksum';
 
 const initialState = {
-  checksum: '',
-  checksumResult: '',
+  currentChecksum: null,
+  checksumResult: null,
   error: false,
-  fileHover: false,
-  fileName: '',
-  filePath: '',
   loading: false,
   match: false,
-  notificationOpen: false,
-  saveChecksum: false,
   type: 'SHA256',
 };
 
 export function checksum(state = initialState, action) {
-  const { checksumType, type } = action;
-
-  switch (type) {
+  switch (action.type) {
+    case CHECKSUM_CURRENTLY_CHECKING:
+      return Object.assign({}, state, {
+        loading: action.data.loading || {},
+      });
     case CHECKSUM_TYPE_CHANGED:
       return Object.assign({}, state, {
-        type: checksumType || {},
+        type: action.data.checksumType || {},
+      });
+    case CHECKSUM_RESULT:
+      console.log(action.data);
+      return Object.assign({}, state, {
+        checksumResult: action.data.checksumResult || null,
+        currentChecksum: action.data.currentChecksum || null,
+        error: action.data.error || false,
+        loading: action.data.loading || false,
+        match: action.data.match || false,
       });
     default:
       return state;
