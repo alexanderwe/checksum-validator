@@ -1,8 +1,11 @@
+import { ipcRenderer } from 'electron';
 import createIpc, { send } from 'redux-electron-ipc';
+import { store } from '../../entry';
 
 export const CHECK_FOR_UPDATE = 'CHECK_FOR_UPDATE';
 export const UDPATE_INFO = 'UDPATE_INFO';
 
+//Incoming IPC messages
 export const updateIpc = createIpc({
   update: (event, data) => {
     return {
@@ -24,3 +27,12 @@ export const updateIpc = createIpc({
     };
   },
 });
+
+//Outgoing
+export const checkForUpdate = () => {
+  store.dispatch(send('checkForUpdate', {}));
+};
+
+export const updateApp = () => {
+  send('update-app', {});
+};

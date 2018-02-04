@@ -1,4 +1,3 @@
-import { ipcRenderer } from 'electron';
 import * as React from 'react'; // ES6
 import Transition from 'react-transition-group/Transition';
 import BulmaIcon from './base/Icon.component';
@@ -48,6 +47,12 @@ class ChecksumValidator extends React.Component<any, any> {
   }
 
   public componentDidMount() {
+    this.props.form.setFieldsValue({
+      checksumType: this.props.checksumType,
+    });
+
+    this.props.form.setFieldsValue;
+
     document.body.ondrop = (event: any) => {
       this.setState({
         fileHover: false,
@@ -120,7 +125,7 @@ class ChecksumValidator extends React.Component<any, any> {
   };
 
   public updateApp = (): any => {
-    ipcRenderer.send('update-app', {});
+    //ipcRenderer.send('update-app', {});
   };
 
   handleSubmit = e => {
@@ -139,12 +144,12 @@ class ChecksumValidator extends React.Component<any, any> {
         loading: true,
       });
       setTimeout(() => {
-        ipcRenderer.send('checksum', {
+        /*ipcRenderer.send('checksum', {
           checksum: this.state.checksum,
           filepath: this.state.filePath,
           saveChecksum: this.state.saveChecksum,
           type: this.state.type,
-        });
+        });*/
       }, 1000);
     }
   };
@@ -210,10 +215,7 @@ class ChecksumValidator extends React.Component<any, any> {
                 },
               ],
             })(
-              <Select
-                value={this.props.checksumType}
-                onChange={this.props.checksumTypeChanged}
-              >
+              <Select onChange={this.props.checksumTypeChanged}>
                 <Option value="SHA256">SHA256</Option>
                 <Option value="SHA512">SHA512</Option>
                 <Option value="SHA1">SHA1</Option>

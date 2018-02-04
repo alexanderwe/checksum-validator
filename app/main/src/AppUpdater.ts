@@ -18,7 +18,7 @@ export default class AppUpdater {
       autoUpdater.updateConfigPath = 'dev-app-update.yml';
     }
 
-    console.log('checking for updates');
+    electronLog.info('checking for Updates');
     autoUpdater.checkForUpdates();
 
     electronLog.transports.file.level = 'info';

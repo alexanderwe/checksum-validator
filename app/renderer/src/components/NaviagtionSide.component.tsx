@@ -8,8 +8,6 @@ import Icon from 'antd/lib/icon';
 
 const { Content, Sider } = Layout;
 
-const hi = '';
-
 class NavigationSide extends React.Component<any, any> {
   render() {
     console.log(this.props.location.pathname);
@@ -28,7 +26,12 @@ class NavigationSide extends React.Component<any, any> {
         <Menu
           mode="inline"
           theme="dark"
-          style={{ paddingTop: 24 }}
+          style={{
+            paddingTop: 24,
+            height: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+          }}
           defaultSelectedKeys={[this.props.location.pathname]}
           selectedKeys={['/' + this.props.location.pathname.split('/')[1]]}
         >
@@ -38,10 +41,12 @@ class NavigationSide extends React.Component<any, any> {
             </NavLink>
             <span className="nav-text">Check</span>
           </Menu.Item>
-          <Menu.Item key="/settings">
+
+          <Menu.Item key="/settings" style={{ marginTop: 'auto' }}>
             <NavLink to={'/settings'}>
               <Icon type="setting" />
             </NavLink>
+
             <span className="nav-text">Settings</span>
           </Menu.Item>
         </Menu>
