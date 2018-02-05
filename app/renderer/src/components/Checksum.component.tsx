@@ -60,39 +60,6 @@ class ChecksumValidator extends React.Component<any, any> {
     this.props.form.setFieldsValue({
       checksumType: this.props.checksumType,
     });
-
-    this.props.form.setFieldsValue;
-
-    document.body.ondrop = (event: any) => {
-      this.setState({
-        fileHover: false,
-        fileName: event.dataTransfer.files[0].name,
-        filePath: event.dataTransfer.files[0].path,
-      });
-      event.preventDefault();
-    };
-
-    document.ondragover = document.ondrop = (event: any) => {
-      event.preventDefault();
-      this.setState({
-        fileHover: true,
-      });
-    };
-    document.ondragend = document.ondrop = (event: any) => {
-      event.preventDefault();
-      this.setState({
-        fileHover: false,
-      });
-    };
-
-    document.ondragleave = (event: any) => {
-      event.preventDefault();
-      if (event.target.className === 'hero-body') {
-        this.setState({
-          fileHover: false,
-        });
-      }
-    };
   }
 
   private normFile = e => {
@@ -115,35 +82,6 @@ class ChecksumValidator extends React.Component<any, any> {
     this.setState({
       [name]: value,
     });
-  };
-
-  public handleFileChange = (event: any) => {
-    this.setState({
-      fileName: event.target.files[0].name,
-      filePath: event.target.files[0].path,
-    });
-  };
-
-  public handleCheckboxChange = (event: any) => {
-    this.setState({
-      saveChecksum: event.target.checked,
-    });
-  };
-
-  public closeNotification = (): any => {
-    this.setState({
-      notificationOpen: false,
-    });
-  };
-
-  public openNotification = (): any => {
-    this.setState({
-      notificationOpen: true,
-    });
-  };
-
-  public updateApp = (): any => {
-    //ipcRenderer.send('update-app', {});
   };
 
   handleSubmit = e => {
