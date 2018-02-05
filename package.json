@@ -10,7 +10,7 @@
     "dist": "build -m --x64 --ia32",
     "postinstall": "install-app-deps",
     "release": "build",
-    "start": "ELECTRON_DEV=1 electron app/build/main.js",
+    "start": "ELECTRON_DEV=true electron app/build/main.js",
     "test": "mocha",
     "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5"
   },
@@ -33,10 +33,13 @@
     "css-loader": "^0.28.7",
     "electron": "^1.8.2-beta.4",
     "electron-builder": "^19.37.2",
+    "electron-devtools-installer": "^2.2.3",
     "electron-react-devtools": "^0.4.0",
     "electron-reload": "^1.1.0",
     "extract-text-webpack-plugin": "^2.0.0-rc.3",
     "file-loader": "^0.9.0",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
     "mocha": "^4.0.1",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.6",
@@ -45,6 +48,7 @@
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "tslint-config-airbnb": "^5.3.0",
+    "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.5.3",
     "url-loader": "^0.6.2",
     "webpack": "^3.8.1",
@@ -65,5 +69,12 @@
       "category": "public.app-category.utilities",
       "type": "distribution"
     }
+  },
+  "dependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-import": "^1.6.3",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1"
   }
 }

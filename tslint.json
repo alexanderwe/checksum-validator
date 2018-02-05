@@ -1,7 +1,5 @@
 {
-  "extends": "tslint-config-airbnb",
   "rules": {
-    "quotemark": [true, "single"],
     "trailing-comma": [
       true,
       {
@@ -14,5 +12,6 @@
     "no-trailing-whitespace": [false],
     "no-var-requires": false,
     "variable-name": [true, "check-format", "allow-leading-underscore"]
-  }
+  },
+  "extends": ["tslint-config-airbnb", "tslint-config-prettier"]
 }

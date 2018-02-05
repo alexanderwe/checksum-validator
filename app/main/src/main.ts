@@ -10,7 +10,8 @@ import MenuBuilder from './MenuBuilder';
 import TouchBarBuilder from './TouchBarBuilder';
 
 if (process.env.ELECTRON_DEV) {
-  require('electron-reload')(path.join(__dirname, '/../../renderer/build/'));
+  console.log('DEV ENVIRONMENT');
+  require('electron-reload')(path.join(__dirname, '/../build'));
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -27,10 +28,10 @@ function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     height: 320,
-    resizable: false,
+    resizable: true,
     show: true,
     titleBarStyle: 'hidden',
-    width: 300,
+    width: 500,
   });
 
   // and load the index.html of the app.
@@ -61,6 +62,22 @@ function createWindow() {
 
 app.on('ready', () => {
   createWindow();
+
+  if (process.env.ELECTRON_DEV) {
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS,
+    } = require('electron-devtools-installer');
+
+    installExtension(REACT_DEVELOPER_TOOLS)
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
+
+    installExtension(REDUX_DEVTOOLS)
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
+  }
 });
 
 // Quit when all windows are closed.
