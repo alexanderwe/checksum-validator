@@ -1,6 +1,6 @@
 import * as child from 'child_process';
 import electronLog from 'electron-log';
-
+import { IChecksum, ChecksumAlgorithm } from './Database';
 export default class Checksum {
   /**
    * @function sha512
@@ -112,6 +112,32 @@ export default class Checksum {
           resolve(checksum);
         },
       );
+    });
+  }
+
+  public static allChecksums(filepath: string): Promise<[IChecksum]> {
+    return new Promise<[IChecksum]>(async (resolve, reject) => {
+      const md5: IChecksum = {
+        checksum: await Checksum.md5(filepath),
+        algorithm: ChecksumAlgorithm.MD5,
+      };
+
+      const sha1: IChecksum = {
+        checksum: await Checksum.sha1(filepath),
+        algorithm: ChecksumAlgorithm.SHA1,
+      };
+
+      const sha256: IChecksum = {
+        checksum: await Checksum.sha256(filepath),
+        algorithm: ChecksumAlgorithm.SHA256,
+      };
+
+      const sha512: IChecksum = {
+        checksum: await Checksum.sha512(filepath),
+        algorithm: ChecksumAlgorithm.SHA512,
+      };
+
+      resolve([md5, sha1, sha256, sha512]);
     });
   }
 }

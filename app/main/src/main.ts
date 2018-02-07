@@ -8,6 +8,7 @@ import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
 import MenuBuilder from './MenuBuilder';
 import TouchBarBuilder from './TouchBarBuilder';
+import Database from './Database';
 
 if (process.env.ELECTRON_DEV) {
   console.log('DEV ENVIRONMENT');
@@ -19,6 +20,7 @@ if (process.env.ELECTRON_DEV) {
 let mainWindow: BrowserWindow;
 let ipcHandler: IPCHandler;
 let appUpdater: AppUpdater;
+let database: Database;
 
 /**
  * @function createWindow
@@ -49,8 +51,9 @@ function createWindow() {
   // Init ipcHandler
   ipcHandler = new IPCHandler(mainWindow);
   appUpdater = new AppUpdater(ipcHandler);
+  database = new Database(ipcHandler);
   ipcHandler.updater = appUpdater;
-  console.log('main' + app.getLocale());
+  ipcHandler.database = database;
 
   // Init the touchbar with ipcHandler support to send events to the renderer process
   mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());

@@ -98,9 +98,10 @@ module.exports = function(env) {
       loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }],
     },
     plugins: [
-      new CopyWebpackPlugin([{ from: 'app/lib/i18n/', to: 'app/build/' }], {
-        ignore: ['*.ts'],
-      }),
+      new CopyWebpackPlugin([
+        { from: 'app/lib/i18n/', to: 'app/build/', ignore: ['*.ts'] },
+        { from: 'app/renderer/src/styles/iconfont/', to: 'app/build/iconfont' },
+      ]),
       new DashboardPlugin(),
     ],
   });
