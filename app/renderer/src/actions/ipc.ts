@@ -1,8 +1,14 @@
 import createIpc, { send } from 'redux-electron-ipc';
 import message from 'antd/lib/message';
-import { UDPATE_INFO, CHECK_FOR_UPDATE } from './update';
-import { CHECKSUM_CURRENTLY_CHECKING, CHECKSUM_RESULT } from './checksum';
+
+import { UDPATE_INFO, CHECK_FOR_UPDATE } from './update/index';
+import { CHECKSUM_CURRENTLY_CHECKING, CHECKSUM_RESULT } from './checksum/index';
+import { DATABSE_CHECKS_RELOAD } from './database/index';
 import { Events } from '../../../main/src/Events';
+
+import I18n from '../../../lib/i18n/I18n';
+
+const i18n: I18n = new I18n();
 
 export const ipc = createIpc({
   [Events.UPDATE]: (event, data) => {
@@ -35,8 +41,8 @@ export const ipc = createIpc({
   },
   [Events.CHECKSUM_RESULT]: (event, data) => {
     data.match
-      ? message.success('This is a message of success')
-      : message.warning('This is message of warning');
+      ? message.success(i18n.translate('checksum match'))
+      : message.warning(i18n.translate('checksum mismatch'));
 
     return {
       type: CHECKSUM_RESULT,
@@ -49,7 +55,12 @@ export const ipc = createIpc({
       },
     };
   },
-  [Events.DATABSE_CHECKSUM_RELOAD]: (event, data) => {
-    console.log(data);
+  [Events.DATABSE_CHECKS_RELOAD]: (event, data) => {
+    return {
+      type: DATABSE_CHECKS_RELOAD,
+      data: {
+        checks: data,
+      },
+    };
   },
 });

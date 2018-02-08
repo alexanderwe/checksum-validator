@@ -31,12 +31,12 @@ export enum ChecksumAlgorithm {
  * @desc  Handles the communication with the database
  */
 class Database {
-  checksumCollection: Datastore;
+  checksCollection: Datastore;
   ipcHandler: IPCHandler;
 
   constructor(ipcHandler: IPCHandler) {
     this.ipcHandler = ipcHandler;
-    this.checksumCollection = new Datastore({
+    this.checksCollection = new Datastore({
       filename: path.join(app.getPath('userData'), 'checks.json'),
       autoload: true,
       timestampData: true,
@@ -47,9 +47,9 @@ class Database {
    * Sends a refresh event to the renderer
    * @function refreshDB
    */
-  private refreshDB() {
-    this.checksumCollection.find({}, (err, docs) => {
-      this.ipcHandler.sendToRenderer(Events.DATABSE_CHECKSUM_RELOAD, docs);
+  public refreshDB() {
+    this.checksCollection.find({}, (err, docs) => {
+      this.ipcHandler.sendToRenderer(Events.DATABSE_CHECKS_RELOAD, docs);
     });
   }
 
@@ -59,7 +59,7 @@ class Database {
    * @param check The object to add
    */
   public addCheck(check: ICheck) {
-    this.checksumCollection.insert(check, (err, newDoc) => {
+    this.checksCollection.insert(check, (err, newDoc) => {
       this.refreshDB();
     });
   }

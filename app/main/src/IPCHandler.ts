@@ -2,6 +2,7 @@ import { BrowserWindow, clipboard, ipcMain } from 'electron';
 import AppUpdater from './AppUpdater';
 import Database, { ICheck, ChecksumAlgorithm } from './Database';
 import Checksum from './Checksum';
+import { Events } from './Events';
 
 /**
  * @class IPCHandler
@@ -16,7 +17,7 @@ export default class IPCHandler {
     this.mainWindow = mainWindow;
 
     ipcMain
-      .on('checksum', async (event: any, arg: any) => {
+      .on(Events.CHECKSUM, async (event: any, arg: any) => {
         event.sender.send('checksum', {}); // main received event and acknowledge it to renderer
 
         const calculateAll = event.calculateAll;
@@ -63,18 +64,21 @@ export default class IPCHandler {
           this.database.addCheck(check);
         }
 
-        event.sender.send('checksum-result', {
+        event.sender.send(Events.CHECKSUM_RESULT, {
           checksumResult: checksumResultString,
           currentChecksum: arg.checksum,
           error: error ? error : false,
           match: didMatch,
         });
       })
-      .on('update:app', async (event: any, arg: any) => {
+      .on(Events.UPDATE, async (event: any, arg: any) => {
         this.updater.update();
       })
-      .on('update:check', async (event: any, arg: any) => {
+      .on(Events.UPDATE_CHECK, async (event: any, arg: any) => {
         this.updater.checkForUpdate();
+      })
+      .on(Events.DATABSE_CHECKS_RELOAD, async (event: any, arg: any) => {
+        this.database.refreshDB();
       });
   }
 

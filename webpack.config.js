@@ -100,7 +100,6 @@ module.exports = function(env) {
     plugins: [
       new CopyWebpackPlugin([
         { from: 'app/lib/i18n/', to: 'app/build/', ignore: ['*.ts'] },
-        { from: 'app/renderer/src/styles/iconfont/', to: 'app/build/iconfont' },
       ]),
       new DashboardPlugin(),
     ],

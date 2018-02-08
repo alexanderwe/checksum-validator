@@ -18,8 +18,12 @@
   "learn more": "Learn more",
   "open logs": "Open Logs",
   "paste": "Paste",
+  "past checks": "Past Checks",
   "quit": "Quit",
+  "save checks": "Save checks",
   "settings": "Settings",
+  "tooltip save checks":
+    "Your checks are getting saved into a small database, so you can always remember them",
   "unhide": "Unhide",
   "upload text": "Click or drag to insert a file",
   "upload hint": "Please insert only files and not directories",

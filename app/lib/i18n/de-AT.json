@@ -18,8 +18,12 @@
   "learn more": "Erfahre mehr",
   "open logs": "Öffne Logs",
   "paste": "Einfügen",
+  "past checks": "Bisherige Checks",
   "quit": "Beenden",
+  "save checks": "Checks speichern",
   "settings": "Einstellungen",
+  "tooltip save checks":
+    "Deine Checks werden in einer kleinen Datenbank gespeichert um sie später noch einmal abrufen zu können.",
   "unhide": "Alles anzeigen",
   "upload text": "Klicke oder ziehe eine Datei hier hin",
   "upload hint": "Bitte nur Dateien und keine Ordner hinzufügen",

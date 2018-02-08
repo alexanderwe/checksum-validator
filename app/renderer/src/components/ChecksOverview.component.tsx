@@ -1,29 +1,51 @@
 import * as React from 'react';
+import { connect } from 'react-redux';
+
+import { databaseReloadChecks } from '../actions/database';
+
 import Layout from 'antd/lib/layout';
 import Icon from 'antd/lib/icon';
 import Divider from 'antd/lib/divider';
 import Table from 'antd/lib/table';
+import I18n from '../../../lib/i18n/I18n';
 
 const { Header, Content, Footer, Sider } = Layout;
 
-class ChecksumsOverview extends React.Component<any, any> {
+const i18n: I18n = new I18n();
+
+const mapStateToProps = state => ({
+  checks: state.database.checks,
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    databaseReloadChecks: () => dispatch(databaseReloadChecks()),
+  };
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+class ChecksOverview extends React.Component<any, any> {
+  componentDidMount() {
+    this.props.databaseReloadChecks();
+  }
+
   render() {
     const columns = [
       {
-        title: 'Name',
-        dataIndex: 'name',
-        key: 'name',
+        title: 'File',
+        dataIndex: 'filePath',
+        key: 'filePath',
         render: text => <a href="#">{text}</a>,
       },
       {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
+        title: 'Check Algorithm',
+        dataIndex: 'checkAlgorithm',
+        key: 'checkAlgorithm',
       },
       {
-        title: 'Address',
-        dataIndex: 'address',
-        key: 'address',
+        title: 'Match ?',
+        dataIndex: 'didMatch',
+        key: 'didMatch',
       },
       {
         title: 'Action',
@@ -40,31 +62,10 @@ class ChecksumsOverview extends React.Component<any, any> {
       },
     ];
 
-    const data = [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-      },
-      {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sidney No. 1 Lake Park',
-      },
-    ];
-
     return (
       <div>
         <Header style={{ background: '#fff', paddingLeft: 24 }}>
-          <h2>Past Checks</h2>
+          <h2>{i18n.translate('past checks')}</h2>
         </Header>
         <Content
           style={{
@@ -74,11 +75,11 @@ class ChecksumsOverview extends React.Component<any, any> {
             padding: 24,
           }}
         >
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={this.props.checks} />
         </Content>
       </div>
     );
   }
 }
 
-export default ChecksumsOverview;
+export default ChecksOverview;
