@@ -1,4 +1,4 @@
-import { DATABSE_CHECKS_RELOAD } from '../actions/database';
+import { DATABASE_CHECKS_RELOAD } from '../actions/database';
 
 const initialState = {
   checks: [],
@@ -6,7 +6,7 @@ const initialState = {
 
 export function database(state = initialState, action) {
   switch (action.type) {
-    case DATABSE_CHECKS_RELOAD:
+    case DATABASE_CHECKS_RELOAD:
       return Object.assign({}, state, {
         checks: action.data.checks || [],
       });

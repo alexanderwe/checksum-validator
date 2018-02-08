@@ -3,5 +3,7 @@ export enum Events {
   UPDATE_CHECK = 'update:check',
   CHECKSUM = 'checksum',
   CHECKSUM_RESULT = 'checksum:result',
-  DATABSE_CHECKS_RELOAD = 'database:checks-reload',
+  DATABASE_CHECKS_RELOAD = 'database:checks-reload',
+  SETTINGS_LOAD = 'settings:load',
+  SETTINGS_UPDATED = 'settings:update',
 }

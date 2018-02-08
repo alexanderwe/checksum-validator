@@ -49,7 +49,7 @@ class Database {
    */
   public refreshDB() {
     this.checksCollection.find({}, (err, docs) => {
-      this.ipcHandler.sendToRenderer(Events.DATABSE_CHECKS_RELOAD, docs);
+      this.ipcHandler.sendToRenderer(Events.DATABASE_CHECKS_RELOAD, docs);
     });
   }
 

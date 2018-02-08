@@ -1,4 +1,5 @@
 import { BrowserWindow, clipboard, ipcMain } from 'electron';
+import * as Store from 'electron-store';
 import AppUpdater from './AppUpdater';
 import Database, { ICheck, ChecksumAlgorithm } from './Database';
 import Checksum from './Checksum';
@@ -12,14 +13,16 @@ export default class IPCHandler {
   public updater: AppUpdater;
   public database: Database;
   private mainWindow: BrowserWindow;
+  public settings: Store;
 
   constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow;
+    this.settings = new Store();
 
     ipcMain
       .on(Events.CHECKSUM, async (event: any, arg: any) => {
-        event.sender.send('checksum', {}); // main received event and acknowledge it to renderer
-
+        event.sender.send(Events.CHECKSUM, {}); // main received event and acknowledge it to renderer
+        console.log(arg);
         const calculateAll = event.calculateAll;
         let checksumResultString: string;
         let didMatch: boolean;
@@ -48,11 +51,13 @@ export default class IPCHandler {
 
         didMatch = checksumResultString === arg.checksum ? true : false;
 
-        if (arg.saveClipboard && !error) {
+        if (arg.saveCheckClipboard) {
           clipboard.writeText(checksumResultString);
         }
 
-        if (true /*arg.saveDatabase && !error*/) {
+        if (arg.saveChecks) {
+          console.log('Saving check to database');
+
           const check: ICheck = {
             checksums: await Checksum.allChecksums(arg.filepath),
             checkString: arg.checksum as String,
@@ -62,6 +67,8 @@ export default class IPCHandler {
           };
 
           this.database.addCheck(check);
+        } else {
+          console.log('NOT saving check to database');
         }
 
         event.sender.send(Events.CHECKSUM_RESULT, {
@@ -77,8 +84,16 @@ export default class IPCHandler {
       .on(Events.UPDATE_CHECK, async (event: any, arg: any) => {
         this.updater.checkForUpdate();
       })
-      .on(Events.DATABSE_CHECKS_RELOAD, async (event: any, arg: any) => {
+      .on(Events.DATABASE_CHECKS_RELOAD, async (event: any, arg: any) => {
         this.database.refreshDB();
+      })
+      .on(Events.SETTINGS_LOAD, async (event: any, arg: any) => {
+        console.log('Load settings action initiaed from renderer');
+        event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
+      })
+      .on(Events.SETTINGS_UPDATED, async (event: any, arg: any) => {
+        this.settings.set(arg.key, arg.value);
+        event.sender.send(Events.SETTINGS_LOAD, this.settings.store);
       });
   }
 

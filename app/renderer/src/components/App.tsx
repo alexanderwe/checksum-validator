@@ -6,6 +6,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Route, NavLink, Switch } from 'react-router-dom';
 
+import { loadSettings } from '../actions/settings';
+
 import NavigationSide from './NaviagtionSide.component';
 import ChecksumComponent from './Checksum.component';
 import ChecksOverview from './ChecksOverview.component';
@@ -15,12 +17,19 @@ const { Content } = Layout;
 
 const mapStateToProps = state => ({});
 
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
+const mapDispatchToProps = dispatch => {
+  return {
+    loadSettings: () => dispatch(loadSettings()),
+  };
+};
 
 @connect(mapStateToProps, mapDispatchToProps)
-class App extends React.Component {
+class App extends React.Component<any, any> {
+  componentDidMount() {
+    this.props.loadSettings();
+  }
+
   render() {
-    const collapsed = true;
     return (
       <Layout>
         <NavigationSide />

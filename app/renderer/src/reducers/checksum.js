@@ -24,7 +24,6 @@ export function checksum(state = initialState, action) {
         type: action.data.checksumType || {},
       });
     case CHECKSUM_RESULT:
-      console.log(action.data);
       return Object.assign({}, state, {
         checksumResult: action.data.checksumResult || null,
         currentChecksum: action.data.currentChecksum || null,

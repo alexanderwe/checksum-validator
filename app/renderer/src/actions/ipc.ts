@@ -3,7 +3,8 @@ import message from 'antd/lib/message';
 
 import { UDPATE_INFO, CHECK_FOR_UPDATE } from './update/index';
 import { CHECKSUM_CURRENTLY_CHECKING, CHECKSUM_RESULT } from './checksum/index';
-import { DATABSE_CHECKS_RELOAD } from './database/index';
+import { DATABASE_CHECKS_RELOAD } from './database/index';
+import { SETTINGS_RELOAD } from './settings/index';
 import { Events } from '../../../main/src/Events';
 
 import I18n from '../../../lib/i18n/I18n';
@@ -55,11 +56,19 @@ export const ipc = createIpc({
       },
     };
   },
-  [Events.DATABSE_CHECKS_RELOAD]: (event, data) => {
+  [Events.DATABASE_CHECKS_RELOAD]: (event, data) => {
     return {
-      type: DATABSE_CHECKS_RELOAD,
+      type: DATABASE_CHECKS_RELOAD,
       data: {
         checks: data,
+      },
+    };
+  },
+  [Events.SETTINGS_LOAD]: (event, data) => {
+    return {
+      type: SETTINGS_RELOAD,
+      data: {
+        settings: data,
       },
     };
   },

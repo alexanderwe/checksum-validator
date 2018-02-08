@@ -2,7 +2,7 @@ import * as React from 'react'; // ES6
 import { send } from 'redux-electron-ipc';
 
 import Transition from 'react-transition-group/Transition';
-import BulmaIcon from './base/Icon.component';
+import Icon from './base/Icon.component';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -12,7 +12,6 @@ import {
 } from '../actions/checksum/index';
 
 import Form from 'antd/lib/form';
-import Icon from 'antd/lib/icon';
 import Input from 'antd/lib/input';
 import Button from 'antd/lib/button';
 import Checkbox from 'antd/lib/checkbox';
@@ -37,11 +36,13 @@ interface IUpdateMsg {
 
 const mapStateToProps = state => ({
   checksumType: state.checksum.type,
+  loading: state.checksum.loading,
   update: {
     error: state.update.error,
     msg: state.update.msg,
     updateAvailable: state.update.updateAvailable,
   },
+  settings: state.settings.settings,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -92,11 +93,13 @@ class ChecksumValidator extends React.Component<any, any> {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        console.log(this.props.settings);
         this.props.validateChecksum({
           checksum: values.checksum,
           filepath: values.files[0].originFileObj.path,
-          saveChecksum: false,
+          saveCheckClipboard: this.props.settings.saveCheckClipboard,
           type: values.checksumType,
+          saveChecks: this.props.settings.saveChecks,
         });
       }
     });
@@ -148,7 +151,7 @@ class ChecksumValidator extends React.Component<any, any> {
                 })(
                   <Dragger {...draggerProps}>
                     <p className="ant-upload-drag-icon">
-                      <Icon type="inbox" />
+                      <Icon name="nc-archive-paper-check" />
                     </p>
                     <p className="ant-upload-text">
                       {i18n.translate('upload text')}
@@ -171,8 +174,8 @@ class ChecksumValidator extends React.Component<any, any> {
                   <Input
                     style={{ marginTop: '24px' }}
                     prefix={
-                      <BulmaIcon
-                        name={'nc-code'}
+                      <Icon
+                        name={'nc-note-code'}
                         isSmall
                         isLeft
                         style={{ color: 'rgba(0,0,0,.25)' }}
@@ -205,6 +208,7 @@ class ChecksumValidator extends React.Component<any, any> {
                   type="primary"
                   htmlType="submit"
                   className="login-form-button"
+                  loading={this.props.loading}
                 >
                   {i18n.translate('check')}
                 </Button>

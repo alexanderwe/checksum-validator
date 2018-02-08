@@ -190,4 +190,8 @@ License - nucleoapp.com/license/
   content: '\ea0e';
 }
 
+.nc-archive-paper-check::before {
+  content: '\ea0f';
+}
+
 /* all icon font classes list here */

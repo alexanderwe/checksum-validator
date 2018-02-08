@@ -35,30 +35,27 @@ class ChecksOverview extends React.Component<any, any> {
         title: 'File',
         dataIndex: 'filePath',
         key: 'filePath',
+        width: 300,
         render: text => <a href="#">{text}</a>,
       },
       {
         title: 'Check Algorithm',
         dataIndex: 'checkAlgorithm',
         key: 'checkAlgorithm',
+        width: 300,
       },
       {
         title: 'Match ?',
         dataIndex: 'didMatch',
         key: 'didMatch',
+        width: 300,
+        render: text => <span>{text.toString()}</span>,
       },
       {
         title: 'Action',
         key: 'action',
-        render: (text, record) => (
-          <span>
-            <a href="#">Delete</a>
-            <Divider type="vertical" />
-            <a href="#" className="ant-dropdown-link">
-              More actions <Icon type="down" />
-            </a>
-          </span>
-        ),
+        width: 300,
+        render: () => <a href="#">action</a>,
       },
     ];
 

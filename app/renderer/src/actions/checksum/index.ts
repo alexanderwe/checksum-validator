@@ -26,10 +26,5 @@ export const checksumIsChecking = () => {
 
 export const validateChecksum = data => {
   checksumIsChecking();
-  return send(Events.CHECKSUM, {
-    checksum: data.checksum,
-    filepath: data.filepath,
-    saveChecksum: data.saveChecksum,
-    type: data.type,
-  });
+  return send(Events.CHECKSUM, data);
 };
