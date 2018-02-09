@@ -19,11 +19,12 @@ export default class Checksum {
               'Error while computing SHA512 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed SHA512 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed SHA512 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
@@ -51,11 +52,12 @@ export default class Checksum {
               'Error while computing sha256 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed sha256 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed sha256 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
@@ -78,11 +80,12 @@ export default class Checksum {
               'Error while computing sha1 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed sha1 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed sha1 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
@@ -105,17 +108,18 @@ export default class Checksum {
               'Error while computing md5 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed md5 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed md5 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
   }
 
-  public static allChecksums(filepath: string): Promise<[IChecksum]> {
+  public static allChecksums(filepath: string): Promise<IChecksum[]> {
     return new Promise<[IChecksum]>(async (resolve, reject) => {
       const md5: IChecksum = {
         checksum: await Checksum.md5(filepath),

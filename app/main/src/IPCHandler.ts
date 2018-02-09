@@ -1,9 +1,10 @@
 import { BrowserWindow, clipboard, ipcMain } from 'electron';
 import * as Store from 'electron-store';
+import electronLog from 'electron-log';
 import AppUpdater from './AppUpdater';
 import Database, { ICheck, ChecksumAlgorithm } from './Database';
 import Checksum from './Checksum';
-import { Events } from './Events';
+import { Events } from '../../lib/Events';
 
 /**
  * @class IPCHandler
@@ -51,13 +52,13 @@ export default class IPCHandler {
 
         didMatch = checksumResultString === arg.checksum ? true : false;
 
-        if (arg.saveCheckClipboard) {
+        // Only save to clipboard if checksumResultString is available
+        if (arg.saveCheckClipboard && checksumResultString) {
           clipboard.writeText(checksumResultString);
         }
 
-        if (arg.saveChecks) {
-          console.log('Saving check to database');
-
+        if (arg.saveChecks && !error) {
+          electronLog.info('Saving check to database');
           const check: ICheck = {
             checksums: await Checksum.allChecksums(arg.filepath),
             checkString: arg.checksum as String,
@@ -67,8 +68,6 @@ export default class IPCHandler {
           };
 
           this.database.addCheck(check);
-        } else {
-          console.log('NOT saving check to database');
         }
 
         event.sender.send(Events.CHECKSUM_RESULT, {
@@ -87,8 +86,10 @@ export default class IPCHandler {
       .on(Events.DATABASE_CHECKS_RELOAD, async (event: any, arg: any) => {
         this.database.refreshDB();
       })
+      .on(Events.DATABASE_CHECK_DELETE, async (event: any, arg: any) => {
+        this.database.deleteCheck(arg._id);
+      })
       .on(Events.SETTINGS_LOAD, async (event: any, arg: any) => {
-        console.log('Load settings action initiaed from renderer');
         event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
       })
       .on(Events.SETTINGS_UPDATED, async (event: any, arg: any) => {

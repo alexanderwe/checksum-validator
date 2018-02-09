@@ -12,9 +12,10 @@ const initialState = {
 export function update(state = initialState, action) {
   switch (action.type) {
     case CHECK_FOR_UPDATE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         checkingForUpdate: action.data.checkingForUpdate,
-      });
+      };
     case UDPATE_INFO:
       notification.config({
         placement: 'bottomRight',
@@ -23,12 +24,13 @@ export function update(state = initialState, action) {
         message: 'Update Info',
         description: action.data.msg,
       });
-      return Object.assign({}, state, {
+      return {
+        ...state,
         checkingForUpdate: action.data.checkingForUpdate,
         error: action.data.error,
         updateAvailable: action.data.updateAvailable,
         msg: action.data.msg,
-      });
+      };
     default:
       return state;
   }

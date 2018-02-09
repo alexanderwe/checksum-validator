@@ -1,5 +1,5 @@
 import { send } from 'redux-electron-ipc';
-import { Events } from '../../../../main/src/Events';
+import { Events } from '../../../../lib/Events';
 
 export const SETTINGS_RELOAD = 'SETTINGS_RELOAD';
 

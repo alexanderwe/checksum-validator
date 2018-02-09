@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { shell } from 'electron';
 
-import { databaseReloadChecks } from '../actions/database';
+import { databaseReloadChecks, deleteCheck } from '../actions/database';
 
 import Layout from 'antd/lib/layout';
 import Icon from 'antd/lib/icon';
@@ -23,6 +23,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
   return {
     databaseReloadChecks: () => dispatch(databaseReloadChecks()),
+    deleteCheck: (id: string) => dispatch(deleteCheck(id)),
   };
 };
 
@@ -32,8 +33,8 @@ class ChecksOverview extends React.Component<any, any> {
     this.props.databaseReloadChecks();
   }
 
-  deleteConfirm = e => {
-    console.log(e);
+  deleteConfirm = id => {
+    this.props.deleteCheck(id);
   };
 
   deleteCancel = e => {
@@ -74,14 +75,20 @@ class ChecksOverview extends React.Component<any, any> {
           ),
       },
       {
+        title: i18n.translate('date'),
+        dataIndex: 'createdAt',
+        key: 'createdAt',
+        width: 300,
+      },
+      {
         title: i18n.translate('action'),
         key: 'action',
         width: 300,
-        render: () => (
+        render: record => (
           <Popconfirm
             title={i18n.translate('delete check question')}
-            onConfirm={this.deleteConfirm}
-            onCancel={this.deleteCancel}
+            onConfirm={() => this.deleteConfirm(record._id)}
+            onCancel={() => this.deleteCancel(record._id)}
             okText={i18n.translate('yes')}
             cancelText={i18n.translate('no')}
           >
@@ -104,7 +111,11 @@ class ChecksOverview extends React.Component<any, any> {
             padding: 24,
           }}
         >
-          <Table columns={columns} dataSource={this.props.checks} />
+          <Table
+            columns={columns}
+            dataSource={this.props.checks}
+            rowKey="_id"
+          />
         </Content>
       </div>
     );

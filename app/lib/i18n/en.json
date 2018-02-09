@@ -1,14 +1,18 @@
 {
   "about": "About",
+  "action": "Action",
   "check": "Check",
   "check for updates": "Check for updates...",
+  "checksum error": "Error - Did you try to add a directory ?",
   "checksum match": "Checksum match",
   "checksum mismatch": "Checksum mismatch",
   "checksum missing": "Please provide a checksum to check against",
-  "checksum fail": "Error - Did you try to add a directory ?",
   "choose file": "Choose file",
   "copy": "Copy",
   "cut": "Cut",
+  "date": "Date",
+  "delete check question": "Are you sure to delete this check?",
+  "delete": "Delete",
   "drop file": "Drop your file here",
   "edit": "Edit",
   "file missing": "Please add a file to check",
@@ -16,7 +20,9 @@
   "hide others": "Hide others",
   "hide": "Hide",
   "learn more": "Learn more",
+  "no": "No",
   "open logs": "Open Logs",
+  "open in finder": "Open in Finder",
   "paste": "Paste",
   "past checks": "Past Checks",
   "quit": "Quit",
@@ -32,5 +38,6 @@
   "upload hint": "Please insert only files and not directories",
   "update available": "Update available",
   "update error": "Error while checking updates",
-  "update latest": "You have the latest version"
+  "update latest": "You have the latest version",
+  "yes": "Yes"
 }

@@ -9,7 +9,6 @@ import IPCHandler from './IPCHandler';
 import MenuBuilder from './MenuBuilder';
 import TouchBarBuilder from './TouchBarBuilder';
 import Database from './Database';
-import { Events } from './Events';
 
 if (process.env.ELECTRON_DEV) {
   console.log('DEV ENVIRONMENT');

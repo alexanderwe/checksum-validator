@@ -5,7 +5,7 @@ import { UDPATE_INFO, CHECK_FOR_UPDATE } from './update/index';
 import { CHECKSUM_CURRENTLY_CHECKING, CHECKSUM_RESULT } from './checksum/index';
 import { DATABASE_CHECKS_RELOAD } from './database/index';
 import { SETTINGS_RELOAD } from './settings/index';
-import { Events } from '../../../main/src/Events';
+import { Events } from '../../../lib/Events';
 
 import I18n from '../../../lib/i18n/I18n';
 
@@ -41,9 +41,13 @@ export const ipc = createIpc({
     };
   },
   [Events.CHECKSUM_RESULT]: (event, data) => {
-    data.match
-      ? message.success(i18n.translate('checksum match'))
-      : message.warning(i18n.translate('checksum mismatch'));
+    if (data.error) {
+      message.warning(i18n.translate('checksum error'));
+    } else {
+      data.match
+        ? message.success(i18n.translate('checksum match'))
+        : message.warning(i18n.translate('checksum mismatch'));
+    }
 
     return {
       type: CHECKSUM_RESULT,

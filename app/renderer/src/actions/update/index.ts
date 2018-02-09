@@ -1,5 +1,5 @@
 import createIpc, { send } from 'redux-electron-ipc';
-import { Events } from '../../../../main/src/Events';
+import { Events } from '../../../../lib/Events';
 
 export const CHECK_FOR_UPDATE = 'CHECK_FOR_UPDATE';
 export const UDPATE_INFO = 'UDPATE_INFO';

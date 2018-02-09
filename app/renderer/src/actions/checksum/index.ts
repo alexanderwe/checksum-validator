@@ -1,6 +1,6 @@
 import { send } from 'redux-electron-ipc';
 import message from 'antd/lib/message';
-import { Events } from '../../../../main/src/Events';
+import { Events } from '../../../../lib/Events';
 
 export const CHECKSUM_TYPE_CHANGED = 'CHECKSUM_TYPE_CHANGED';
 export const CHECKSUM_CURRENTLY_CHECKING = 'CHECKSUM_CURRENTLY_CHECKING';

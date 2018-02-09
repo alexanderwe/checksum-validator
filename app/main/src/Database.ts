@@ -1,11 +1,12 @@
 import * as Datastore from 'nedb';
 import * as path from 'path';
 import IPCHandler from './IPCHandler';
-import { Events } from './Events';
+import { Events } from '../../lib/Events';
+import electronLog from 'electron-log';
 import { app } from 'electron';
 
 export interface ICheck {
-  checksums: [IChecksum];
+  checksums: IChecksum[];
   filePath: String;
   checkString: String;
   checkAlgorithm: ChecksumAlgorithm;
@@ -60,6 +61,13 @@ class Database {
    */
   public addCheck(check: ICheck) {
     this.checksCollection.insert(check, (err, newDoc) => {
+      this.refreshDB();
+    });
+  }
+
+  public deleteCheck(id: string) {
+    this.checksCollection.remove({ _id: id }, {}, (err, numRemoved) => {
+      electronLog.info(`Deleted check ${id}`);
       this.refreshDB();
     });
   }
