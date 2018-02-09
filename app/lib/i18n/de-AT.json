@@ -1,6 +1,8 @@
 {
   "about": "Über",
+  "action": "Aktion",
   "check": "Check",
+  "check algorithm": "Check Algorithmus",
   "check for updates": "Auf Updates überprüfen...",
   "checksum match": "Übereinstimmung",
   "checksum mismatch": "Die Checksums stimmen nicht überein",
@@ -9,14 +11,19 @@
   "choose file": "Datei wählen...",
   "copy": "Kopieren",
   "cut": "Ausschneiden",
+  "delete check question": "Möchtest du diesen Check wirklich löschen?",
+  "delete": "Löschen",
   "drop file": "Datei hier ablegen",
   "edit": "Bearbeiten",
+  "file": "Datei",
   "file missing": "Bitte füge eine Datei hinzu",
   "help": "Hilfe",
   "hide others": "Andere ausblenden",
   "hide": "Verstecken",
   "learn more": "Erfahre mehr",
+  "no": "Nein",
   "open logs": "Öffne Logs",
+  "open in finder": "Im Finder öffnen",
   "paste": "Einfügen",
   "past checks": "Bisherige Checks",
   "quit": "Beenden",
@@ -32,5 +39,6 @@
   "upload hint": "Bitte nur Dateien und keine Ordner hinzufügen",
   "update available": "Update verfügbar",
   "update error": "Fehler beim Suchen nach Updates",
-  "update latest": "Deine Version ist aktuell"
+  "update latest": "Deine Version ist aktuell",
+  "yes": "Ja"
 }

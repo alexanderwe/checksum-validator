@@ -42,7 +42,7 @@ const mapStateToProps = state => ({
     msg: state.update.msg,
     updateAvailable: state.update.updateAvailable,
   },
-  settings: state.settings.settings,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => {

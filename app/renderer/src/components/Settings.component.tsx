@@ -26,7 +26,7 @@ const i18n: I18n = new I18n();
 
 const mapStateToProps = state => ({
   update: state.update,
-  settings: state.settings.settings,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => {

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { shell } from 'electron';
 
 import { databaseReloadChecks } from '../actions/database';
 
@@ -7,6 +8,8 @@ import Layout from 'antd/lib/layout';
 import Icon from 'antd/lib/icon';
 import Divider from 'antd/lib/divider';
 import Table from 'antd/lib/table';
+import Tooltip from 'antd/lib/tooltip';
+import Popconfirm from 'antd/lib/popconfirm';
 import I18n from '../../../lib/i18n/I18n';
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -29,33 +32,62 @@ class ChecksOverview extends React.Component<any, any> {
     this.props.databaseReloadChecks();
   }
 
+  deleteConfirm = e => {
+    console.log(e);
+  };
+
+  deleteCancel = e => {
+    console.log(e);
+  };
+
   render() {
     const columns = [
       {
-        title: 'File',
+        title: i18n.translate('file'),
         dataIndex: 'filePath',
         key: 'filePath',
         width: 300,
-        render: text => <a href="#">{text}</a>,
+        render: text => (
+          <Tooltip title={i18n.translate('open in finder')}>
+            <a onClick={() => shell.showItemInFolder(text)}>
+              {text.split('/').pop()}
+            </a>
+          </Tooltip>
+        ),
       },
       {
-        title: 'Check Algorithm',
+        title: i18n.translate('check algorithm'),
         dataIndex: 'checkAlgorithm',
         key: 'checkAlgorithm',
         width: 300,
       },
       {
-        title: 'Match ?',
+        title: i18n.translate('checksum match'),
         dataIndex: 'didMatch',
         key: 'didMatch',
         width: 300,
-        render: text => <span>{text.toString()}</span>,
+        render: match =>
+          match ? (
+            <Icon type="check" style={{ color: '#73d13d' }} />
+          ) : (
+            <Icon type="warning" style={{ color: '#ff4d4f' }} />
+          ),
       },
       {
-        title: 'Action',
+        title: i18n.translate('action'),
         key: 'action',
         width: 300,
-        render: () => <a href="#">action</a>,
+        render: () => (
+          <Popconfirm
+            title={i18n.translate('delete check question')}
+            onConfirm={this.deleteConfirm}
+            onCancel={this.deleteCancel}
+            okText={i18n.translate('yes')}
+            cancelText={i18n.translate('no')}
+          >
+            <a href="#">{i18n.translate('delete')}</a>
+          </Popconfirm>
+        ),
       },
     ];
 

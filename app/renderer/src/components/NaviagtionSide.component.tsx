@@ -6,8 +6,10 @@ import Layout from 'antd/lib/layout';
 import Menu from 'antd/lib/menu';
 import Icon from 'antd/lib/icon';
 import BulmaIcon from './base/Icon.component';
+import I18n from '../../../lib/i18n/I18n';
 
 const { Content, Sider } = Layout;
+const i18n: I18n = new I18n();
 
 class NavigationSide extends React.Component<any, any> {
   render() {
@@ -53,7 +55,7 @@ class NavigationSide extends React.Component<any, any> {
               <BulmaIcon name="nc-settings-gear-64" />
             </NavLink>
 
-            <span className="nav-text">Settings</span>
+            <span className="nav-text">{i18n.translate('settings')}</span>
           </Menu.Item>
         </Menu>
       </Sider>
