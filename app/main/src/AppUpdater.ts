@@ -43,9 +43,11 @@ export default class AppUpdater {
 
     autoUpdater.on('download-progress', progressObj => {
       const logMessage = 'Downloaded ' + Math.round(progressObj.percent) + '%';
-      this.ipcHandler.sendToRenderer(Events.UPDATE_DOWNLOAD, {
+      this.ipcHandler.sendToRenderer(Events.UPDATE_DOWNLOADING, {
         error: false,
         msg: logMessage,
+        downloading: true,
+        downloadPercentage: Math.round(progressObj.percent),
         updateAvailable: true,
       });
     });
@@ -58,15 +60,6 @@ export default class AppUpdater {
       this.ipcHandler.sendToRenderer(Events.UPDATE, {
         error: false,
         msg: this.i18n.translate('update latest'),
-        updateAvailable: false,
-      });
-    });
-
-    // TODO: Display error on UI
-    autoUpdater.on('error', error => {
-      this.ipcHandler.sendToRenderer(Events.UPDATE, {
-        error: true,
-        msg: error,
         updateAvailable: false,
       });
     });

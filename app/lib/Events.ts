@@ -1,7 +1,8 @@
 export enum Events {
   UPDATE = 'update',
   UPDATE_CHECK = 'update:check',
-  UPDATE_DOWNLOAD = 'update:download',
+  UPDATE_DOWNLOADING = 'update:downloading',
+  UPDATE_DOWNLOADED = 'update:downloaded',
   CHECKSUM = 'checksum',
   CHECKSUM_RESULT = 'checksum:result',
   DATABASE_CHECKS_RELOAD = 'database:checks-reload',

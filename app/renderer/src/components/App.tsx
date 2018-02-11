@@ -8,6 +8,7 @@ import { Route, NavLink, Switch } from 'react-router-dom';
 
 import { loadSettings } from '../actions/settings';
 
+import DownloadModal from './DownloadModal.component';
 import NavigationSide from './NaviagtionSide.component';
 import ChecksumComponent from './Checksum.component';
 import ChecksOverview from './ChecksOverview.component';
@@ -32,6 +33,7 @@ class App extends React.Component<any, any> {
   render() {
     return (
       <Layout>
+        <DownloadModal />
         <NavigationSide />
         <Layout style={{ marginLeft: '80px', height: '100vh' }}>
           <Route exact path="/" component={ChecksumComponent} />

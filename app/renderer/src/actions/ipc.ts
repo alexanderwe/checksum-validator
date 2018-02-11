@@ -1,7 +1,12 @@
 import createIpc, { send } from 'redux-electron-ipc';
 import message from 'antd/lib/message';
 
-import { UDPATE_INFO, CHECK_FOR_UPDATE } from './update/index';
+import {
+  UDPATE_INFO,
+  UPDATE_DOWNLOADING,
+  CHECK_FOR_UPDATE,
+  UPDATE_DOWNLOADED,
+} from './update/index';
 import { CHECKSUM_CURRENTLY_CHECKING, CHECKSUM_RESULT } from './checksum/index';
 import { DATABASE_CHECKS_RELOAD } from './database/index';
 import { SETTINGS_RELOAD } from './settings/index';
@@ -20,6 +25,29 @@ export const ipc = createIpc({
         error: data.error,
         updateAvailable: data.updateAvailable,
         msg: data.msg,
+      },
+    };
+  },
+  [Events.UPDATE_DOWNLOADING]: (event, data) => {
+    return {
+      type: UPDATE_DOWNLOADING,
+      data: {
+        error: data.error,
+        updateAvailable: data.updateAvailable,
+        msg: data.msg,
+        downloading: data.downloading,
+        downloadPercentage: data.downloadPercentage,
+      },
+    };
+  },
+  [Events.UPDATE_DOWNLOADED]: (event, data) => {
+    return {
+      type: UPDATE_DOWNLOADED,
+      data: {
+        error: data.error,
+        updateAvailable: data.updateAvailable,
+        msg: data.msg,
+        downloading: false,
       },
     };
   },
