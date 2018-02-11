@@ -36,6 +36,7 @@ export const ipc = createIpc({
         updateAvailable: data.updateAvailable,
         msg: data.msg,
         downloading: data.downloading,
+        updating: data.updating,
         downloadPercentage: data.downloadPercentage,
       },
     };

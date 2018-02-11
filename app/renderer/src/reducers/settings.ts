@@ -6,6 +6,7 @@ const initialState = {
   saveChecks: false,
   language: 'us',
   detectLanguage: true,
+  automaticUpdate: false,
 };
 
 export function settings(state = initialState, action) {
@@ -20,6 +21,7 @@ export function settings(state = initialState, action) {
           action.data.settings.detectLanguage !== undefined
             ? action.data.settings.detectLanguage
             : true,
+        automaticUpdate: action.data.settings.automaticUpdate || false,
       };
     default:
       return state;

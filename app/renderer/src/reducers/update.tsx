@@ -14,6 +14,7 @@ const initialState = {
   updateAvailable: false,
   msg: null,
   downloading: false,
+  updating: false,
   downloadPercentage: 0,
 };
 
@@ -42,6 +43,16 @@ export function update(state = initialState, action) {
       return {
         ...state,
         downloading: action.data.downloading,
+        downloadPercentage: action.data.downloadPercentage,
+        error: action.data.error,
+        updateAvailable: action.data.updateAvailable,
+        msg: action.data.msg,
+      };
+    case UPDATE_DOWNLOADING:
+      return {
+        ...state,
+        downloading: action.data.downloading,
+        updating: action.data.updating,
         downloadPercentage: action.data.downloadPercentage,
         error: action.data.error,
         updateAvailable: action.data.updateAvailable,

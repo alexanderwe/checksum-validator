@@ -30,12 +30,15 @@ class DownloadModal extends React.Component<any, any> {
     return (
       <Modal
         title={'Update'}
-        visible={this.props.update.downloading}
+        visible={this.props.update.updating}
         wrapClassName="vertical-center-modal update-modal"
         closable={false}
         footer={[
           <Button
-            disabled={this.props.update.downloadPercentage !== 100}
+            disabled={
+              this.props.update.downloading ||
+              this.props.update.downloadPercentage !== 100
+            }
             key="enter"
             onClick={this.handleExit}
             type="primary"
