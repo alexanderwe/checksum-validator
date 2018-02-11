@@ -32,7 +32,6 @@ export const ipc = createIpc({
     };
   },
   [Events.CHECKSUM]: (event, data) => {
-    console.log('currently checking');
     return {
       type: CHECKSUM_CURRENTLY_CHECKING,
       data: {

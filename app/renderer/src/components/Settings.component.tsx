@@ -11,6 +11,7 @@ import Button from 'antd/lib/button';
 import Icon from 'antd/lib/icon';
 import Layout from 'antd/lib/layout';
 import Form from 'antd/lib/form';
+import Select from 'antd/lib/select';
 import Input from 'antd/lib/input';
 import Tooltip from 'antd/lib/tooltip';
 import Checkbox from 'antd/lib/checkbox';
@@ -21,6 +22,7 @@ import I18n from '../../../lib/i18n/I18n';
 
 const { Header, Content, Footer, Sider } = Layout;
 const FormItem = Form.Item;
+const Option = Select.Option;
 
 const i18n: I18n = new I18n();
 
@@ -98,6 +100,23 @@ class Settings extends React.Component<any, any> {
                 defaultChecked={this.props.settings.saveCheckClipboard}
                 onChange={this.saveCheckClipboard}
               />
+            </Col>
+          </Row>
+          <Row>
+            <Col span={8}>
+              <div>
+                <span>{i18n.translate('language') + ': '}</span>
+              </div>
+            </Col>
+            <Col span={16}>
+              <Select onChange={this.props.checksumTypeChanged}>
+                <Option value="de-AT">German (Austria)</Option>
+                <Option value="de-CH">German (Switzerland)</Option>
+                <Option value="de-DE">German (Germany)</Option>
+                <Option value="de">German</Option>
+                <Option value="en">Englisch</Option>
+                <Option value="en-US">Englisch (US)</Option>
+              </Select>,
             </Col>
           </Row>
           <Row style={{ marginTop: 24 }}>
