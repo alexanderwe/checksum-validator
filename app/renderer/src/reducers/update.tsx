@@ -1,5 +1,7 @@
-import notification from 'antd/lib/notification';
-
+import {
+  showUpdateNotAvailableNotification,
+  showUpdateAvailableNotification,
+} from '../Notifications';
 import { CHECK_FOR_UPDATE, UDPATE_INFO } from '../actions/update/';
 
 const initialState = {
@@ -17,13 +19,12 @@ export function update(state = initialState, action) {
         checkingForUpdate: action.data.checkingForUpdate,
       };
     case UDPATE_INFO:
-      notification.config({
-        placement: 'bottomRight',
-      });
-      notification.open({
-        message: 'Update Info',
-        description: action.data.msg,
-      });
+      if (action.data.updateAvailable) {
+        showUpdateAvailableNotification(action.data.msg);
+      } else {
+        showUpdateNotAvailableNotification(action.data.msg);
+      }
+
       return {
         ...state,
         checkingForUpdate: action.data.checkingForUpdate,

@@ -8,5 +8,5 @@ export const loadSettings = () => {
 };
 
 export const setSetting = (key: String, value: any) => {
-  return send(Events.SETTINGS_UPDATED, { key: key, value: value });
+  return send(Events.SETTINGS_UPDATED, { key, value });
 };

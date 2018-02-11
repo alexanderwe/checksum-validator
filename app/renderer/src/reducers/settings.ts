@@ -1,8 +1,11 @@
+import { remote } from 'electron';
 import { SETTINGS_RELOAD } from '../actions/settings';
 
 const initialState = {
   saveCheckClipboard: false,
   saveChecks: false,
+  language: 'us',
+  detectLanguage: true,
 };
 
 export function settings(state = initialState, action) {
@@ -12,6 +15,11 @@ export function settings(state = initialState, action) {
         ...state,
         saveCheckClipboard: action.data.settings.saveCheckClipboard || false,
         saveChecks: action.data.settings.saveChecks || false,
+        language: action.data.settings.language || remote.app.getLocale(),
+        detectLanguage:
+          action.data.settings.detectLanguage !== undefined
+            ? action.data.settings.detectLanguage
+            : true,
       };
     default:
       return state;

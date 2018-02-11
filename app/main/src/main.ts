@@ -29,11 +29,11 @@ let database: Database;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 320,
+    height: 570,
     resizable: true,
     show: true,
     titleBarStyle: 'hidden',
-    width: 500,
+    width: 800,
   });
 
   // and load the index.html of the app.
