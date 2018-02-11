@@ -1,6 +1,6 @@
 import * as child from 'child_process';
 import electronLog from 'electron-log';
-
+import { IChecksum, ChecksumAlgorithm } from './Database';
 export default class Checksum {
   /**
    * @function sha512
@@ -19,11 +19,12 @@ export default class Checksum {
               'Error while computing SHA512 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed SHA512 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed SHA512 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
@@ -51,11 +52,12 @@ export default class Checksum {
               'Error while computing sha256 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed sha256 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed sha256 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
@@ -78,11 +80,12 @@ export default class Checksum {
               'Error while computing sha1 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed sha1 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed sha1 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
     });
@@ -105,13 +108,40 @@ export default class Checksum {
               'Error while computing md5 of ' + filepath + ' : ' + error,
             );
             reject(error);
+          } else {
+            electronLog.info(
+              'Computed md5 of ' + filepath + ' result: ' + checksum,
+            );
+            resolve(checksum);
           }
-          electronLog.info(
-            'Computed md5 of ' + filepath + ' result: ' + checksum,
-          );
-          resolve(checksum);
         },
       );
+    });
+  }
+
+  public static allChecksums(filepath: string): Promise<IChecksum[]> {
+    return new Promise<[IChecksum]>(async (resolve, reject) => {
+      const md5: IChecksum = {
+        checksum: await Checksum.md5(filepath),
+        algorithm: ChecksumAlgorithm.MD5,
+      };
+
+      const sha1: IChecksum = {
+        checksum: await Checksum.sha1(filepath),
+        algorithm: ChecksumAlgorithm.SHA1,
+      };
+
+      const sha256: IChecksum = {
+        checksum: await Checksum.sha256(filepath),
+        algorithm: ChecksumAlgorithm.SHA256,
+      };
+
+      const sha512: IChecksum = {
+        checksum: await Checksum.sha512(filepath),
+        algorithm: ChecksumAlgorithm.SHA512,
+      };
+
+      resolve([md5, sha1, sha256, sha512]);
     });
   }
 }

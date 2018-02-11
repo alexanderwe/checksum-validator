@@ -1,6 +1,10 @@
 import { BrowserWindow, clipboard, ipcMain } from 'electron';
+import * as Store from 'electron-store';
+import electronLog from 'electron-log';
 import AppUpdater from './AppUpdater';
+import Database, { ICheck, ChecksumAlgorithm } from './Database';
 import Checksum from './Checksum';
+import { Events } from '../../lib/Events';
 
 /**
  * @class IPCHandler
@@ -8,130 +12,98 @@ import Checksum from './Checksum';
  */
 export default class IPCHandler {
   public updater: AppUpdater;
+  public database: Database;
   private mainWindow: BrowserWindow;
+  public settings: Store;
 
   constructor(mainWindow: BrowserWindow) {
     this.mainWindow = mainWindow;
+    this.settings = new Store();
 
     ipcMain
-      .on('checksum', async (event: any, arg: any) => {
-        event.sender.send('checksum', {}); // main received event and acknowledge it to renderer
+      .on(Events.CHECKSUM, async (event: any, arg: any) => {
+        event.sender.send(Events.CHECKSUM, {}); // main received event and acknowledge it to renderer
+        console.log(arg);
+        const calculateAll = event.calculateAll;
         let checksumResultString: string;
         let didMatch: boolean;
-        switch (arg.type) {
-          case 'SHA512':
-            try {
+        let error: boolean;
+
+        try {
+          switch (arg.type) {
+            case 'SHA512':
               checksumResultString = await Checksum.sha512(arg.filepath);
-            } catch (e) {
-              event.sender.send('checksum-result', {
-                checksumResult: checksumResultString,
-                currentChecksum: arg.checksum,
-                error: true,
-                match: didMatch,
-              });
               break;
-            }
-
-            didMatch = checksumResultString === arg.checksum ? true : false;
-
-            if (arg.saveChecksum) {
-              clipboard.writeText(checksumResultString);
-            }
-
-            event.sender.send('checksum-result', {
-              checksumResult: checksumResultString,
-              currentChecksum: arg.checksum,
-              error: false,
-              match: didMatch,
-            });
-            break;
-          case 'SHA256':
-            try {
+            case 'SHA256':
               checksumResultString = await Checksum.sha256(arg.filepath);
-            } catch (e) {
-              event.sender.send('checksum-result', {
-                checksumResult: checksumResultString,
-                currentChecksum: arg.checksum,
-                error: true,
-                match: didMatch,
-              });
               break;
-            }
-            didMatch = checksumResultString === arg.checksum ? true : false;
-            if (arg.saveChecksum) {
-              clipboard.writeText(checksumResultString);
-            }
-            event.sender.send('checksum-result', {
-              checksumResult: checksumResultString,
-              currentChecksum: arg.checksum,
-              error: false,
-              match: didMatch,
-            });
-
-            break;
-          case 'SHA1':
-            try {
+            case 'SHA1':
               checksumResultString = await Checksum.sha1(arg.filepath);
-            } catch (e) {
-              event.sender.send('checksum-result', {
-                checksumResult: checksumResultString,
-                currentChecksum: arg.checksum,
-                error: true,
-                match: didMatch,
-              });
               break;
-            }
-
-            didMatch = checksumResultString === arg.checksum ? true : false;
-
-            if (arg.saveChecksum) {
-              clipboard.writeText(checksumResultString);
-            }
-
-            event.sender.send('checksum-result', {
-              checksumResult: checksumResultString,
-              currentChecksum: arg.checksum,
-              error: false,
-              match: didMatch,
-            });
-            break;
-          case 'MD5':
-            try {
+            case 'MD5':
               checksumResultString = await Checksum.md5(arg.filepath);
-            } catch (e) {
-              event.sender.send('checksum-result', {
-                checksumResult: checksumResultString,
-                currentChecksum: arg.checksum,
-                error: true,
-                match: didMatch,
-              });
               break;
-            }
-            didMatch = checksumResultString === arg.checksum ? true : false;
-
-            if (arg.saveChecksum) {
-              clipboard.writeText(checksumResultString);
-            }
-            event.sender.send('checksum-result', {
-              checksumResult: checksumResultString,
-              currentChecksum: arg.checksum,
-              error: false,
-              match: didMatch,
-            });
-            break;
-          default:
-            break;
+            default:
+              break;
+          }
+        } catch (e) {
+          error = true;
         }
+
+        didMatch = checksumResultString === arg.checksum ? true : false;
+
+        // Only save to clipboard if checksumResultString is available
+        if (arg.saveCheckClipboard && checksumResultString) {
+          clipboard.writeText(checksumResultString);
+        }
+
+        if (arg.saveChecks && !error) {
+          electronLog.info('Saving check to database');
+          const check: ICheck = {
+            checksums: await Checksum.allChecksums(arg.filepath),
+            checkString: arg.checksum as String,
+            checkAlgorithm: arg.type as ChecksumAlgorithm,
+            didMatch: didMatch as boolean,
+            filePath: arg.filepath as String,
+          };
+
+          this.database.addCheck(check);
+        }
+
+        event.sender.send(Events.CHECKSUM_RESULT, {
+          checksumResult: checksumResultString,
+          currentChecksum: arg.checksum,
+          error: error ? error : false,
+          match: didMatch,
+        });
       })
-      .on('update-app', async (event: any, arg: any) => {
+      .on(Events.UPDATE, async (event: any, arg: any) => {
         this.updater.update();
       })
-      .on('checkForUpdate', async (event: any, arg: any) => {
+      .on(Events.UPDATE_CHECK, async (event: any, arg: any) => {
         this.updater.checkForUpdate();
+      })
+      .on(Events.DATABASE_CHECKS_RELOAD, async (event: any, arg: any) => {
+        this.database.refreshDB();
+      })
+      .on(Events.DATABASE_CHECK_DELETE, async (event: any, arg: any) => {
+        this.database.deleteCheck(arg._id);
+      })
+      .on(Events.SETTINGS_LOAD, async (event: any, arg: any) => {
+        event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
+      })
+      .on(Events.SETTINGS_UPDATED, async (event: any, arg: any) => {
+        this.settings.set(arg.key, arg.value);
+        event.sender.send(Events.SETTINGS_LOAD, this.settings.store);
       });
   }
 
-  public sendToRenderer(eventName: string, data: object) {
-    this.mainWindow.webContents.send(eventName, data);
+  /**
+   * @function sendToRenderer
+   * @param channelName Name of the channel to send data to
+   * @param data Data to send
+   */
+  public sendToRenderer(channelName: string, data: object) {
+    this.mainWindow.webContents.send(channelName, data);
   }
 }

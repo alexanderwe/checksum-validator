@@ -61,6 +61,7 @@ export default class AppUpdater {
       });
     });
 
+    // TODO: Display error on UI
     autoUpdater.on('error', error => {
       this.ipcHandler.sendToRenderer('update', {
         error: true,
@@ -75,7 +76,7 @@ export default class AppUpdater {
   };
 
   public checkForUpdate = () => {
-    this.ipcHandler.sendToRenderer('checkForUpdate', {});
+    this.ipcHandler.sendToRenderer('update:check', {});
     autoUpdater.checkForUpdates();
   };
 }
