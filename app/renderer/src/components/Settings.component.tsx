@@ -1,7 +1,7 @@
 import * as React from 'react';
+import { remote } from 'electron';
 import { withRouter } from 'react-router';
-import { send } from 'redux-electron-ipc';
-import { checkForUpdate, updateApp } from '../actions/update/index';
+import { checkForUpdate } from '../actions/update/index';
 import { setSetting } from '../actions/settings/index';
 
 import { connect } from 'react-redux';
@@ -17,6 +17,7 @@ import Tooltip from 'antd/lib/tooltip';
 import Checkbox from 'antd/lib/checkbox';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
+import { showLanguageOptionsChangedNotification } from '../Notifications';
 
 import I18n from '../../../lib/i18n/I18n';
 
@@ -35,24 +36,35 @@ const mapDispatchToProps = dispatch => {
   return {
     checkForUpdate: () => dispatch(checkForUpdate()),
     setSetting: (key: String, value: any) => dispatch(setSetting(key, value)),
-    updateApp: () => dispatch(updateApp()),
   };
 };
 
 @connect(mapStateToProps, mapDispatchToProps)
 class Settings extends React.Component<any, any> {
-  saveCheck = checkedValue => {
-    console.log(checkedValue);
-    this.props.setSetting('saveChecks', checkedValue.target.checked);
+  setSaveCheck = event => {
+    this.props.setSetting('saveChecks', event.target.checked);
   };
 
-  saveCheckClipboard = checkedValue => {
-    this.props.setSetting('saveCheckClipboard', checkedValue.target.checked);
+  setSaveCheckClipboard = event => {
+    this.props.setSetting('saveCheckClipboard', event.target.checked);
+  };
+
+  setLanguage = value => {
+    showLanguageOptionsChangedNotification();
+    this.props.setSetting('language', value);
+  };
+
+  setDetectLanguage = event => {
+    showLanguageOptionsChangedNotification();
+    if (event.target.checked) {
+      this.props.setSetting('language', remote.app.getLocale());
+    }
+    this.props.setSetting('detectLanguage', event.target.checked);
   };
 
   render() {
     return (
-      <div>
+      <div className="settings">
         <Header style={{ background: '#fff', paddingLeft: 24 }}>
           <h2>{i18n.translate('settings')}</h2>
         </Header>
@@ -79,7 +91,7 @@ class Settings extends React.Component<any, any> {
             <Col span={16}>
               <Checkbox
                 defaultChecked={this.props.settings.saveChecks}
-                onChange={this.saveCheck}
+                onChange={this.setSaveCheck}
               />
             </Col>
           </Row>
@@ -98,7 +110,7 @@ class Settings extends React.Component<any, any> {
             <Col span={16}>
               <Checkbox
                 defaultChecked={this.props.settings.saveCheckClipboard}
-                onChange={this.saveCheckClipboard}
+                onChange={this.setSaveCheckClipboard}
               />
             </Col>
           </Row>
@@ -109,14 +121,27 @@ class Settings extends React.Component<any, any> {
               </div>
             </Col>
             <Col span={16}>
-              <Select onChange={this.props.checksumTypeChanged}>
+              <Select
+                style={{ width: '30%' }}
+                onChange={this.setLanguage}
+                value={this.props.settings.language}
+                disabled={this.props.settings.detectLanguage}
+              >
                 <Option value="de-AT">German (Austria)</Option>
                 <Option value="de-CH">German (Switzerland)</Option>
                 <Option value="de-DE">German (Germany)</Option>
                 <Option value="de">German</Option>
                 <Option value="en">Englisch</Option>
                 <Option value="en-US">Englisch (US)</Option>
-              </Select>,
+              </Select>
+
+              <Checkbox
+                style={{ marginLeft: '1rem' }}
+                defaultChecked={this.props.settings.detectLanguage}
+                onChange={this.setDetectLanguage}
+              >
+                {i18n.translate('language automatic')}
+              </Checkbox>
             </Col>
           </Row>
           <Row style={{ marginTop: 24 }}>

@@ -2,6 +2,7 @@ import { dialog } from 'electron';
 import electronLog from 'electron-log';
 import { autoUpdater } from 'electron-updater';
 import I18n from '../../lib/i18n/I18n';
+import { Events } from '../../lib/Events';
 import IPCHandler from './IPCHandler';
 
 export default class AppUpdater {
@@ -25,7 +26,7 @@ export default class AppUpdater {
     autoUpdater.logger = electronLog;
 
     autoUpdater.on('error', error => {
-      this.ipcHandler.sendToRenderer('update', {
+      this.ipcHandler.sendToRenderer(Events.UPDATE, {
         error: true,
         msg: this.i18n.translate('update error') + ' ' + error,
         updateAvailable: false,
@@ -33,7 +34,7 @@ export default class AppUpdater {
     });
 
     autoUpdater.on('update-available', () => {
-      this.ipcHandler.sendToRenderer('update', {
+      this.ipcHandler.sendToRenderer(Events.UPDATE, {
         error: false,
         msg: this.i18n.translate('update available'),
         updateAvailable: true,
@@ -42,7 +43,7 @@ export default class AppUpdater {
 
     autoUpdater.on('download-progress', progressObj => {
       const logMessage = 'Downloaded ' + Math.round(progressObj.percent) + '%';
-      this.ipcHandler.sendToRenderer('update', {
+      this.ipcHandler.sendToRenderer(Events.UPDATE_DOWNLOAD, {
         error: false,
         msg: logMessage,
         updateAvailable: true,
@@ -54,7 +55,7 @@ export default class AppUpdater {
     });
 
     autoUpdater.on('update-not-available', () => {
-      this.ipcHandler.sendToRenderer('update', {
+      this.ipcHandler.sendToRenderer(Events.UPDATE, {
         error: false,
         msg: this.i18n.translate('update latest'),
         updateAvailable: false,
@@ -63,7 +64,7 @@ export default class AppUpdater {
 
     // TODO: Display error on UI
     autoUpdater.on('error', error => {
-      this.ipcHandler.sendToRenderer('update', {
+      this.ipcHandler.sendToRenderer(Events.UPDATE, {
         error: true,
         msg: error,
         updateAvailable: false,
