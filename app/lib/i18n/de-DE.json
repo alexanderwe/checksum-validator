@@ -7,7 +7,7 @@
   "check for updates": "Auf Updates überprüfen...",
   "checksum error": "Fehler - Hast du versucht einen Ordner hinzuzufügen?",
   "checksum match": "Übereinstimmung",
-  "checksum mismatch": "Die Checksums stimmen nicht überein",
+  "checksum mismatch": "Keine Übereinstimmung",
   "checksum missing": "Bitte trage eine Checksum ein",
   "choose file": "Datei wählen...",
   "copy": "Kopieren",
@@ -49,5 +49,6 @@
   "update available": "Update verfügbar",
   "update error": "Fehler beim Suchen nach Updates",
   "update latest": "Deine Version ist aktuell",
+  "used to check": "Zur Überprüfung benutzt",
   "yes": "Ja"
 }
