@@ -2,13 +2,20 @@ import {
   showUpdateNotAvailableNotification,
   showUpdateAvailableNotification,
 } from '../Notifications';
-import { CHECK_FOR_UPDATE, UDPATE_INFO } from '../actions/update/';
+import {
+  CHECK_FOR_UPDATE,
+  UDPATE_INFO,
+  UPDATE_DOWNLOADING,
+} from '../actions/update/';
 
 const initialState = {
   checkingForUpdate: false,
   error: null,
   updateAvailable: false,
   msg: null,
+  downloading: false,
+  updating: false,
+  downloadPercentage: 0,
 };
 
 export function update(state = initialState, action) {
@@ -28,6 +35,25 @@ export function update(state = initialState, action) {
       return {
         ...state,
         checkingForUpdate: action.data.checkingForUpdate,
+        error: action.data.error,
+        updateAvailable: action.data.updateAvailable,
+        msg: action.data.msg,
+      };
+    case UPDATE_DOWNLOADING:
+      return {
+        ...state,
+        downloading: action.data.downloading,
+        downloadPercentage: action.data.downloadPercentage,
+        error: action.data.error,
+        updateAvailable: action.data.updateAvailable,
+        msg: action.data.msg,
+      };
+    case UPDATE_DOWNLOADING:
+      return {
+        ...state,
+        downloading: action.data.downloading,
+        updating: action.data.updating,
+        downloadPercentage: action.data.downloadPercentage,
         error: action.data.error,
         updateAvailable: action.data.updateAvailable,
         msg: action.data.msg,

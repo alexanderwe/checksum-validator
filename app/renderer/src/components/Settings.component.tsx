@@ -62,6 +62,10 @@ class Settings extends React.Component<any, any> {
     this.props.setSetting('detectLanguage', event.target.checked);
   };
 
+  setAutomaticUpdate = event => {
+    this.props.setSetting('automaticUpdate', event.target.checked);
+  };
+
   render() {
     return (
       <div className="settings">
@@ -142,6 +146,19 @@ class Settings extends React.Component<any, any> {
               >
                 {i18n.translate('language automatic')}
               </Checkbox>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={8}>
+              <div>
+                <span>{i18n.translate('automatic update') + ': '}</span>
+              </div>
+            </Col>
+            <Col span={16}>
+              <Checkbox
+                defaultChecked={this.props.settings.automaticUpdate}
+                onChange={this.setAutomaticUpdate}
+              />
             </Col>
           </Row>
           <Row style={{ marginTop: 24 }}>

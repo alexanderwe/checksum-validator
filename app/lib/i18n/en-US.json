@@ -1,6 +1,7 @@
 {
   "about": "About",
   "action": "Action",
+  "automatic update": "Install updates automatically",
   "check": "Check",
   "check algorithm": "Check Algorithm",
   "check for updates": "Check for updates...",
