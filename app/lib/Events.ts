@@ -7,6 +7,9 @@ export enum Events {
   CHECKSUM_RESULT = 'checksum:result',
   DATABASE_CHECKS_RELOAD = 'database:checks-reload',
   DATABASE_CHECK_DELETE = 'database:check-delete',
+  DATABASE_CHECK_EXPORT = 'database:check-export',
+  DATABASE_CHECK_EXPORT_SUCCESS = 'database:check-export-success',
+  ROUTE_SETTINGS = 'route:settings',
   SETTINGS_LOAD = 'settings:load',
   SETTINGS_UPDATED = 'settings:update',
 }

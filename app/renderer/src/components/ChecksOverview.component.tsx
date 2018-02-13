@@ -2,8 +2,13 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { shell } from 'electron';
 
-import { databaseReloadChecks, deleteCheck } from '../actions/database';
+import {
+  databaseReloadChecks,
+  deleteCheck,
+  exportCheck,
+} from '../actions/database';
 
+import message from 'antd/lib/message';
 import Layout from 'antd/lib/layout';
 import Row from 'antd/lib/row';
 import Col from 'antd/lib/col';
@@ -21,12 +26,14 @@ const i18n: I18n = new I18n();
 
 const mapStateToProps = state => ({
   checks: state.database.checks,
+  settings: state.settings,
 });
 
 const mapDispatchToProps = dispatch => {
   return {
     databaseReloadChecks: () => dispatch(databaseReloadChecks()),
     deleteCheck: (id: string) => dispatch(deleteCheck(id)),
+    exportCheck: (id: string) => dispatch(exportCheck(id)),
   };
 };
 
@@ -53,7 +60,14 @@ class ChecksOverview extends React.Component<any, any> {
         width: 300,
         render: text => (
           <Tooltip title={i18n.translate('open in finder')}>
-            <a onClick={() => shell.showItemInFolder(text)}>
+            <a
+              onClick={() => {
+                const success = shell.showItemInFolder(text);
+                if (!success) {
+                  message.warning(i18n.translate('file original missing'));
+                }
+              }}
+            >
               {text.split('/').pop()}
             </a>
           </Tooltip>
@@ -73,11 +87,11 @@ class ChecksOverview extends React.Component<any, any> {
         filters: [
           {
             text: i18n.translate('checksum match'),
-            value: true,
+            value: 'true',
           },
           {
             text: i18n.translate('checksum mismatch'),
-            value: false,
+            value: 'false',
           },
         ],
         onFilter: (value, record) => {
@@ -102,6 +116,16 @@ class ChecksOverview extends React.Component<any, any> {
             (new Date(a.createdAt) as any) - (new Date(b.createdAt) as any)
           );
         },
+        defaultSortOrder: 'descend' as 'descend',
+        render: text => {
+          return (
+            <span>
+              {new Date(text).toLocaleString(this.props.settings.language, {
+                hour12: false,
+              })}
+            </span>
+          );
+        },
       },
       {
         title: i18n.translate('action'),
@@ -109,7 +133,7 @@ class ChecksOverview extends React.Component<any, any> {
         width: 300,
         render: record => (
           <span>
-            <a onClick={() => console.log('Export')}>Export</a>
+            <a onClick={() => this.props.exportCheck(record._id)}>Export</a>
             <Divider type="vertical" />
             <Popconfirm
               title={i18n.translate('delete check question')}

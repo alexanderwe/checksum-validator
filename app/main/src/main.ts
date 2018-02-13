@@ -59,7 +59,9 @@ function createWindow() {
   mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());
 
   // Build the application menu
-  const menu = Menu.buildFromTemplate(new MenuBuilder(appUpdater).build());
+  const menu = Menu.buildFromTemplate(
+    new MenuBuilder(appUpdater, ipcHandler).build(),
+  );
   Menu.setApplicationMenu(menu);
 }
 

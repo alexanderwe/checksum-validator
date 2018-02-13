@@ -11,7 +11,7 @@
     "max-line-length": 120,
     "no-trailing-whitespace": [false],
     "no-var-requires": false,
-    "variable-name": [true, "check-format", "allow-leading-underscore"]
+    "variable-name": [false, "check-format", "allow-leading-underscore"]
   },
   "extends": ["tslint-config-airbnb", "tslint-config-prettier"]
 }

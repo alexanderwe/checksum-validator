@@ -120,7 +120,7 @@ export default class Checksum {
   }
 
   public static allChecksums(filepath: string): Promise<IChecksum[]> {
-    return new Promise<[IChecksum]>(async (resolve, reject) => {
+    return new Promise<IChecksum[]>(async (resolve, reject) => {
       const md5: IChecksum = {
         checksum: await Checksum.md5(filepath),
         algorithm: ChecksumAlgorithm.MD5,

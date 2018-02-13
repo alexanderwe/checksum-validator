@@ -1,7 +1,7 @@
 {
   "about": "About",
-  "automatic update": "Install updates automatically",
   "action": "Action",
+  "automatic update": "Install updates automatically",
   "check": "Check",
   "check algorithm": "Check Algorithm",
   "check for updates": "Check for updates...",
@@ -19,6 +19,8 @@
   "edit": "Edit",
   "file": "File",
   "file missing": "Please add a file to check",
+  "file original missing": "Original file does not exist anymore",
+  "file saved": "File saved",
   "help": "Help",
   "hide others": "Hide others",
   "hide": "Hide",

@@ -56,12 +56,30 @@ class Database {
 
   /**
    * Adds a check object to the database
-   * @function addChecl()
+   * @function addCheck()
    * @param check The object to add
    */
   public addCheck(check: ICheck) {
     this.checksCollection.insert(check, (err, newDoc) => {
       this.refreshDB();
+    });
+  }
+
+  /**
+   * Returns a single check with specified id
+   * @function getCheck
+   * @param  {string} id: Id of the check to get
+   * @return {Promise.object} If resolved the found check
+   */
+  public getCheck(id: string): Promise<object> {
+    return new Promise<object>((resolve, reject) => {
+      this.checksCollection.findOne({ _id: id }, (err, doc) => {
+        if (!err) {
+          resolve(doc);
+        } else {
+          reject(err);
+        }
+      });
     });
   }
 
