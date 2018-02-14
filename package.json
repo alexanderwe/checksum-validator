@@ -30,7 +30,7 @@
     "chai-as-promised": "^7.1.1",
     "copy-webpack-plugin": "^4.2.0",
     "css-loader": "^0.28.7",
-    "electron": "^1.8.2-beta.4",
+    "electron": "^1.8.2",
     "electron-builder": "^19.37.2",
     "electron-devtools-installer": "^2.2.3",
     "electron-react-devtools": "^0.4.0",

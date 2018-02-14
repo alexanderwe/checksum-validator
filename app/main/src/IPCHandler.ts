@@ -113,7 +113,7 @@ export default class IPCHandler {
       })
       .on(Events.SETTINGS_UPDATED, async (event: any, arg: any) => {
         this.settings.set(arg.key, arg.value);
-        event.sender.send(Events.SETTINGS_LOAD, this.settings.store);
+        event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
       });
   }
 

@@ -56,7 +56,7 @@ function createWindow() {
   ipcHandler.database = database;
 
   // Init the touchbar with ipcHandler support to send events to the renderer process
-  mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());
+  mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler, appUpdater).build());
 
   // Build the application menu
   const menu = Menu.buildFromTemplate(
