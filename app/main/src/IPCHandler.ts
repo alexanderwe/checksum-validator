@@ -1,4 +1,6 @@
-import { BrowserWindow, clipboard, ipcMain } from 'electron';
+import * as fs from 'fs';
+
+import { BrowserWindow, clipboard, dialog, ipcMain } from 'electron';
 import * as Store from 'electron-store';
 import electronLog from 'electron-log';
 import AppUpdater from './AppUpdater';
@@ -89,12 +91,29 @@ export default class IPCHandler {
       .on(Events.DATABASE_CHECK_DELETE, async (event: any, arg: any) => {
         this.database.deleteCheck(arg._id);
       })
+      .on(Events.DATABASE_CHECK_EXPORT, async (event: any, arg: any) => {
+        const check = await this.database.getCheck(arg._id);
+
+        dialog.showSaveDialog(
+          {
+            filters: [{ name: 'json', extensions: ['json'] }],
+            defaultPath:
+              (check as any).filePath.split('/').pop() + '_checksums',
+          },
+          fileName => {
+            if (fileName === undefined) return;
+            fs.writeFile(fileName, JSON.stringify(check), err => {
+              event.sender.send(Events.DATABASE_CHECK_EXPORT_SUCCESS, {});
+            });
+          },
+        );
+      })
       .on(Events.SETTINGS_LOAD, async (event: any, arg: any) => {
         event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
       })
       .on(Events.SETTINGS_UPDATED, async (event: any, arg: any) => {
         this.settings.set(arg.key, arg.value);
-        event.sender.send(Events.SETTINGS_LOAD, this.settings.store);
+        event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
       });
   }
 

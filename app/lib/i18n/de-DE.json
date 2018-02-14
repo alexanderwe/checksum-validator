@@ -7,7 +7,7 @@
   "check for updates": "Auf Updates überprüfen...",
   "checksum error": "Fehler - Hast du versucht einen Ordner hinzuzufügen?",
   "checksum match": "Übereinstimmung",
-  "checksum mismatch": "Die Checksums stimmen nicht überein",
+  "checksum mismatch": "Keine Übereinstimmung",
   "checksum missing": "Bitte trage eine Checksum ein",
   "choose file": "Datei wählen...",
   "copy": "Kopieren",
@@ -19,6 +19,8 @@
   "edit": "Bearbeiten",
   "file": "Datei",
   "file missing": "Bitte füge eine Datei hinzu",
+  "file original missing": "Die Originaldatei ist nicht mehr vorhanden",
+  "file saved": "Datei gesichert",
   "help": "Hilfe",
   "hide others": "Andere ausblenden",
   "hide": "Verstecken",
@@ -49,5 +51,6 @@
   "update available": "Update verfügbar",
   "update error": "Fehler beim Suchen nach Updates",
   "update latest": "Deine Version ist aktuell",
+  "used to check": "Zur Überprüfung benutzt",
   "yes": "Ja"
 }

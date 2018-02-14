@@ -52,8 +52,6 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-//checksumTypeChanged
-
 @connect(mapStateToProps, mapDispatchToProps)
 class ChecksumValidator extends React.Component<any, any> {
   constructor(props: any) {

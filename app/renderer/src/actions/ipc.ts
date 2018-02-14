@@ -1,6 +1,9 @@
 import createIpc, { send } from 'redux-electron-ipc';
 import message from 'antd/lib/message';
 
+import { push } from 'react-router-redux';
+import store from '../store';
+
 import {
   UDPATE_INFO,
   UPDATE_DOWNLOADING,
@@ -8,8 +11,11 @@ import {
   UPDATE_DOWNLOADED,
 } from './update/index';
 import { CHECKSUM_CURRENTLY_CHECKING, CHECKSUM_RESULT } from './checksum/index';
-import { DATABASE_CHECKS_RELOAD } from './database/index';
-import { SETTINGS_RELOAD } from './settings/index';
+import {
+  DATABASE_CHECKS_RELOAD,
+  DATABASE_CHECK_EXPORT_SUCCESS,
+} from './database/index';
+import { SETTINGS_RELOAD, ROUTE_SETTINGS } from './settings/index';
 import { Events } from '../../../lib/Events';
 
 import I18n from '../../../lib/i18n/I18n';
@@ -17,6 +23,14 @@ import I18n from '../../../lib/i18n/I18n';
 const i18n: I18n = new I18n();
 
 export const ipc = createIpc({
+  [Events.ROUTE_SETTINGS]: (event, data) => {
+    store.dispatch(push('/settings'));
+    return {
+      // not used in reducer
+      type: ROUTE_SETTINGS,
+      data: {},
+    };
+  },
   [Events.UPDATE]: (event, data) => {
     return {
       type: UDPATE_INFO,
@@ -94,6 +108,14 @@ export const ipc = createIpc({
       data: {
         checks: data,
       },
+    };
+  },
+  [Events.DATABASE_CHECK_EXPORT_SUCCESS]: (event, data) => {
+    message.success(i18n.translate('file saved'));
+    return {
+      // not used in reducer
+      type: DATABASE_CHECK_EXPORT_SUCCESS,
+      data: {},
     };
   },
   [Events.SETTINGS_LOAD]: (event, data) => {

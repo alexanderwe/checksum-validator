@@ -65,6 +65,16 @@ class I18n {
     }
     return translation;
   }
+
+  public translateTest(phrase: string): string {
+    const tokens = phrase.split('.');
+    const parent = this.loadedLanguage[tokens[0]];
+    let translation = parent[tokens[1]];
+    if (translation === undefined) {
+      translation = phrase;
+    }
+    return translation;
+  }
 }
 
 export default I18n;

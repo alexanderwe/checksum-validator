@@ -19,6 +19,8 @@
   "edit": "Edit",
   "file": "File",
   "file missing": "Please add a file to check",
+  "file original missing": "Original file does not exist anymore",
+  "file saved": "File saved",
   "help": "Help",
   "hide others": "Hide others",
   "hide": "Hide",
@@ -49,5 +51,6 @@
   "update available": "Update available",
   "update error": "Error while checking updates",
   "update latest": "You have the latest version",
+  "used to check": "Used to check",
   "yes": "Yes"
 }
