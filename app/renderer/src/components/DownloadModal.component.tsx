@@ -1,9 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 
-import Button from 'antd/lib/button';
-import Modal from 'antd/lib/modal';
-import Progress from 'antd/lib/progress';
+import { Button, Modal, Progress } from 'antd';
 
 import { updateApp } from '../actions/update';
 

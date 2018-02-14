@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { withRouter } from 'react-router';
-import Layout from 'antd/lib/layout';
+import { Layout } from 'antd';
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

@@ -24,7 +24,7 @@ ansi-styles@^2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/ansi-styles/-/ansi-styles-2.2.1.tgz#b432dd3358b634cf75e1e4664368240533c1ddbe"
 
-antd@^3.1.6:
+antd@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/antd/-/antd-3.2.1.tgz#141d87b61063b58aa1cd392d0bf5fb953e96eeec"
   dependencies:
@@ -139,6 +139,10 @@ builder-util-runtime@~4.0.3:
     debug "^3.1.0"
     fs-extra-p "^4.5.0"
     sax "^1.2.4"
+
+bulma@^0.6.0:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.6.2.tgz#f4b1d11d5acc51a79644eb0a2b0b10649d3d71f5"
 
 can-use-dom@^0.1.0:
   version "0.1.0"
@@ -422,7 +426,7 @@ immediate@~3.0.5:
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/immediate/-/immediate-3.0.6.tgz#9db1dbd0faf8de6fbe0f5dd5e56bb606280de69b"
 
-immutable@^3.7.4:
+immutable@^3.7.4, immutable@^3.8.2:
   version "3.8.2"
   resolved "https://registry.yarnpkg.com/immutable/-/immutable-3.8.2.tgz#c2439951455bb39913daf281376f1530e104adf3"
 
@@ -1197,6 +1201,16 @@ react@^16.0.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
+
+reactbulma@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/reactbulma/-/reactbulma-1.1.1.tgz#4410ea53ec6e46e1c66660c1eb8eacaaabe64776"
+  dependencies:
+    bulma "^0.6.0"
+    classnames "^2.2.5"
+    prop-types "^15.6.0"
+    react "^16.0.0"
+    react-dom "^16.0.0"
 
 redux-electron-ipc@^1.1.12:
   version "1.1.12"

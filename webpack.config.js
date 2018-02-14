@@ -2,6 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const tsImportPluginFactory = require('ts-import-plugin');
 const path = require('path');
 module.exports = function(env) {
   console.log(env);
@@ -29,8 +30,22 @@ module.exports = function(env) {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
-          use: [{ loader: 'awesome-typescript-loader' }],
+          test: /\.(jsx|tsx|js|ts)$/,
+          use: [
+            {
+              loader: 'awesome-typescript-loader',
+              options: {
+                transpileOnly: true,
+                getCustomTransformers: () => ({
+                  before: [tsImportPluginFactory(/** options */)],
+                }),
+                compilerOptions: {
+                  module: 'es2015',
+                },
+              },
+            },
+          ],
+          exclude: /node_modules/,
         },
         {
           // regular css files

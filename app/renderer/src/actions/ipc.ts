@@ -1,5 +1,5 @@
 import createIpc, { send } from 'redux-electron-ipc';
-import message from 'antd/lib/message';
+import { message } from 'antd';
 
 import { push } from 'react-router-redux';
 import store from '../store';
