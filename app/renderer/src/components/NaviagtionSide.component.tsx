@@ -2,9 +2,7 @@ import * as React from 'react';
 import { withRouter } from 'react-router';
 import { Route, NavLink, Switch } from 'react-router-dom';
 
-import Layout from 'antd/lib/layout';
-import Menu from 'antd/lib/menu';
-import Icon from 'antd/lib/icon';
+import { Layout, Menu, Icon } from 'antd';
 import BulmaIcon from './base/Icon.component';
 import I18n from '../../../lib/i18n/I18n';
 

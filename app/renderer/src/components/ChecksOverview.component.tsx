@@ -8,16 +8,18 @@ import {
   exportCheck,
 } from '../actions/database';
 
-import message from 'antd/lib/message';
-import Layout from 'antd/lib/layout';
-import Row from 'antd/lib/row';
-import Col from 'antd/lib/col';
-import Icon from 'antd/lib/icon';
-import Divider from 'antd/lib/divider';
-import Table from 'antd/lib/table';
-import Tooltip from 'antd/lib/tooltip';
-import Popconfirm from 'antd/lib/popconfirm';
-import Modal from 'antd/lib/modal';
+import {
+  message,
+  Layout,
+  Row,
+  Col,
+  Icon,
+  Divider,
+  Table,
+  Tooltip,
+  Popconfirm,
+  Modal,
+} from 'antd';
 import I18n from '../../../lib/i18n/I18n';
 
 const { Header, Content, Footer, Sider } = Layout;

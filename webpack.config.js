@@ -2,6 +2,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const tsImportPluginFactory = require('ts-import-plugin');
 const path = require('path');
 module.exports = function(env) {
   console.log(env);
@@ -29,24 +30,33 @@ module.exports = function(env) {
     module: {
       rules: [
         {
-          test: /\.tsx?$/,
+          test: /\.(jsx|tsx|js|ts)$/,
           use: [
             {
               loader: 'awesome-typescript-loader',
+              options: {
+                transpileOnly: true,
+                getCustomTransformers: () => ({
+                  before: [tsImportPluginFactory(/** options */)],
+                }),
+                compilerOptions: {
+                  module: 'es2015',
+                },
+              },
             },
           ],
+          exclude: /node_modules/,
         },
         {
           // regular css files
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract({
-            loader: 'css-loader?importLoaders=1',
+          use: ExtractTextPlugin.extract({
+            use: 'css-loader?importLoaders=1',
           }),
         },
         {
-          // sass / scss loader for webpack
           test: /\.less$/,
-          loader: ExtractTextPlugin.extract(['css-loader', 'less-loader']),
+          use: ExtractTextPlugin.extract(['css-loader', 'less-loader']),
         },
         {
           test: /\.(png|jpg|gif|svg)$/,
@@ -61,11 +71,7 @@ module.exports = function(env) {
         },
         {
           test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
-          use: [
-            {
-              loader: 'url-loader',
-            },
-          ],
+          use: [{ loader: 'url-loader' }],
         },
       ],
     },
@@ -95,7 +101,12 @@ module.exports = function(env) {
       extensions: ['.ts', '.js', '.json'],
     },
     module: {
-      loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }],
+      rules: [
+        {
+          test: /.ts$/,
+          use: [{ loader: 'awesome-typescript-loader' }],
+        },
+      ],
     },
     plugins: [
       new CopyWebpackPlugin([

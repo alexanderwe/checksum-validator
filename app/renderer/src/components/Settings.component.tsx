@@ -7,16 +7,19 @@ import { setSetting } from '../actions/settings/index';
 import { connect } from 'react-redux';
 import { Route, NavLink, Switch } from 'react-router-dom';
 
-import Button from 'antd/lib/button';
-import Icon from 'antd/lib/icon';
-import Layout from 'antd/lib/layout';
-import Form from 'antd/lib/form';
-import Select from 'antd/lib/select';
-import Input from 'antd/lib/input';
-import Tooltip from 'antd/lib/tooltip';
-import Checkbox from 'antd/lib/checkbox';
-import Row from 'antd/lib/row';
-import Col from 'antd/lib/col';
+import {
+  Button,
+  Icon,
+  Layout,
+  Form,
+  Select,
+  Input,
+  Tooltip,
+  Checkbox,
+  Row,
+  Col,
+} from 'antd';
+
 import { showLanguageOptionsChangedNotification } from '../Notifications';
 
 import I18n from '../../../lib/i18n/I18n';

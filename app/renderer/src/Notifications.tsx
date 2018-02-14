@@ -1,8 +1,7 @@
 import * as React from 'react';
 import { remote } from 'electron';
 
-import notification from 'antd/lib/notification';
-import Button from 'antd/lib/button';
+import { Button, notification } from 'antd';
 
 import store from './store';
 import { updateApp } from './actions/update/index';

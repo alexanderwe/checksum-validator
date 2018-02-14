@@ -11,15 +11,9 @@ import {
   validateChecksum,
 } from '../actions/checksum/index';
 
-import Form from 'antd/lib/form';
-import Input from 'antd/lib/input';
-import Button from 'antd/lib/button';
-import Checkbox from 'antd/lib/checkbox';
-import Uploader from 'antd/lib/upload';
-import Select from 'antd/lib/select';
-import Layout from 'antd/lib/layout';
+import { Form, Input, Button, Upload, Checkbox, Select, Layout } from 'antd';
 
-const Dragger = Uploader.Dragger;
+const Dragger = Upload.Dragger;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const { Content, Header } = Layout;
