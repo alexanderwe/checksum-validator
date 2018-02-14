@@ -30,23 +30,18 @@ module.exports = function(env) {
       rules: [
         {
           test: /\.tsx?$/,
-          use: [
-            {
-              loader: 'awesome-typescript-loader',
-            },
-          ],
+          use: [{ loader: 'awesome-typescript-loader' }],
         },
         {
           // regular css files
           test: /\.css$/,
-          loader: ExtractTextPlugin.extract({
-            loader: 'css-loader?importLoaders=1',
+          use: ExtractTextPlugin.extract({
+            use: 'css-loader?importLoaders=1',
           }),
         },
         {
-          // sass / scss loader for webpack
           test: /\.less$/,
-          loader: ExtractTextPlugin.extract(['css-loader', 'less-loader']),
+          use: ExtractTextPlugin.extract(['css-loader', 'less-loader']),
         },
         {
           test: /\.(png|jpg|gif|svg)$/,
@@ -61,11 +56,7 @@ module.exports = function(env) {
         },
         {
           test: /\.(eot|svg|ttf|woff(2)?)(\?v=\d+\.\d+\.\d+)?/,
-          use: [
-            {
-              loader: 'url-loader',
-            },
-          ],
+          use: [{ loader: 'url-loader' }],
         },
       ],
     },
@@ -95,7 +86,12 @@ module.exports = function(env) {
       extensions: ['.ts', '.js', '.json'],
     },
     module: {
-      loaders: [{ test: /.ts$/, loader: 'awesome-typescript-loader' }],
+      rules: [
+        {
+          test: /.ts$/,
+          use: [{ loader: 'awesome-typescript-loader' }],
+        },
+      ],
     },
     plugins: [
       new CopyWebpackPlugin([

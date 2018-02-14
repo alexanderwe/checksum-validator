@@ -3,6 +3,7 @@ import { withRouter } from 'react-router';
 import { Route, NavLink, Switch } from 'react-router-dom';
 
 import Layout from 'antd/lib/layout';
+console.log(Layout);
 import Menu from 'antd/lib/menu';
 import Icon from 'antd/lib/icon';
 import BulmaIcon from './base/Icon.component';
