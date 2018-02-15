@@ -8,9 +8,11 @@ import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
 import MenuBuilder from './MenuBuilder';
 import TouchBarBuilder from './TouchBarBuilder';
+import Database from './Database';
 
 if (process.env.ELECTRON_DEV) {
-  require('electron-reload')(path.join(__dirname, '/../../renderer/build/'));
+  console.log('DEV ENVIRONMENT');
+  require('electron-reload')(path.join(__dirname, '/../build'));
 }
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -18,6 +20,7 @@ if (process.env.ELECTRON_DEV) {
 let mainWindow: BrowserWindow;
 let ipcHandler: IPCHandler;
 let appUpdater: AppUpdater;
+let database: Database;
 
 /**
  * @function createWindow
@@ -26,11 +29,11 @@ let appUpdater: AppUpdater;
 function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    height: 320,
-    resizable: false,
+    height: 570,
+    resizable: true,
     show: true,
     titleBarStyle: 'hidden',
-    width: 300,
+    width: 800,
   });
 
   // and load the index.html of the app.
@@ -48,19 +51,38 @@ function createWindow() {
   // Init ipcHandler
   ipcHandler = new IPCHandler(mainWindow);
   appUpdater = new AppUpdater(ipcHandler);
+  database = new Database(ipcHandler);
   ipcHandler.updater = appUpdater;
-  console.log('main' + app.getLocale());
+  ipcHandler.database = database;
 
   // Init the touchbar with ipcHandler support to send events to the renderer process
-  mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler).build());
+  mainWindow.setTouchBar(new TouchBarBuilder(ipcHandler, appUpdater).build());
 
   // Build the application menu
-  const menu = Menu.buildFromTemplate(new MenuBuilder(appUpdater).build());
+  const menu = Menu.buildFromTemplate(
+    new MenuBuilder(appUpdater, ipcHandler).build(),
+  );
   Menu.setApplicationMenu(menu);
 }
 
 app.on('ready', () => {
   createWindow();
+
+  if (process.env.ELECTRON_DEV) {
+    const {
+      default: installExtension,
+      REACT_DEVELOPER_TOOLS,
+      REDUX_DEVTOOLS,
+    } = require('electron-devtools-installer');
+
+    installExtension(REACT_DEVELOPER_TOOLS)
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
+
+    installExtension(REDUX_DEVTOOLS)
+      .then(name => console.log(`Added Extension:  ${name}`))
+      .catch(err => console.log('An error occurred: ', err));
+  }
 });
 
 // Quit when all windows are closed.

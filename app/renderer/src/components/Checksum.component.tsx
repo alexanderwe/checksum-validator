@@ -1,18 +1,22 @@
-import { ipcRenderer } from 'electron';
 import * as React from 'react'; // ES6
+import { send } from 'redux-electron-ipc';
+
 import Transition from 'react-transition-group/Transition';
+import Icon from './base/Icon.component';
 
-import Button from './bulma/element/Button.component';
-import Icon from './bulma/element/Icon.component';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+  checksumTypeChanged,
+  validateChecksum,
+} from '../actions/checksum/index';
 
-import Notification from './bulma/element/Notification.component';
-import Form from './bulma/form/Form.component';
-import Container from './bulma/layout/Container.component';
-import Hero from './bulma/layout/hero/Hero.component';
-import Section from './bulma/layout/Section.component';
-import FadeAndSlideDownTransition from './transition/FadeAndSlideDownTransition.component';
+import { Form, Input, Button, Upload, Checkbox, Select, Layout } from 'antd';
 
-import Tag from './bulma/element/Tag.component';
+const Dragger = Upload.Dragger;
+const FormItem = Form.Item;
+const Option = Select.Option;
+const { Content, Header } = Layout;
 
 import I18n from '../../../lib/i18n/I18n';
 
@@ -24,101 +28,46 @@ interface IUpdateMsg {
   updateAvailable: boolean;
 }
 
-interface IChecksumValidatorState {
-  checksum: string;
-  checksumResult: string;
-  error: boolean;
-  fileHover: boolean;
-  fileName: string;
-  filePath: string;
-  loading: boolean;
-  match: boolean;
-  notificationOpen: boolean;
-  saveChecksum: boolean;
-  type: string;
-  updateMsg: IUpdateMsg;
-  checkingForUpdate: boolean;
-}
+const mapStateToProps = state => ({
+  checksumType: state.checksum.type,
+  loading: state.checksum.loading,
+  update: {
+    error: state.update.error,
+    msg: state.update.msg,
+    updateAvailable: state.update.updateAvailable,
+  },
+  settings: state.settings,
+});
 
-class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
+const mapDispatchToProps = dispatch => {
+  return {
+    validateChecksum: data => dispatch(validateChecksum(data)),
+    checksumTypeChanged: value => dispatch(checksumTypeChanged(value)),
+  };
+};
+
+@connect(mapStateToProps, mapDispatchToProps)
+class ChecksumValidator extends React.Component<any, any> {
   constructor(props: any) {
     super(props);
-    this.state = {
-      checkingForUpdate: false,
-      checksum: '',
-      checksumResult: '',
-      error: false,
-      fileHover: false,
-      fileName: '',
-      filePath: '',
-      loading: false,
-      match: false,
-      notificationOpen: false,
-      saveChecksum: false,
-      type: 'SHA256',
-      updateMsg: null,
-    };
   }
 
   public componentDidMount() {
-    ipcRenderer.on('checksum-result', (event: any, data: any) => {
-      this.setState(
-        {
-          checksumResult: data.checksumResult,
-          error: data.error,
-          loading: false,
-          match: data.match,
-        },
-        this.openNotification(),
-      );
-    }).on('check', (event: any, data: any) => {
-      this.check();
-    }).on('update', (event: any, data: any) => {
-      this.setState({
-        checkingForUpdate: false,
-        updateMsg: data,
-      });
-    }).on('checkForUpdate', (event: any, data: any) => {
-      this.setState({
-        checkingForUpdate: true,
-      });
+    this.props.form.setFieldsValue({
+      checksumType: this.props.checksumType,
     });
-
-    document.body.ondrop = (event: any) => {
-      this.setState({
-        fileHover: false,
-        fileName: event.dataTransfer.files[0].name,
-        filePath: event.dataTransfer.files[0].path,
-      });
-      event.preventDefault();
-    };
-
-    document.ondragover = document.ondrop = (event: any) => {
-      event.preventDefault();
-      this.setState({
-        fileHover: true,
-      });
-    };
-    document.ondragend = document.ondrop = (event: any) => {
-      event.preventDefault();
-      this.setState({
-        fileHover: false,
-      });
-    };
-
-    document.ondragleave = (event: any) => {
-      event.preventDefault();
-      if (event.target.className === 'hero-body') {
-        this.setState({
-          fileHover: false,
-        });
-      }
-    };
   }
 
-  public handleSelectChange = (event: any) => {
-    this.setState({ type: event.target.value });
-  }
+  private normFile = e => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList.slice(-1); // only show latest uploaded file
+  };
+
+  public handleSelectChange = (value: any) => {
+    this.setState({ type: value });
+  };
 
   public handleInputChange = (event: any) => {
     const target = event.target;
@@ -128,125 +77,139 @@ class ChecksumValidator extends React.Component<any, IChecksumValidatorState> {
     this.setState({
       [name]: value,
     });
-  }
+  };
 
-  public handleFileChange = (event: any) => {
-    this.setState(
-      {
-        fileName: event.target.files[0].name,
-        filePath: event.target.files[0].path,
-      },
-    );
-  }
-
-  public handleCheckboxChange = (event: any) => {
-    this.setState({
-      saveChecksum: event.target.checked,
-    });
-  }
-
-  public closeNotification = (): any => {
-    this.setState({
-      notificationOpen: false,
-    });
-  }
-
-  public openNotification = (): any => {
-    this.setState({
-      notificationOpen: true,
-    });
-  }
-
-  public updateApp = (): any => {
-    ipcRenderer.send('update-app', {});
-  }
-
-  public check = () => {
-
-    if (this.state.filePath !== '' && this.state.checksum !== '') {
-      this.closeNotification();
-      this.setState({
-        loading: true,
-      });
-      setTimeout(() => {
-        ipcRenderer.send('checksum', {
-          checksum: this.state.checksum,
-          filepath: this.state.filePath,
-          saveChecksum: this.state.saveChecksum,
-          type: this.state.type,
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        console.log('Received values of form: ', values);
+        console.log(this.props.settings);
+        this.props.validateChecksum({
+          checksum: values.checksum,
+          filepath: values.files[0].originFileObj.path,
+          saveCheckClipboard: this.props.settings.saveCheckClipboard,
+          type: values.checksumType,
+          saveChecks: this.props.settings.saveChecks,
         });
-      }, 1000);
-    }
-  }
+      }
+    });
+  };
 
   public render() {
-    const button = <div>Button</div>;
+    const draggerProps = {
+      name: 'file',
+      multiple: false,
+      onChange(info) {
+        const status = info.file.status;
+        if (status !== 'uploading') {
+          console.log(info.file, info.fileList);
+        }
+        if (status === 'done') {
+          console.log(`${info.file.name} file uploaded successfully.`);
+        } else if (status === 'error') {
+          console.log(`${info.file.name} file upload failed.`);
+        }
+      },
+    };
 
+    const { getFieldDecorator } = this.props.form;
     return (
-      <div className='checksum-validator'>
-        <FadeAndSlideDownTransition in={!!this.state.notificationOpen} duration={500}>
-          <Notification isSuccess={this.state.match} isDanger={!this.state.match || this.state.error} style={{ width: '100%', position: 'absolute', zIndex: '10' }} onCloseClick={() => this.closeNotification()}>
-            {!this.state.checksumResult ? <div>
-              <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> {i18n.translate('checksum fail')}
-            </div> : this.state.match ? (
-              <div>
-                <Icon name={'nc-check-2'} style={{ marginRight: '10px' }} /> {i18n.translate('checksum match')}
-              </div>
-            ) : (
-                  <div>
-                    <Icon name={'nc-alert-exc'} style={{ marginRight: '10px' }} /> {i18n.translate('checksum mismatch')}
-                  </div>
+      <div>
+        <Header style={{ background: '#fff', paddingLeft: 24 }}>
+          <h2>Check</h2>
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px 0',
+            overflow: 'initial',
+            background: '#fff',
+            padding: 24,
+          }}
+        >
+          <div className="checksum-validator">
+            <Form onSubmit={this.handleSubmit} className="login-form">
+              <FormItem>
+                {getFieldDecorator('files', {
+                  valuePropName: 'fileList',
+                  getValueFromEvent: this.normFile,
+                  rules: [
+                    {
+                      required: true,
+                      message: i18n.translate('file missing'),
+                    },
+                  ],
+                })(
+                  <Dragger {...draggerProps}>
+                    <p className="ant-upload-drag-icon">
+                      <Icon name="nc-archive-paper-check" />
+                    </p>
+                    <p className="ant-upload-text">
+                      {i18n.translate('upload text')}
+                    </p>
+                    <p className="ant-upload-hint">
+                      {i18n.translate('upload hint')}
+                    </p>
+                  </Dragger>,
                 )}
-          </Notification>
-        </FadeAndSlideDownTransition>
-        <div className='dimmer' style={this.state.fileHover ? { display: 'block' } : { display: 'none' }}>
-          <Hero isMedium isFullHeight>
-            <Hero.Body>
-              <Container>
-                <h1 className='title' style={{ color: '#fff' }}>
-                  {i18n.translate('drop file')}
-                </h1>
-                <Icon name={'nc-file-download-89'} isLarge />
-              </Container>
-            </Hero.Body>
-          </Hero>
-        </div>
-        <Section>
-          <Form.Field>
-            <Form.File isBoxed isPrimary isFullWidth label={i18n.translate('choose file')} onChange={this.handleFileChange} fileName={this.state.fileName} />
-          </Form.Field>
-          <Form.Field hasIconsLeft>
-            <input className='input' type='text' name='checksum' placeholder='Checksum' value={this.state.checksum} onChange={this.handleInputChange} />
-            <Icon name={'nc-code'} isSmall isLeft />
-          </Form.Field>
-          <Form.Field hasIconsLeft>
-            <span className='select'>
-              <select value={this.state.type} onChange={this.handleSelectChange}>
-                <option value='SHA256'>SHA256</option>
-                <option value='SHA512'>SHA512</option>
-                <option value='SHA1'>SHA1</option>
-                <option value='MD5'>MD5</option>
-              </select>
-            </span>
-            <Icon name={'nc-security'} isSmall isLeft />
-          </Form.Field>
-          <Button isOutLined isPrimary onClick={() => this.check()} icon={this.state.loading ? <Icon name={'nc-dots'} isSmall spin style={{ marginRight: '10px' }} /> : null}>
-            {i18n.translate('check')}
-          </Button>
-        </Section>
-        {this.state.updateMsg ?
-          <Tag
-            isPrimary={this.state.updateMsg.updateAvailable}
-            isDanger={this.state.updateMsg.error}
-            style={{ cursor: 'pointer' }}
-            onClick={this.state.updateMsg.updateAvailable ? () => this.updateApp() : null}>
-            {this.state.checkingForUpdate ? <Icon name={'nc-circle'} spin></Icon> : null}  {this.state.updateMsg.msg}
-          </Tag>
-          : null}
-
-      </div >
+              </FormItem>
+              <FormItem>
+                {getFieldDecorator('checksum', {
+                  rules: [
+                    {
+                      required: true,
+                      message: i18n.translate('checksum missing'),
+                    },
+                  ],
+                })(
+                  <Input
+                    style={{ marginTop: '24px' }}
+                    prefix={
+                      <Icon
+                        name={'nc-note-code'}
+                        isSmall
+                        isLeft
+                        style={{ color: 'rgba(0,0,0,.25)' }}
+                      />
+                    }
+                    placeholder="Checksum"
+                  />,
+                )}
+              </FormItem>
+              <FormItem>
+                {getFieldDecorator('checksumType', {
+                  initialValue: this.props.checksumType,
+                  rules: [
+                    {
+                      required: true,
+                      message: 'Please specify the checksum type!',
+                    },
+                  ],
+                })(
+                  <Select onChange={this.props.checksumTypeChanged}>
+                    <Option value="SHA256">SHA256</Option>
+                    <Option value="SHA512">SHA512</Option>
+                    <Option value="SHA1">SHA1</Option>
+                    <Option value="MD5">MD5</Option>
+                  </Select>,
+                )}
+              </FormItem>
+              <FormItem>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="login-form-button"
+                  loading={this.props.loading}
+                >
+                  {i18n.translate('check')}
+                </Button>
+              </FormItem>
+            </Form>
+          </div>
+        </Content>
+      </div>
     );
   }
 }
 
-export default ChecksumValidator;
+export default Form.create()(ChecksumValidator);
