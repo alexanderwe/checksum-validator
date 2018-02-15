@@ -1,6 +1,6 @@
 {
   "name": "checksum-validator",
-  "version": "0.2.1",
+  "version": "1.0.0",
   "description": "Small Electron application to validate checksums.",
   "scripts": {
     "babel:watch": "babel ./app/main/src/ -w -d ./app/main/build",

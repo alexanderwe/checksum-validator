@@ -63,7 +63,7 @@ class ChecksumValidator extends React.Component<any, any> {
     if (Array.isArray(e)) {
       return e;
     }
-    return e && e.fileList;
+    return e && e.fileList.slice(-1); // only show latest uploaded file
   };
 
   public handleSelectChange = (value: any) => {
