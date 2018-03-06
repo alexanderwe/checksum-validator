@@ -1,9 +1,9 @@
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const DashboardPlugin = require('webpack-dashboard/plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const tsImportPluginFactory = require('ts-import-plugin');
 const path = require('path');
+
 module.exports = function(env) {
   console.log(env);
   let config = {
@@ -11,6 +11,7 @@ module.exports = function(env) {
   };
 
   let rendererConfig = Object.assign({}, config, {
+    mode: 'production',
     watch: env.mode == 'watch' ? true : false,
     target: 'electron-renderer',
     node: {
@@ -33,11 +34,17 @@ module.exports = function(env) {
           test: /\.(jsx|tsx|js|ts)$/,
           use: [
             {
-              loader: 'awesome-typescript-loader',
+              loader: 'ts-loader',
               options: {
                 transpileOnly: true,
                 getCustomTransformers: () => ({
-                  before: [tsImportPluginFactory(/** options */)],
+                  before: [
+                    tsImportPluginFactory({
+                      libraryName: 'antd',
+                      libraryDirectory: 'lib',
+                      style: true,
+                    }),
+                  ],
                 }),
                 compilerOptions: {
                   module: 'es2015',
@@ -81,11 +88,11 @@ module.exports = function(env) {
         disable: false,
         allChunks: true,
       }),
-      new DashboardPlugin(),
     ],
   });
 
   let mainConfig = Object.assign({}, config, {
+    mode: 'production',
     entry: './app/main/src/main.ts',
     target: 'electron-main',
     node: {
@@ -104,7 +111,7 @@ module.exports = function(env) {
       rules: [
         {
           test: /.ts$/,
-          use: [{ loader: 'awesome-typescript-loader' }],
+          use: [{ loader: 'ts-loader' }],
         },
       ],
     },
@@ -112,7 +119,6 @@ module.exports = function(env) {
       new CopyWebpackPlugin([
         { from: 'app/lib/i18n/', to: 'app/build/', ignore: ['*.ts'] },
       ]),
-      new DashboardPlugin(),
     ],
   });
 
