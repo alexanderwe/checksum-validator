@@ -50,7 +50,7 @@ class ChecksOverview extends React.Component<any, any> {
   };
 
   deleteCancel = e => {
-    console.log(e);
+    //doNothing
   };
 
   render() {
