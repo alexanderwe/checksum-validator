@@ -7,7 +7,7 @@ const fs = require('fs');
 const lessToJs = require('less-vars-to-js');
 
 const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './app/renderer/src/styles/ant-default-vars.less'), 'utf8'));
-themeVariables["@icon-url"] = "''";
+themeVariables["@icon-url"] = "'/'";
 
 module.exports = function(env) {
   console.log(env);
