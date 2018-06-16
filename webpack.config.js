@@ -110,7 +110,9 @@ module.exports = function (env) {
     externals: [nodeExternals()],
     watch: env.mode == 'watch' ? true : false,
     output: {
-      filename: './app/build/main.js',
+      path: __dirname + '/app/build/',
+      publicPath: 'build/',
+      filename: 'main.js',
     },
     resolve: {
       extensions: ['.ts', '.js', '.json'],
@@ -125,10 +127,10 @@ module.exports = function (env) {
     },
     plugins: [
       new CopyWebpackPlugin([
-        { from: 'app/lib/i18n/', to: 'app/build/', ignore: ['*.ts'] },
+        { from: 'app/lib/i18n/', to: './', ignore: ['*.ts'] },
       ]),
     ],
   });
 
-  return [mainConfig];
+  return [mainConfig, rendererConfig];
 };
