@@ -1,4 +1,4 @@
-import { app, Menu, shell } from 'electron';
+import { app, Menu, shell, BrowserWindow } from 'electron';
 import * as fs from 'fs';
 import * as path from 'path';
 import * as username from 'username';
@@ -11,11 +11,17 @@ export default class MenuBuilder {
   private i18n: I18n;
   private updater: AppUpdater;
   private ipcHandler: IPCHandler;
+  private mainWindow: BrowserWindow;
 
-  constructor(updater: AppUpdater, ipcHandler: IPCHandler) {
+  constructor(
+    updater: AppUpdater,
+    ipcHandler: IPCHandler,
+    mainWindow: BrowserWindow,
+  ) {
     this.updater = updater;
     this.ipcHandler = ipcHandler;
     this.i18n = new I18n();
+    this.mainWindow = mainWindow;
   }
 
   /**
@@ -84,6 +90,12 @@ export default class MenuBuilder {
               );
             },
             label: this.i18n.translate('open logs'),
+          },
+          {
+            click: () => {
+              this.mainWindow.webContents.openDevTools();
+            },
+            label: this.i18n.translate('open dev tools'), //TODO: Open dev tools translation
           },
         ],
       },

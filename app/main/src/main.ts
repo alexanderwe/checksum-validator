@@ -60,7 +60,7 @@ function createWindow() {
 
   // Build the application menu
   const menu = Menu.buildFromTemplate(
-    new MenuBuilder(appUpdater, ipcHandler).build(),
+    new MenuBuilder(appUpdater, ipcHandler, mainWindow).build(),
   );
   Menu.setApplicationMenu(menu);
 }

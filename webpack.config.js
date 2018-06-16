@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const tsImportPluginFactory = require('ts-import-plugin');
@@ -60,17 +60,10 @@ module.exports = function(env) {
           exclude: /node_modules/,
         },
         {
-          // regular css files
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: 'css-loader?importLoaders=1',
-          }),
-        },
-        {
-          test: /\.less$/,
+          test: /\.(less|css)$/,
           use: [
-            {loader: "style-loader"},
-            {loader: "css-loader"},
+            MiniCssExtractPlugin.loader,
+            "css-loader",
             {loader: "less-loader",
               options: {
                 modifyVars: themeVariables
@@ -96,10 +89,11 @@ module.exports = function(env) {
       ],
     },
     plugins: [
-      new ExtractTextPlugin({
-        filename: 'bundle.css',
-        disable: false,
-        allChunks: true,
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: "bundle.css",
+        chunkFilename: "[id].css"
       }),
     ],
   });
