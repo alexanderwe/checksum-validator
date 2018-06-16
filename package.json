@@ -5,11 +5,11 @@
   "scripts": {
     "babel:watch": "babel ./app/main/src/ -w -d ./app/main/build",
     "build:watch": "webpack --env.mode=watch",
-    "build": "NODE_ENV=production webpack --env.mode=noWatch --progress",
+    "build": "cross-env NODE_ENV=production webpack --env.mode=noWatch --progress",
     "dist": "build -m --x64 --ia32",
     "postinstall": "install-app-deps",
     "release": "build",
-    "start": "ELECTRON_DEV=true electron app/build/main.js",
+    "start": "cross-env ELECTRON_DEV=true electron app/build/main.js",
     "test": "mocha",
     "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5"
   },
@@ -27,6 +27,7 @@
     "chai": "^4.1.2",
     "chai-as-promised": "^7.1.1",
     "copy-webpack-plugin": "^4.5.1",
+    "cross-env": "^5.2.0",
     "css-loader": "^0.28.11",
     "electron": "^2.0.2",
     "electron-builder": "^20.15.3",
