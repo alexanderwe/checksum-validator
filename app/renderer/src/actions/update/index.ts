@@ -13,3 +13,7 @@ export const checkForUpdate = () => {
 export const updateApp = () => {
   return send(Events.UPDATE);
 };
+
+export const quitAndInstall = () => {
+  return send(Events.UPDATE_QUIT_AND_INSTALL);
+}

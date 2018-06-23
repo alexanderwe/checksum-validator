@@ -86,6 +86,9 @@ export default class IPCHandler {
       .on(Events.UPDATE_CHECK, async (event: any, arg: any) => {
         this.updater.checkForUpdate();
       })
+      .on(Events.UPDATE_QUIT_AND_INSTALL, async (event: any, arg: any) => {
+        this.updater.quitAndInstall();
+      })
       .on(Events.DATABASE_CHECKS_RELOAD, async (event: any, arg: any) => {
         this.database.refreshDB();
       })

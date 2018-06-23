@@ -62,7 +62,9 @@ export const ipc = createIpc({
         error: data.error,
         updateAvailable: data.updateAvailable,
         msg: data.msg,
-        downloading: false,
+        downloading: data.downloading,
+        updating: data.updating,
+        downloadPercentage: data.downloadPercentage,
       },
     };
   },
