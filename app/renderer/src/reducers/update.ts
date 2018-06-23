@@ -6,6 +6,7 @@ import {
   CHECK_FOR_UPDATE,
   UDPATE_INFO,
   UPDATE_DOWNLOADING,
+  UPDATE_DOWNLOADED
 } from '../actions/update/';
 
 const initialState = {
@@ -43,12 +44,13 @@ export function update(state = initialState, action) {
       return {
         ...state,
         downloading: action.data.downloading,
+        updating: action.data.updating,
         downloadPercentage: action.data.downloadPercentage,
         error: action.data.error,
         updateAvailable: action.data.updateAvailable,
         msg: action.data.msg,
       };
-    case UPDATE_DOWNLOADING:
+    case UPDATE_DOWNLOADED:
       return {
         ...state,
         downloading: action.data.downloading,

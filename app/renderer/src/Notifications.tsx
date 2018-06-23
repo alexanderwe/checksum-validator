@@ -33,6 +33,7 @@ export const showUpdateAvailableNotification = msg => {
       size="small"
       onClick={() => {
         store.dispatch(updateApp());
+        notification.destroy();
       }}
     >
       {i18n.translate('update application')}

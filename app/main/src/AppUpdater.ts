@@ -88,6 +88,10 @@ export default class AppUpdater {
     autoUpdater.downloadUpdate();
   };
 
+  public quitAndInstall = () => {
+    autoUpdater.quitAndInstall();
+  }
+
   public checkForUpdate = () => {
     this.ipcHandler.sendToRenderer('update:check', {});
     autoUpdater.checkForUpdates();

@@ -4,6 +4,12 @@
 
 checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. It is primarily intended to validate checksums of downloaded files.
 
+```
+Since V 1.1.1 the update process should work with the correct visualization. 
+Previous versions had a little bug, which caused the download process not being visualized.
+```
+
+
 # Usage
 
 ## Installation
@@ -11,6 +17,8 @@ checksum-validator is a small convenient Electron application, which can quickly
 _Supported platforms_
 
 * MacOS (tested under V. 10.13 (High Sierra))
+* Windows (tested under Win 10 Pro, Version 1803)
+    * Update process is not tested yet, if you see some trouble with future releases please file an issue :)
 
 Head over to the [releases section](https://github.com/alexanderwe/checksum-validator/releases) and download the latest distribution.
 

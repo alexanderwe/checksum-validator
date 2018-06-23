@@ -3,6 +3,7 @@ export enum Events {
   UPDATE_CHECK = 'update:check',
   UPDATE_DOWNLOADING = 'update:downloading',
   UPDATE_DOWNLOADED = 'update:downloaded',
+  UPDATE_QUIT_AND_INSTALL = 'update;:quit-and-install',
   CHECKSUM = 'checksum',
   CHECKSUM_RESULT = 'checksum:result',
   DATABASE_CHECKS_RELOAD = 'database:checks-reload',
