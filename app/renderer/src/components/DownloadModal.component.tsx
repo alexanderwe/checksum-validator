@@ -24,8 +24,10 @@ class DownloadModal extends React.Component<any, any> {
   handleExit = () => {
     this.props.quitAndInstall();
   };
-
+  
   render() {
+    console.log('DownloadModal');
+    console.log(this.props);
     return (
       <Modal
         title={'Update'}
