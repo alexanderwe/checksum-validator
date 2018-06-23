@@ -1,10 +1,7 @@
 import * as React from 'react'; // ES6
-import { send } from 'redux-electron-ipc';
 
-import Transition from 'react-transition-group/Transition';
 import Icon from './base/Icon.component';
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import {
   checksumTypeChanged,
@@ -46,7 +43,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)
 class ChecksumValidator extends React.Component<any, any> {
   constructor(props: any) {
     super(props);

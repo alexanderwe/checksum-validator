@@ -40,6 +40,7 @@
   "save checks": "Save checks",
   "save check clipboard": "Save checksum to clipboard",
   "settings": "Settings",
+  "toggle developer tools": "Toggle Developer Tools",
   "tooltip save checks":
     "Your checks are getting saved into a small database, so you can always remember them",
   "tooltip save check clipboard":

@@ -40,6 +40,7 @@
   "save checks": "Checks speichern",
   "save check clipboard": "Checksum in der Zwischenablage speichern",
   "settings": "Einstellungen",
+  "toggle developer tools": "Öffne Entwickler Werkzeuge",
   "tooltip save checks":
     "Deine Checks werden in einer kleinen Datenbank gespeichert um sie später noch einmal abrufen zu können",
   "tooltip save check clipboard":

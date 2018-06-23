@@ -26,7 +26,6 @@ export default class IPCHandler {
       .on(Events.CHECKSUM, async (event: any, arg: any) => {
         event.sender.send(Events.CHECKSUM, {}); // main received event and acknowledge it to renderer
         console.log(arg);
-        const calculateAll = event.calculateAll;
         let checksumResultString: string;
         let didMatch: boolean;
         let error: boolean;
@@ -51,6 +50,8 @@ export default class IPCHandler {
         } catch (e) {
           error = true;
         }
+
+        console.log(checksumResultString);
 
         didMatch = checksumResultString === arg.checksum ? true : false;
 

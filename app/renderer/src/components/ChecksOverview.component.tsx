@@ -39,7 +39,10 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-@connect(mapStateToProps, mapDispatchToProps)
+@connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)
 class ChecksOverview extends React.Component<any, any> {
   componentDidMount() {
     this.props.databaseReloadChecks();
@@ -105,7 +108,7 @@ class ChecksOverview extends React.Component<any, any> {
           match ? (
             <Icon type="check" style={{ color: '#73d13d' }} />
           ) : (
-            <Icon type="warning" style={{ color: '#ff4d4f' }} />
+            <Icon type="close" style={{ color: '#ff4d4f' }} />
           ),
       },
       {

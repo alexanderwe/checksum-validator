@@ -1,8 +1,6 @@
 // Basic init
 import { app, BrowserWindow, Menu } from 'electron';
-import * as fs from 'fs';
 import * as path from 'path';
-import * as url from 'url';
 
 import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
@@ -60,7 +58,7 @@ function createWindow() {
 
   // Build the application menu
   const menu = Menu.buildFromTemplate(
-    new MenuBuilder(appUpdater, ipcHandler).build(),
+    new MenuBuilder(appUpdater, ipcHandler, mainWindow).build(),
   );
   Menu.setApplicationMenu(menu);
 }

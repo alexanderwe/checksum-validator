@@ -1,4 +1,4 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const tsImportPluginFactory = require('ts-import-plugin');
@@ -9,7 +9,7 @@ const lessToJs = require('less-vars-to-js');
 const themeVariables = lessToJs(fs.readFileSync(path.join(__dirname, './app/renderer/src/styles/ant-default-vars.less'), 'utf8'));
 themeVariables["@icon-url"] = "'/'";
 
-module.exports = function(env) {
+module.exports = function (env) {
   console.log(env);
   let config = {
     module: {},
@@ -60,18 +60,12 @@ module.exports = function(env) {
           exclude: /node_modules/,
         },
         {
-          // regular css files
-          test: /\.css$/,
-          use: ExtractTextPlugin.extract({
-            use: 'css-loader?importLoaders=1',
-          }),
-        },
-        {
-          test: /\.less$/,
+          test: /\.(less|css)$/,
           use: [
-            {loader: "style-loader"},
-            {loader: "css-loader"},
-            {loader: "less-loader",
+            MiniCssExtractPlugin.loader,
+            "css-loader",
+            {
+              loader: "less-loader",
               options: {
                 modifyVars: themeVariables
               }
@@ -96,10 +90,11 @@ module.exports = function(env) {
       ],
     },
     plugins: [
-      new ExtractTextPlugin({
-        filename: 'bundle.css',
-        disable: false,
-        allChunks: true,
+      new MiniCssExtractPlugin({
+        // Options similar to the same options in webpackOptions.output
+        // both options are optional
+        filename: "bundle.css",
+        chunkFilename: "[id].css"
       }),
     ],
   });
@@ -115,7 +110,9 @@ module.exports = function(env) {
     externals: [nodeExternals()],
     watch: env.mode == 'watch' ? true : false,
     output: {
-      filename: './app/build/main.js',
+      path: __dirname + '/app/build/',
+      publicPath: 'build/',
+      filename: 'main.js',
     },
     resolve: {
       extensions: ['.ts', '.js', '.json'],
@@ -130,10 +127,10 @@ module.exports = function(env) {
     },
     plugins: [
       new CopyWebpackPlugin([
-        { from: 'app/lib/i18n/', to: 'app/build/', ignore: ['*.ts'] },
+        { from: 'app/lib/i18n/', to: './', ignore: ['*.ts'] },
       ]),
     ],
   });
 
-  return [rendererConfig, mainConfig];
+  return [mainConfig, rendererConfig];
 };
