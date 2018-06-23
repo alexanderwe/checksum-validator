@@ -51,6 +51,8 @@ export default class IPCHandler {
           error = true;
         }
 
+        console.log(checksumResultString);
+
         didMatch = checksumResultString === arg.checksum ? true : false;
 
         // Only save to clipboard if checksumResultString is available

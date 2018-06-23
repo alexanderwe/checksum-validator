@@ -1,7 +1,42 @@
 import * as child from 'child_process';
+import * as crypto from 'crypto';
+import * as fs from 'fs';
 import electronLog from 'electron-log';
 import { IChecksum, ChecksumAlgorithm } from './Database';
 export default class Checksum {
+
+  public static fileHash(filename, algorithm = 'md5'): Promise<string> {
+    return new Promise((resolve, reject) => {
+
+      if (!filename) {
+        reject(new Error());
+      }
+
+      let shasum = crypto.createHash(algorithm);
+      try {
+        let s = new fs.ReadStream(filename)
+        s.on('data', function (data) {
+          shasum.update(data)
+        })
+        // making digest
+        s.on('end', function () {
+          const hash = shasum.digest('hex');
+          electronLog.info(
+            `Computed ${algorithm} of ${filename} result: ${hash}`,
+          );
+          return resolve(hash);
+        })
+      } catch (error) {
+        electronLog.error(
+          `Error while computing ${algorithm} of ${filename} : ${error}`,
+        );
+        return reject('calc fail');
+      }
+    });
+  }
+
+
+
   /**
    * @function sha512
    * @param  {string} filepath: path to the file
@@ -9,25 +44,7 @@ export default class Checksum {
    * @return {Promise.string} The calculation result
    */
   public static sha512(filepath: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      child.exec(
-        'shasum -a 512 ' + filepath.replace(/ /g, '\\ '),
-        (error, stdout, stderr) => {
-          const checksum = stdout.split(' ')[0].trim();
-          if (error) {
-            electronLog.error(
-              'Error while computing SHA512 of ' + filepath + ' : ' + error,
-            );
-            reject(error);
-          } else {
-            electronLog.info(
-              'Computed SHA512 of ' + filepath + ' result: ' + checksum,
-            );
-            resolve(checksum);
-          }
-        },
-      );
-    });
+    return Checksum.fileHash(filepath, 'sha512');
   }
 
   /**
@@ -37,30 +54,7 @@ export default class Checksum {
    * @return {Promise.string} The calculation result
    */
   public static sha256(filepath: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      if (!filepath) {
-        reject(new Error());
-      }
-
-      child.exec(
-        'shasum -a 256 ' + filepath.replace(/ /g, '\\ '),
-        (error, stdout, stderr) => {
-          const checksum = stdout.split(' ')[0].trim();
-
-          if (error) {
-            electronLog.error(
-              'Error while computing sha256 of ' + filepath + ' : ' + error,
-            );
-            reject(error);
-          } else {
-            electronLog.info(
-              'Computed sha256 of ' + filepath + ' result: ' + checksum,
-            );
-            resolve(checksum);
-          }
-        },
-      );
-    });
+    return Checksum.fileHash(filepath, 'sha256');
   }
 
   /**
@@ -70,25 +64,7 @@ export default class Checksum {
    * @return {Promise.string} The calculation result
    */
   public static sha1(filepath: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      child.exec(
-        'openssl sha1 ' + filepath.replace(/ /g, '\\ '),
-        (error, stdout, stderr) => {
-          const checksum = stdout.split('= ')[1].trim();
-          if (error) {
-            electronLog.error(
-              'Error while computing sha1 of ' + filepath + ' : ' + error,
-            );
-            reject(error);
-          } else {
-            electronLog.info(
-              'Computed sha1 of ' + filepath + ' result: ' + checksum,
-            );
-            resolve(checksum);
-          }
-        },
-      );
-    });
+    return Checksum.fileHash(filepath, 'sha1');
   }
 
   /**
@@ -98,25 +74,7 @@ export default class Checksum {
    * @return {Promise.string} The calculation result
    */
   public static md5(filepath: string): Promise<string> {
-    return new Promise<string>((resolve, reject) => {
-      child.exec(
-        'openssl md5 ' + filepath.replace(/ /g, '\\ '),
-        (error, stdout, stderr) => {
-          const checksum = stdout.split('= ')[1].trim();
-          if (error) {
-            electronLog.error(
-              'Error while computing md5 of ' + filepath + ' : ' + error,
-            );
-            reject(error);
-          } else {
-            electronLog.info(
-              'Computed md5 of ' + filepath + ' result: ' + checksum,
-            );
-            resolve(checksum);
-          }
-        },
-      );
-    });
+    return Checksum.fileHash(filepath, 'md5');
   }
 
   public static allChecksums(filepath: string): Promise<IChecksum[]> {
