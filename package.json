@@ -1,6 +1,6 @@
 {
   "name": "checksum-validator",
-  "version": "1.1.1",
+  "version": "1.1.3",
   "description": "Small Electron application to validate checksums.",
   "scripts": {
     "babel:watch": "babel ./app/main/src/ -w -d ./app/main/build",
@@ -8,8 +8,9 @@
     "build": "cross-env NODE_ENV=production webpack --env.mode=noWatch --progress",
     "dist:mac": "build -m --x64 --ia32",
     "dist:win": "build -w --x64",
+    "dist:lin": "build -l",
     "postinstall": "install-app-deps",
-    "release": "build",
+    "release": "electron-builder -ml",
     "start": "cross-env ELECTRON_DEV=true electron app/build/main.js",
     "test": "mocha",
     "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5"
