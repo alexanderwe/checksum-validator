@@ -1,41 +1,42 @@
-import * as child from 'child_process';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import electronLog from 'electron-log';
 import { IChecksum, ChecksumAlgorithm } from './Database';
 export default class Checksum {
-
-  public static fileHash(filename, algorithm = 'md5'): Promise<string> {
+  /**
+   * @function fileHash
+   * @param filepath
+   * @param algorithm
+   * @desc Creates the hash of a file with a specufued hash algorithm. Uses Node's crypto module.
+   * @return {Promise.string} The calculation result
+   */
+  static fileHash(filepath, algorithm): Promise<string> {
     return new Promise((resolve, reject) => {
-
-      if (!filename) {
+      if (!filepath) {
         reject(new Error());
       }
 
-      let shasum = crypto.createHash(algorithm);
+      let hashing = crypto.createHash(algorithm);
       try {
-        let s = new fs.ReadStream(filename)
-        s.on('data', function (data) {
-          shasum.update(data)
-        })
-        // making digest
-        s.on('end', function () {
-          const hash = shasum.digest('hex');
+        let stream = new fs.ReadStream(filepath);
+        stream.on('data', function(data) {
+          hashing.update(data);
+        });
+        stream.on('end', function() {
+          const hash = hashing.digest('hex');
           electronLog.info(
-            `Computed ${algorithm} of ${filename} result: ${hash}`,
+            `Computed ${algorithm} of ${filepath} result: ${hash}`,
           );
           return resolve(hash);
-        })
+        });
       } catch (error) {
         electronLog.error(
-          `Error while computing ${algorithm} of ${filename} : ${error}`,
+          `Error while computing ${algorithm} of ${filepath} : ${error}`,
         );
         return reject('calc fail');
       }
     });
   }
-
-
 
   /**
    * @function sha512

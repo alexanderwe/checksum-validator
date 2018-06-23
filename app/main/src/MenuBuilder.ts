@@ -1,5 +1,5 @@
 import { app, Menu, shell, BrowserWindow } from 'electron';
-import * as fs from 'fs';
+import * as os from 'os';
 import * as path from 'path';
 import * as username from 'username';
 import I18n from '../../lib/i18n/I18n';
@@ -81,13 +81,20 @@ export default class MenuBuilder {
           },
           {
             click: () => {
-              shell.openItem(
-                path.join(
-                  '/Users/',
-                  username.sync(),
-                  '/Library/logs/checksum-validator/log.log',
-                ),
-              );
+              let platform = os.platform();
+              if (platform === 'darwin') {
+                shell.openItem(
+                  path.join(
+                    '/Users/',
+                    username.sync(),
+                    '/Library/logs/checksum-validator/log.log',
+                  ),
+                );
+              } else if (platform === 'win32') {
+                shell.openItem(
+                  path.join('%USERPROFILE%\AppData\Roaming\checksum-validator\log.log'),
+                );
+              }
             },
             label: this.i18n.translate('open logs'),
           },
@@ -95,7 +102,7 @@ export default class MenuBuilder {
             click: () => {
               this.mainWindow.webContents.openDevTools();
             },
-            label: this.i18n.translate('open dev tools'), //TODO: Open dev tools translation
+            label: this.i18n.translate('toggle developer tools'), //TODO: Open dev tools translation
           },
         ],
       },
