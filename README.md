@@ -4,6 +4,11 @@
 
 checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. It is primarily intended to validate checksums of downloaded files.
 
+```
+Since V 1.1.1 the update process should work with the correct visualization. Previous versions had a little bug, which caused the download process not being visualized.
+```
+
+
 # Usage
 
 ## Installation
