@@ -24,8 +24,8 @@ export default class IPCHandler {
 
     ipcMain
       .on(Events.CHECKSUM, async (event: any, arg: any) => {
+        electronLog.debug('Message from renderer: CHECKSUM.UPDATE');
         event.sender.send(Events.CHECKSUM, {}); // main received event and acknowledge it to renderer
-        console.log(arg);
         let checksumResultString: string;
         let didMatch: boolean;
         let error: boolean;
@@ -61,7 +61,7 @@ export default class IPCHandler {
         }
 
         if (arg.saveChecks && !error) {
-          electronLog.info('Saving check to database');
+          electronLog.info('(Main) - Saving check to database');
           const check: ICheck = {
             checksums: await Checksum.allChecksums(arg.filepath),
             checkString: arg.checksum as String,
@@ -81,21 +81,27 @@ export default class IPCHandler {
         });
       })
       .on(Events.UPDATE, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.UPDATE');
         this.updater.update();
       })
       .on(Events.UPDATE_CHECK, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.UPDATE_CHECK');
         this.updater.checkForUpdate();
       })
       .on(Events.UPDATE_QUIT_AND_INSTALL, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.UPDATE_QUIT_AND_INSTALL');
         this.updater.quitAndInstall();
       })
       .on(Events.DATABASE_CHECKS_RELOAD, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.DATABASE_CHECKS_RELOAD');
         this.database.refreshDB();
       })
       .on(Events.DATABASE_CHECK_DELETE, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.DATABASE_CHECK_DELETE - id: ' + arg._id);
         this.database.deleteCheck(arg._id);
       })
       .on(Events.DATABASE_CHECK_EXPORT, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.DATABASE_CHECK_EXPORT - id: ' + arg._id);
         const check = await this.database.getCheck(arg._id);
 
         dialog.showSaveDialog(
@@ -113,9 +119,11 @@ export default class IPCHandler {
         );
       })
       .on(Events.SETTINGS_LOAD, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.SETTINGS_LOAD');
         event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
       })
       .on(Events.SETTINGS_UPDATED, async (event: any, arg: any) => {
+        electronLog.debug('(Main) - Message from renderer: EVENTS.SETTINGS_UPDATED');
         this.settings.set(arg.key, arg.value);
         event.sender.send(Events.SETTINGS_LOAD, { ...this.settings.store });
       });

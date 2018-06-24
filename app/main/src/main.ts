@@ -1,7 +1,7 @@
 // Basic init
 import { app, BrowserWindow, Menu } from 'electron';
 import * as path from 'path';
-
+import electronLog from 'electron-log';
 import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
 import MenuBuilder from './MenuBuilder';
@@ -37,10 +37,7 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/../renderer/index.html`);
 
-  // Open the DevTools.
-  if (process.env.ELECTRON_DEV) {
-    mainWindow.webContents.openDevTools();
-  }
+  mainWindow.webContents.openDevTools();
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -64,6 +61,7 @@ function createWindow() {
 }
 
 app.on('ready', () => {
+  electronLog.transports.file.level = 'debug';
   createWindow();
 
   if (process.env.ELECTRON_DEV) {

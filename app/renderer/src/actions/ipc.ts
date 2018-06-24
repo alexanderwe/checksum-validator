@@ -4,6 +4,8 @@ import { message } from 'antd';
 import { push } from 'react-router-redux';
 import store from '../store';
 
+import electronLog from 'electron-log';
+
 import {
   UDPATE_INFO,
   UPDATE_DOWNLOADING,
@@ -32,6 +34,8 @@ export const ipc = createIpc({
     };
   },
   [Events.UPDATE]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: EVENTS.UPDATE');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: UDPATE_INFO,
       data: {
@@ -43,6 +47,8 @@ export const ipc = createIpc({
     };
   },
   [Events.UPDATE_DOWNLOADING]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.UPDATE_DOWNLOADING');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: UPDATE_DOWNLOADING,
       data: {
@@ -56,6 +62,8 @@ export const ipc = createIpc({
     };
   },
   [Events.UPDATE_DOWNLOADED]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.UPDATE_DOWNLOADED');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: UPDATE_DOWNLOADED,
       data: {
@@ -69,6 +77,8 @@ export const ipc = createIpc({
     };
   },
   [Events.UPDATE_CHECK]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.UPDATE_CHECK');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: CHECK_FOR_UPDATE,
       data: {
@@ -77,6 +87,8 @@ export const ipc = createIpc({
     };
   },
   [Events.CHECKSUM]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.CHECKSUM');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: CHECKSUM_CURRENTLY_CHECKING,
       data: {
@@ -85,6 +97,8 @@ export const ipc = createIpc({
     };
   },
   [Events.CHECKSUM_RESULT]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.CHECKSUM_RESULT');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     if (data.error) {
       message.warning(i18n.translate('checksum error'));
     } else {
@@ -105,6 +119,8 @@ export const ipc = createIpc({
     };
   },
   [Events.DATABASE_CHECKS_RELOAD]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.DATABASE_CHECKS_RELOAD');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: DATABASE_CHECKS_RELOAD,
       data: {
@@ -113,6 +129,8 @@ export const ipc = createIpc({
     };
   },
   [Events.DATABASE_CHECK_EXPORT_SUCCESS]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.DATABASE_CHECK_EXPORT_SUCCESS');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     message.success(i18n.translate('file saved'));
     return {
       // not used in reducer
@@ -121,6 +139,8 @@ export const ipc = createIpc({
     };
   },
   [Events.SETTINGS_LOAD]: (event, data) => {
+    electronLog.debug('(Renderer) - Message from main: Events.SETTINGS_LOAD');
+    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: SETTINGS_RELOAD,
       data: {

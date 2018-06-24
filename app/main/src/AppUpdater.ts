@@ -22,10 +22,10 @@ export default class AppUpdater {
       autoUpdater.updateConfigPath = 'dev-app-update.yml';
     }
 
-    electronLog.info('checking for Updates');
+    electronLog.info('(Main) - Checking for Updates');
     autoUpdater.checkForUpdates();
 
-    electronLog.transports.file.level = 'info';
+    
     autoUpdater.logger = electronLog;
 
     autoUpdater.on('error', error => {

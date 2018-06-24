@@ -1,5 +1,4 @@
 import * as electron from 'electron';
-import log from 'electron-log';
 import * as fs from 'fs';
 import * as isRenderer from 'is-electron-renderer';
 import * as path from 'path';
