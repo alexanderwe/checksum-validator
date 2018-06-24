@@ -36,8 +36,11 @@ function createWindow() {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/../renderer/index.html`);
-
-  mainWindow.webContents.openDevTools();
+  
+   // Open the DevTools.
+   if (process.env.ELECTRON_DEV) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null;
