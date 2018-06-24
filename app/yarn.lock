@@ -121,10 +121,6 @@ builder-util-runtime@~4.2.1:
     fs-extra-p "^4.6.0"
     sax "^1.2.4"
 
-bulma@^0.6.0:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/bulma/-/bulma-0.6.2.tgz#f4b1d11d5acc51a79644eb0a2b0b10649d3d71f5"
-
 classnames@2.x, classnames@^2.2.0, classnames@^2.2.1, classnames@^2.2.3, classnames@^2.2.5, classnames@^2.2.6, classnames@~2.2.0:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.6.tgz#43935bffdd291f326dad0a205309b38d00f650ce"
@@ -1084,16 +1080,6 @@ react@^16.0.0:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
     prop-types "^15.6.0"
-
-reactbulma@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/reactbulma/-/reactbulma-1.1.1.tgz#4410ea53ec6e46e1c66660c1eb8eacaaabe64776"
-  dependencies:
-    bulma "^0.6.0"
-    classnames "^2.2.5"
-    prop-types "^15.6.0"
-    react "^16.0.0"
-    react-dom "^16.0.0"
 
 redux-electron-ipc@^1.1.12:
   version "1.1.12"

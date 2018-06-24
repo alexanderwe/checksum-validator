@@ -120,7 +120,6 @@ export const ipc = createIpc({
   },
   [Events.DATABASE_CHECKS_RELOAD]: (event, data) => {
     electronLog.debug('(Renderer) - Message from main: Events.DATABASE_CHECKS_RELOAD');
-    electronLog.debug(`(Renderer) - ${JSON.stringify(data)}`);
     return {
       type: DATABASE_CHECKS_RELOAD,
       data: {
