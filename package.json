@@ -10,7 +10,7 @@
     "dist:win": "build -w --x64",
     "dist:lin": "build -l",
     "postinstall": "install-app-deps",
-    "release": "electron-builder -ml",
+    "release": " yarn build && electron-builder -ml",
     "start": "cross-env ELECTRON_DEV=true electron app/build/main.js",
     "test": "mocha",
     "tsc:watch": "tsc --watch --p tsconfig.json --declaration --target es5"

@@ -38,7 +38,7 @@ function createWindow() {
   mainWindow.loadURL(`file://${__dirname}/../renderer/index.html`);
   
    // Open the DevTools.
-   if (process.env.ELECTRON_DEV) {
+  if (process.env.ELECTRON_DEV) {
     mainWindow.webContents.openDevTools();
   }
 
@@ -65,8 +65,10 @@ function createWindow() {
 
 app.on('ready', () => {
   electronLog.transports.file.level = 'debug';
+  
+  electronLog.info('(Main) - ====== Application Start =====')
+  
   createWindow();
-
   if (process.env.ELECTRON_DEV) {
     const {
       default: installExtension,
