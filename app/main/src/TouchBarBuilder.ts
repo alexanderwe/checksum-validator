@@ -1,7 +1,7 @@
 import { TouchBar } from 'electron';
 import IPCHandler from './IPCHandler';
 import AppUpdater from './AppUpdater';
-import I18n from '../../lib/i18n/I18n';
+import I18n from '../../lib/i18n/i18n';
 
 const { TouchBarButton } = TouchBar;
 

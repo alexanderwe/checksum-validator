@@ -15,7 +15,7 @@ const FormItem = Form.Item;
 const Option = Select.Option;
 const { Content, Header } = Layout;
 
-import I18n from '../../../lib/i18n/I18n';
+import I18n from '../../../lib/i18n/i18n';
 
 const i18n: I18n = new I18n();
 

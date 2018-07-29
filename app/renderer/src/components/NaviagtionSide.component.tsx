@@ -4,7 +4,7 @@ import { Route, NavLink, Switch } from 'react-router-dom';
 
 import { Layout, Menu, Icon } from 'antd';
 import BulmaIcon from './base/Icon.component';
-import I18n from '../../../lib/i18n/I18n';
+import I18n from '../../../lib/i18n/i18n';
 
 const { Content, Sider } = Layout;
 const i18n: I18n = new I18n();

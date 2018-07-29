@@ -2,7 +2,7 @@ import { dialog } from 'electron';
 import electronLog from 'electron-log';
 import * as Store from 'electron-store';
 import { autoUpdater } from 'electron-updater';
-import I18n from '../../lib/i18n/I18n';
+import I18n from '../../lib/i18n/i18n';
 import { Events } from '../../lib/Events';
 import IPCHandler from './IPCHandler';
 

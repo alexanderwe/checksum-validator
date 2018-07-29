@@ -20,7 +20,7 @@ import {
 import { SETTINGS_RELOAD, ROUTE_SETTINGS } from './settings/index';
 import { Events } from '../../../lib/Events';
 
-import I18n from '../../../lib/i18n/I18n';
+import I18n from '../../../lib/i18n/i18n';
 
 const i18n: I18n = new I18n();
 

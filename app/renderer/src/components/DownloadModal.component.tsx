@@ -6,7 +6,7 @@ import { Button, Modal, Progress } from 'antd';
 
 import { quitAndInstall } from '../actions/update';
 
-import I18n from '../../../lib/i18n/I18n';
+import I18n from '../../../lib/i18n/i18n';
 const i18n: I18n = new I18n();
 
 const mapStateToProps = state => ({

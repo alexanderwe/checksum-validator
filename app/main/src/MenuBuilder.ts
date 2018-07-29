@@ -2,7 +2,7 @@ import { app, Menu, shell, BrowserWindow } from 'electron';
 import * as os from 'os';
 import * as path from 'path';
 import * as username from 'username';
-import I18n from '../../lib/i18n/I18n';
+import I18n from '../../lib/i18n/i18n';
 import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
 import { Events } from '../../lib/Events';
@@ -109,7 +109,7 @@ export default class MenuBuilder {
           ],
         },
       ];
-    } else if (process.platform === 'win32') {
+    } else  {
       return [
         {
           label: app.getName(),
