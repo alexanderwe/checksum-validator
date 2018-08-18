@@ -83,20 +83,13 @@ export default class MenuBuilder {
             },
             {
               click: () => {
-                let platform = os.platform();
-                if (platform === 'darwin') {
-                  shell.openItem(
+                                 shell.openItem(
                     path.join(
                       '/Users/',
                       username.sync(),
                       '/Library/logs/checksum-validator/log.log',
                     ),
                   );
-                } else if (platform === 'win32') {
-                  shell.openItem(
-                    path.join('C:\\Users\\', username.sync(),'\\AppData\\Roaming\\checksum-validator\\log.log'),
-                  );
-                }
               },
               label: this.i18n.translate('open logs'),
             },
@@ -158,15 +151,7 @@ export default class MenuBuilder {
             {
               click: () => {
                 let platform = os.platform();
-                if (platform === 'darwin') {
-                  shell.openItem(
-                    path.join(
-                      '/Users/',
-                      username.sync(),
-                      '/Library/logs/checksum-validator/log.log',
-                    ),
-                  );
-                } else if (platform === 'win32') {
+                if (platform === 'win32') {
                   shell.openItem(
                     path.join('C:\\Users\\', username.sync(),'\\AppData\\Roaming\\checksum-validator\\log.log'),
                   );
