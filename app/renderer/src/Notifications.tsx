@@ -6,7 +6,7 @@ import { Button, notification } from 'antd';
 import store from './store';
 import { updateApp } from './actions/update/index';
 
-import I18n from '../../lib/i18n/I18n';
+import I18n from '../../lib/i18n/i18n';
 const i18n: I18n = new I18n();
 
 /**

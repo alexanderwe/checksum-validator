@@ -20,7 +20,7 @@ import {
   Popconfirm,
   Modal,
 } from 'antd';
-import I18n from '../../../lib/i18n/I18n';
+import I18n from '../../../lib/i18n/i18n';
 
 const { Header, Content, Footer, Sider } = Layout;
 

@@ -2,7 +2,7 @@ import { app, Menu, shell, BrowserWindow } from 'electron';
 import * as os from 'os';
 import * as path from 'path';
 import * as username from 'username';
-import I18n from '../../lib/i18n/I18n';
+import I18n from '../../lib/i18n/i18n';
 import AppUpdater from './AppUpdater';
 import IPCHandler from './IPCHandler';
 import { Events } from '../../lib/Events';
@@ -83,20 +83,13 @@ export default class MenuBuilder {
             },
             {
               click: () => {
-                let platform = os.platform();
-                if (platform === 'darwin') {
-                  shell.openItem(
+                                 shell.openItem(
                     path.join(
                       '/Users/',
                       username.sync(),
                       '/Library/logs/checksum-validator/log.log',
                     ),
                   );
-                } else if (platform === 'win32') {
-                  shell.openItem(
-                    path.join('C:\\Users\\', username.sync(),'\\AppData\\Roaming\\checksum-validator\\log.log'),
-                  );
-                }
               },
               label: this.i18n.translate('open logs'),
             },
@@ -109,7 +102,7 @@ export default class MenuBuilder {
           ],
         },
       ];
-    } else if (process.platform === 'win32') {
+    } else  {
       return [
         {
           label: app.getName(),
@@ -158,18 +151,14 @@ export default class MenuBuilder {
             {
               click: () => {
                 let platform = os.platform();
-                if (platform === 'darwin') {
-                  shell.openItem(
-                    path.join(
-                      '/Users/',
-                      username.sync(),
-                      '/Library/logs/checksum-validator/log.log',
-                    ),
-                  );
-                } else if (platform === 'win32') {
+                if (platform === 'win32') {
                   shell.openItem(
                     path.join('C:\\Users\\', username.sync(),'\\AppData\\Roaming\\checksum-validator\\log.log'),
                   );
+                } else {
+                    shell.openItem(
+                       path.join('/home/', username.sync(),'/.config/checksum-validator/log.log'),
+                    );
                 }
               },
               label: this.i18n.translate('open logs'),
