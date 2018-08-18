@@ -170,6 +170,10 @@ export default class MenuBuilder {
                   shell.openItem(
                     path.join('C:\\Users\\', username.sync(),'\\AppData\\Roaming\\checksum-validator\\log.log'),
                   );
+                } else {
+                    shell.openItem(
+                       path.join('/home/', username.sync(),'/.config/checksum-validator/log.log'),
+                    );
                 }
               },
               label: this.i18n.translate('open logs'),
