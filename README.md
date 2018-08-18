@@ -18,9 +18,8 @@ _Supported platforms_
 
 * MacOS (tested under V. 10.13 (High Sierra))
 * Windows (tested under Win 10 Pro, Version 1803)
-    * Update process is not tested yet, if you see some trouble with future releases please file an issue :)
-* Linux 
-    * Update process is not tested yet, if you see some trouble with future releases please file an issue :)
+* Ubuntu
+  * https://snapcraft.io/checksum-validator
     
 Head over to the [releases section](https://github.com/alexanderwe/checksum-validator/releases) and download the latest distribution.
 
