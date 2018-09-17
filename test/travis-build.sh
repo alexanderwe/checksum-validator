@@ -6,9 +6,9 @@ if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
   sleep 3
 fi
 
-yarn install
+npm install
 cd ./app
-yarn install 
+npm install 
 cd ../
-yarn build
-yarn test
+npm run build
+npm run test
