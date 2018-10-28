@@ -18,9 +18,8 @@ _Supported platforms_
 
 * MacOS (tested under V. 10.13 (High Sierra))
 * Windows (tested under Win 10 Pro, Version 1803)
-    * Update process is not tested yet, if you see some trouble with future releases please file an issue :)
-* Linux 
-    * Update process is not tested yet, if you see some trouble with future releases please file an issue :)
+* Ubuntu
+  * https://snapcraft.io/checksum-validator
     
 Head over to the [releases section](https://github.com/alexanderwe/checksum-validator/releases) and download the latest distribution.
 
@@ -30,17 +29,17 @@ After installing it you are ready to use checksum-validator.
 
 To calculate and validate the checksum of files, head over to the `Check pane` and either drag and drop four file into the drag area or select it by clicking on it. Then just type in the checksum you want to validate and select the hash algorithm which was used to generate the checksum.
 
-![img2](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img2.png)
+![img2](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/img2.png)
 
 On the `Past Checks` pane you have the opportunity to have a look at all checksums you have validated so far. Furthermore you can export the checked file as .json and take a look at other hashes of the file.
 
-![img3](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img3.png)
+![img3](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/mg3.png)
 
 ## Update
 
 On start the application will check if an update is available. If an update is available it will either be installed automatically or the application will tell you that an update is ready to be installed. You can also trigger this check manually by `checksum-validator --> Check for updates...`
 
-![img1](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img1.png)
+![img1](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/img1.png)
 
 ## Settings
 
@@ -50,7 +49,7 @@ Additionally you can select the language of the application. By default `Checksu
 * English
 * German
 
-![img4](https://github.com/alexanderwe/checksum-validator/blob/master/.github/img/img4.png)
+![img4](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/img4.png)
 
 # How was it built ?
 
