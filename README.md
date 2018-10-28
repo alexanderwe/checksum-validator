@@ -33,7 +33,7 @@ To calculate and validate the checksum of files, head over to the `Check pane` a
 
 On the `Past Checks` pane you have the opportunity to have a look at all checksums you have validated so far. Furthermore you can export the checked file as .json and take a look at other hashes of the file.
 
-![img3](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/mg3.png)
+![img3](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/img3.png)
 
 ## Update
 
