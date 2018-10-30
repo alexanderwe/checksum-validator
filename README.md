@@ -5,10 +5,8 @@
 checksum-validator is a small convenient Electron application, which can quickly calculate hashes of files. It is primarily intended to validate checksums of downloaded files.
 
 ```
-Since V 1.1.1 the update process should work with the correct visualization. 
-Previous versions had a little bug, which caused the download process not being visualized.
+Unfortunately the update to MacOS Mojave broke the build version 1.1.5. If you encounter the problem that the application will not start on Mac OS Mojave with version 1.1.5 consider downloading version 1.1.6 from the releases section. All of your settings should be preserved.
 ```
-
 
 # Usage
 
@@ -16,7 +14,7 @@ Previous versions had a little bug, which caused the download process not being 
 
 _Supported platforms_
 
-* MacOS (tested under V. 10.13 (High Sierra))
+* MacOS (tested under V. 10.14 (Mojave))
 * Windows (tested under Win 10 Pro, Version 1803)
 * Ubuntu
   * https://snapcraft.io/checksum-validator
@@ -33,7 +31,7 @@ To calculate and validate the checksum of files, head over to the `Check pane` a
 
 On the `Past Checks` pane you have the opportunity to have a look at all checksums you have validated so far. Furthermore you can export the checked file as .json and take a look at other hashes of the file.
 
-![img3](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/mg3.png)
+![img3](https://github.com/alexanderwe/checksum-validator/blob/master/assets/screenshots/img3.png)
 
 ## Update
 
